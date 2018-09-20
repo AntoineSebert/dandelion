@@ -4,6 +4,7 @@
 - [ ] 20/09/2018 : contact **Copenhagen Suborbitals** ()
 - [ ] 20/09/2018 : create relevant **licence** ()
 - [ ] 20/09/2018 : plan **meetings with AP** weekly ()
+- [x] 20/09/2018 : create 5-colors **palette** ()
 
 # Development
 - [ ] 20/09/2018 : set up **environment** ()
