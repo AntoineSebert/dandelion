@@ -1,3 +1,8 @@
+------
+18/09/2018
+
+------
+
 Hello
 
 I am a french 22yo currently studying Computer Science at the Robert Gordon University, in Scotland.
@@ -10,4 +15,5 @@ Best regards
 
 Anthony
 
-18/09/2018
+
+------

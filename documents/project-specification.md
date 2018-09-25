@@ -15,7 +15,6 @@ Real-Time Operating System in Rust
 **Help:** Provide the background to your project. This section should highlight the main topics in the area you are going to research. Essentially what is the project about, what has been done before and why is this project important?  ~500 words
 
 ------
-
 This project aims the creation of a real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
 - deterministic execution time of the programs (of subparts of them), allowing to manage the processes accurately
 - correctness of the time when a result is expected, to meet or miss the deadlines, whom treatment marks the difference between soft and hard RTOS
@@ -24,9 +23,9 @@ Efficient multitasking is a core principle of the system, and hence a particular
 
 Such systems are very useful in several sectors, including astronautics, aeronautics, robotics, or embedded systems in general.
 
-Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, this last natively includes concurrency mangement and safe operations on memory  (that can be bypassed if needed).
+Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, this last natively includes concurrency mangement and safe operations on memory (that can be bypassed if needed).
 
-The most important operating system project written in Rust, Redox[^1], is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purposes[^2], plus several kernels/microkernels[^3], but no real-time operating system.
+The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purpose, plus several kernels/microkernels, but no real-time operating system. Anyway, a review of these projects during the system’s design process will be informative.
 
 ------
 
@@ -40,8 +39,9 @@ The most important operating system project written in Rust, Redox[^1], is a mic
 **Example** 3: You have designed a new network topology for IrishOil plc’s new Aberdeen headquarters. The interested group would clearly be IrishOil. They would benefit from easier maintenance and improved security of their computer network.
 
 ------
+It seems that no real-time operating system has been written using this promising technology, probably because an important part of the companies that produce this kind of software started their business in the 80s and chose to use the relevant languages at this time, such as C/C++ with assembly.
 
-...
+The advantages of Rust over C/C++ could significantly reduce the ... memory, keeping ... flexibility ... heap/stack. Embedded systems are sometimes quite ... (probe in another planet, aircraft computer) ... sensitive to ... 
 
 ------
 
@@ -117,8 +117,4 @@ Comparison of data and summary of findings.
 ...
 
 ### 1.8 Ethics Form
-**You must include in your signed ethics form in this submission or you will not be able to continue the project.**
-
-[1]: https://www.redox-os.org/
-[2]: https://os.phil-opp.com/
-[3]: such as https://intermezzos.github.io/
+**You must include in your signed ethics form in this submission or you will not be able to continue the project.
