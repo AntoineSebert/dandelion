@@ -9,4 +9,5 @@
 # Development
 - [ ] 20/09/2018 : set up **environment** ()
 - [ ] 22/09/2019 : learn how to use **SpaceVim** ()
+- [ ] 25/09/2018 : choose **build automation utility** ()
 
