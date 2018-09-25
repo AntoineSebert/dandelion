@@ -4,7 +4,7 @@ I am a french 22yo currently studying Computer Science at the Robert Gordon Univ
 My Honours Project's subject is "Real-Time Operating System in Rust", and I thought that maybe it would interested you as an operating system for your Nexo space rockets.
 I am really interested by both computer science and astronautic (I landed on the Mün in Kerbal Space Program :D ), and I think it would be an awesome opportunity to meet people working at Copenhagen Suborbitals and to provide a more realistic thematic for my project, becoming "Embedded Real-Time Operating System for Space Rockets in Rust".
 I have heard of your space program a few months ago, and when I choose with project the idea came quickly to my mind. I would not have imagined that an amateur space programs could exist before, and I will try my best to help you if you are interested.
-Moreover, it is also possible that I move to Denmark next year to get a job, for I already came in the country a couple of weeks and i really enjoyed the lifestyle there.
+Moreover, it is also possible that I move to Denmark next year to get a job, for I already came in the country a couple of weeks and I really enjoyed the lifestyle there.
 
 Best regards
 
