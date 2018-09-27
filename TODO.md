@@ -6,6 +6,8 @@
 - [ ] 20/09/2018 : plan **meetings with AP** weekly ()
 - [x] 20/09/2018 : create 5-colors **palette** (20/09/2018)
 - [ ] 25/09/2018 : get **POSIX** ()
+- [ ] 27/09/2018 : write a proper **README** with how-tos ()
+- [ ] 27/09/2018 : create **website** attached to the GitHub folder ()
 
 # Development
 - [ ] 20/09/2018 : set up **environment** ()
