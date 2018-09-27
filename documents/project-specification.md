@@ -29,7 +29,6 @@ Such systems are very useful in several sectors, including astronautics, mainfra
 
 Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, Rust already includes in-built concurrency mangement and safe operations on memory (that can be bypassed if needed). The community seems quite active, with many contributors and online places (forums, IRC channels, subreddit) where people exchange ideas. A YouTube channel also includes several conferences on specific topics. The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purposes, plus several kernels/microkernels, but no real-time OS. A review of these projects during the system’s design process will be informative.
 
-
 > *“The tools we use have a profound and devious influence on our thinking habits, and therefore on our thinking abilities”*
 > E. W. Dijkstra
 
@@ -97,25 +96,21 @@ Objective 5 : testing the operating system
 Type of OS architecture where the kernel is as light as possible and only provide the necessary functions. Typically, clock driver, display driver, physical memory and scheduler. The kernel, services and programs communicate through IPC.
 - Hansen, P. (1970). The nucleus of a multiprogramming system. Communications of the ACM, 13(4), pp.238-241.
 - Wulf, W., Cohen, E., Corwin, W., Jones, A., Levin, R., Pierson, C. and Pollack, F. (1974). HYDRA: the kernel of a multiprocessor operating system. Communications of the ACM, 17(6), pp.337-345.
-#### Scheduling algorithms
-The implementatino of this algorithm will manage the access ... processor ... minimize resource starvation ...  fairness
-​	https://dl.acm.org/citation.cfm?id=321743(old)
-​	https://books.google.fr/books?hl=fr&lr=&id=h6q-e4Q_rzgC&oi=fnd&pg=PR3&dq=comparison+of+scheduling+algorithms+real_time&ots=jzv9hOGEud&sig=JKrxNpZo94YT4GQ0QyRxumc-J_o#v=onepage&q=comparison%20of%20scheduling%20algorithms%20real_time&f=false 		https://www.sciencedirect.com/science/article/pii/S1388343701801700				https://ieeexplore.ieee.org/abstract/document/4700432
-​	https://link.springer.com/article/10.1023/A:1015398403337
 
-estimate completion time
-​	https://ieeexplore.ieee.org/abstract/document/4271701
+#### Scheduling algorithms
+The implementation of this algorithm will manage the resources among the programs (including the processor itself) in order to minimize resource starvation and ensure fairness.
+- Liu, C. and Layland, J. (1973). Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment. Journal of the ACM, 20(1), pp.46-61.
+- Buttazzo, G. (2013). Hard real-time computing systems. 3rd ed. Johanneshov: MTM.
+- Lu, C., Stankovic, J., Son, S. and Tao, G. (2002). Real-Time Systems, 23(1/2), pp.85-126.
+- Meumeu Yomsi, P. and Sorel, Y. (2007). Extending Rate Monotonic Analysis with Exact Cost of Preemptions for Hard Real-Time Systems. 19th Euromicro Conference on Real-Time Systems (ECRTS'07).
 
 #### JSON data format
-​	https://tools.ietf.org/html/rfc7159
+Simple and widely used, this data format will be used by the processes to communicate with each other. These types of data are sufficiently generic and abstract to be able to be represented in any programming language, on the one hand, and to represent any concrete data on the other. A library for Rust is available on GitHub under free software licenses (MIT or Apache 2.0 most of the time).
+- The JavaScript Object Notation (JSON) Data Interchange Format. (2017).
 
 #### Asynchronous I/O operations
-​	https://blog.skcript.com/asynchronous-io-in-rust-36b623e7b965
-​	https://medium.com/@paulcolomiets/async-io-for-rust-part-ii-33b9a7274e67
-
-- **A persistent rope data structure**. Persistent ropes are efficient even for very large files. In addition, they present a simple interface to their clients - conceptually, they're a sequence of characters just like a string, and the client need not be aware of any internal structure.
-- **Asynchronous operations**. The editor should never, ever block and prevent the user from getting their work done. For example, autosave will spawn a thread with a snapshot of the current editor buffer (the persistent rope data structure is copy-on-write so this operation is nearly free), which can then proceed to write out to disk at its leisure, while the buffer is still fully editable.
-- **JSON**. The protocol for front-end / back-end communication, as well as between the back-end and plug-ins, is based on simple JSON messages. I considered binary formats, but the actual improvement in performance would be completely in the noise. Using JSON considerably lowers friction for developing plug-ins, as it’s available out of the box for most modern languages, and there are plenty of the libraries available for the other ones.
+As the exchange of messages between processes will have a great importance, non-blocking I/O could significantly reduce the deadlocks. Further investigatino on this topic is needed, but a polling system might be an interesting solution.
+- Colomiets, P. (2018). Asynchronous IO in Rust – Sudo vs Root. [online] Sudo vs Root. Available at: https://blog.skcript.com/asynchronous-io-in-rust-36b623e7b965 [Accessed 27 Sep. 2018].
 
 ------
 
