@@ -1,1 +1,1 @@
-# (Embedded Microkernel) Real-Time Operating System (for Space Rockets) in Rust
+# (Embedded Microkernel) Real-Time Operating System in Rust
