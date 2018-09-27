@@ -15,25 +15,25 @@ Real-Time Operating System in Rust
 **Help:** Provide the background to your project. This section should highlight the main topics in the area you are going to research. Essentially what is the project about, what has been done before and why is this project important ? ~500 words
 
 ------
-This project aims the creation of a real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
+This project aims to create a real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
 
-- deterministic execution time of the programs (or subparts of them), allowing to manage the processes accurately
-- correctness of the time when a result is expected, to meet or miss the deadlines, whom treatment marks the difference between soft and hard RTOS
-- predictability of the deadline associated with a set of constraints to define a expected state of the system
+- **deterministic** execution time of the programs (or subparts of them), allowing the processes to be managed accurately
+- **correctness** of the time when a result is expected, to meet or miss the deadlines, where treatment marks the difference between soft and hard RTOS
+- **predictability** of the deadline associated with a set of constraints to define an expected state of the system
 
-These three concepts are the core characteristics of a RTOS, and will be the frames of the tools to evaluate the efficiency of such an OS. But a particular effort will also be put on the performance of the system, because elegant operations are marks of quality; and in the ways it is possible for the developper/user to interact with it, typically through a shell, for graphic UIs are out of the topic of this project. Efficient multitasking is, as well, a core principle of the system, and hence a particular attention to the scheduling policy is required, as long as fast context switches to reduce the scheduler's overcost. Since almost each OS has its own solution to this problem, plenty of examples from different families of policies are available.
+These three concepts are the core characteristics of a RTOS, and will frame the tools used to evaluate the efficiency of such an OS. But a particular effort will be made to discuss the performance of the system, because elegant operations are marks of quality; and in the ways it is possible for the developper/user to interact with it, typically through a shell, for graphic UIs will not be covered in this project. Efficient multitasking is, as well, a core principle of the system, and hence a particular attention to the scheduling policy is required, as well as fast context switches to reduce the scheduler's overcost. Since almost each OS has its own solution to this problem, plenty of examples from different families of policies will be discussed.
 
-Note that some of the popular classic OS, like Windows or GNU/linux distributions, can be turned into a RTOS either by an extension (RTX and RTX64 for Microsoft Windows) or a microkernel (RTLinux for Linux). Apparently this is not a common solution, for they lack of specificities compared to their concurrents.
+Note that some of the popular classic OS, like Windows or GNU/linux distributions, can be turned into a RTOS either by an extension (RTX and RTX64 for Microsoft Windows) or a microkernel (RTLinux for Linux). Apparently this is not a common solution, for they lack certain specificities when compared to their counterparts.
 
-Such systems are very useful in several sectors, including astronautics, mainframes, aeronautics, robotics, or embedded systems in general (and IoT in particular), for the simple fact that they are highly reliable and almost never crash if they are well-designed. But yet they do not really suit a comon daily usage for a lambda user because they are task-oriented and not meant to be focused on user experience.
+Such systems are very useful in several sectors, including astronautics, mainframes, aeronautics, robotics, or embedded systems in general (and IoT in particular), for the simple fact that they are highly reliable and almost never crash if they are well-designed. But yet they do not really suit a comon daily usage for a regular user because they are task-oriented and not meant to be focused on user experience.
 
-Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, this last natively includes concurrency mangement and safe operations on memory (that can be bypassed if needed). The community seems quite active, with many contributors and online places (forums, IRC channels, subreddit) to exchange with people. A YouTube channel also includes several conferences on specific topics. The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purpose, plus several kernels/microkernels, but no real-time OS. Anyway, a review of these projects during the system’s design process will be informative.
+Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, Rust already includes in-built concurrency mangement and safe operations on memory (that can be bypassed if needed). The community seems quite active, with many contributors and online places (forums, IRC channels, subreddit) where people exchange ideas. A YouTube channel also includes several conferences on specific topics. The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purposes, plus several kernels/microkernels, but no real-time OS. A review of these projects during the system’s design process will be informative.
 
 
 > *“The tools we use have a profound and devious influence on our thinking habits, and therefore on our thinking abilities”*
 > E. W. Dijkstra
 
-It will also constitute a precedent in terms of combination of RTOS and Rust, useful in terms of computer science research. The programming language, a tool like any other, will have a deep influence on the final result. Rather than deny this relation, we choose to take profit of it, by selecting upstream the technological solution that will help to meet the goals.
+It will also constitute a precedent in terms of combination of RTOS and Rust, useful in terms of computer science research. The programming language, a tool like any other, will have a deep influence on the final result. Rather than deny this relation, we choose to advantage profit of it, by selecting upstream the technological solution that will help to meet the goals.
 
 ------
 
@@ -75,19 +75,17 @@ Objective 4: Conduct user trials to evaluate capabilities of prototype applicati
 Objective 5: Create a refined application incorporating feedback from user trials
 
 ------
-Aim : to create a functional real-time operating system using the Rust language with the following characteristics : deterministic, correctness, predictability.
+Aim : to create a functional real-time operating system using the Rust language with the following characteristics : **deterministic**, **correctness**, **predictability**.
 
-Objective 1 : review general theory and implementations of operating systems
+Objective 1 : review theory and implementations of real-time operating systems
 
-Objective 2 : review theory and implementations of real-time operating systems
+Objective 2 : familiarization with Rust
 
-Objective 3 : learn Rust
+Objective 3 : implementation of the operating systems core components
 
-Objective 4 : implementation of the operating systems core components
+Objective 4 : implementation of a shell
 
-Objective 5 : implementation of a shell
-
-Objective 6 : testing the operating system
+Objective 5 : testing the operating system
 
 ------
 
@@ -95,13 +93,26 @@ Objective 6 : testing the operating system
 **Help:** Perform some initial research into the area and outline what techniques you might research in further detail here. The techniques you cover here should include references to the papers where you have sourced the information. The techniques mentioned here are very likely to become the section headers in your literature review.
 
 ------
-microkernel
-client-server model (https://cds.cern.ch/record/245910)
-JSON (https://tools.ietf.org/html/rfc7159)
-asynchronous operations
-rope data structure
+#### Microkernel OS architecture
+Type of OS architecture where the kernel is as light as possible and only provide the necessary functions. Typically, clock driver, display driver, physical memory and scheduler. The kernel, services and programs communicate through IPC.
+- Hansen, P. (1970). The nucleus of a multiprogramming system. Communications of the ACM, 13(4), pp.238-241.
+- Wulf, W., Cohen, E., Corwin, W., Jones, A., Levin, R., Pierson, C. and Pollack, F. (1974). HYDRA: the kernel of a multiprocessor operating system. Communications of the ACM, 17(6), pp.337-345.
+#### Scheduling algorithms
+The implementatino of this algorithm will manage the access ... processor ... minimize resource starvation ...  fairness
+​	https://dl.acm.org/citation.cfm?id=321743(old)
+​	https://books.google.fr/books?hl=fr&lr=&id=h6q-e4Q_rzgC&oi=fnd&pg=PR3&dq=comparison+of+scheduling+algorithms+real_time&ots=jzv9hOGEud&sig=JKrxNpZo94YT4GQ0QyRxumc-J_o#v=onepage&q=comparison%20of%20scheduling%20algorithms%20real_time&f=false 		https://www.sciencedirect.com/science/article/pii/S1388343701801700				https://ieeexplore.ieee.org/abstract/document/4700432
+​	https://link.springer.com/article/10.1023/A:1015398403337
 
-- **Rust**. The back-end needs to be extremely performant. In particular, it should use little more memory than the buffers being edited. That level of performance is possible in C++, but Rust offers a much more reliable, and in many ways, higher level programming platform.
+estimate completion time
+​	https://ieeexplore.ieee.org/abstract/document/4271701
+
+#### JSON data format
+​	https://tools.ietf.org/html/rfc7159
+
+#### Asynchronous I/O operations
+​	https://blog.skcript.com/asynchronous-io-in-rust-36b623e7b965
+​	https://medium.com/@paulcolomiets/async-io-for-rust-part-ii-33b9a7274e67
+
 - **A persistent rope data structure**. Persistent ropes are efficient even for very large files. In addition, they present a simple interface to their clients - conceptually, they're a sequence of characters just like a string, and the client need not be aware of any internal structure.
 - **Asynchronous operations**. The editor should never, ever block and prevent the user from getting their work done. For example, autosave will spawn a thread with a snapshot of the current editor buffer (the persistent rope data structure is copy-on-write so this operation is nearly free), which can then proceed to write out to disk at its leisure, while the buffer is still fully editable.
 - **JSON**. The protocol for front-end / back-end communication, as well as between the back-end and plug-ins, is based on simple JSON messages. I considered binary formats, but the actual improvement in performance would be completely in the noise. Using JSON considerably lowers friction for developing plug-ins, as it’s available out of the box for most modern languages, and there are plenty of the libraries available for the other ones.
@@ -118,7 +129,7 @@ rope data structure
 **Example 3** : You network design need to adhere to specific company policies. You would need to consider the possibility that your design could be wrong, compromising the company’s security.
 
 ------
-In case of a dysfunction of a ... that runs the RTOS, causing damage to material and/or people, the responsability of the ... could not be (engagée) and (incombe) to the ... (personne qui a crée/conçu le produit).
+In case of a dysfunction of a software that runs on the RTOS and/or a product running the RTOS, causing damage to material and/or people, and/or leading to the destruction of the system that runs the RTOS, the responsability does not lie with the programmer of the RTOS but rather with the physical person or corporation that have designed and/or created the product running the RTOS and/or the software running on the RTOS.
 
 ------
 
