@@ -21,13 +21,13 @@ This project aims to create a real-time operating system using the Rust language
 - **correctness** of the time when a result is expected, to meet or miss the deadlines, where treatment marks the difference between soft and hard RTOS
 - **predictability** of the deadline associated with a set of constraints to define an expected state of the system
 
-These three concepts are the core characteristics of a RTOS, and will frame the tools used to evaluate the efficiency of such an OS. But a particular effort will be made to discuss the performance of the system, because elegant operations are marks of quality; and in the ways it is possible for the developper/user to interact with it, typically through a shell, for graphic UIs will not be covered in this project. Efficient multitasking is, as well, a core principle of the system, and hence a particular attention to the scheduling policy is required, as well as fast context switches to reduce the scheduler's overcost. Since almost each OS has its own solution to this problem, plenty of examples from different families of policies will be discussed.
+These three concepts are the core characteristics of a RTOS, and will frame the tools used to evaluate the efficiency of such an OS. But a particular effort will be made to discuss the performance of the system, because elegant operations are marks of quality; and in the ways it is possible for the developer/user to interact with it, typically through a shell, for graphic UIs will not be covered in this project. Efficient multitasking is, as well, a core principle of the system, and hence a particular attention to the scheduling policy is required, as well as fast context switches to reduce the scheduler's overcost. Since almost each OS has its own solution to this problem, plenty of examples from different families of policies will be discussed.
 
-Note that some of the popular classic OS, like Windows or GNU/linux distributions, can be turned into a RTOS either by an extension (RTX and RTX64 for Microsoft Windows) or a microkernel (RTLinux for Linux). Apparently this is not a common solution, for they lack certain specificities when compared to their counterparts.
+Note that some of the popular classic OS, like Windows or GNU/Linux distributions, can be turned into a RTOS either by an extension (RTX and RTX64 for Microsoft Windows) or a microkernel (RTLinux for Linux). Apparently this is not a common solution, for they lack certain specificities when compared to their counterparts.
 
-Such systems are very useful in several sectors, including astronautics, mainframes, aeronautics, robotics, or embedded systems in general (and IoT in particular), for the simple fact that they are highly reliable and almost never crash if they are well-designed. But yet they do not really suit a comon daily usage for a regular user because they are task-oriented and not meant to be focused on user experience.
+Such systems are very useful in several sectors, including astronautics, mainframes, aeronautics, robotics, or embedded systems in general (and IoT in particular), for the simple fact that they are highly reliable and almost never crash if they are well-designed. But yet they do not really suit a common daily usage for a regular user because they are task-oriented and not meant to be focused on user experience.
 
-Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, Rust already includes in-built concurrency mangement and safe operations on memory (that can be bypassed if needed). The community seems quite active, with many contributors and online places (forums, IRC channels, subreddit) where people exchange ideas. A YouTube channel also includes several conferences on specific topics. The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educatioal purposes, plus several kernels/microkernels, but no real-time OS. A review of these projects during the system’s design process will be informative.
+Concerning the Rust language, it is often cited as a potential successor of C++. Indeed, if C++ and Rust are quite close, especially regarding the syntax, the low-level orientation and the memory management, Rust already includes in-built concurrency management and safe operations on memory (that can be bypassed if needed). The community seems quite active, with many contributors and online places (forums, IRC channels, subreddit) where people exchange ideas. A YouTube channel also includes several conferences on specific topics. The most important operating system project written in Rust, Redox, is a microkernel Unix-like OS. There are also a few more projects, some of them for educational purposes, plus several kernels/microkernels, but no real-time OS. A review of these projects during the system’s design process will be informative.
 
 > *“The tools we use have a profound and devious influence on our thinking habits, and therefore on our thinking abilities”*
 > E. W. Dijkstra
@@ -46,13 +46,13 @@ It will also constitute a precedent in terms of combination of RTOS and Rust, us
 **Example** 3: You have designed a new network topology for IrishOil plc’s new Aberdeen headquarters. The interested group would clearly be IrishOil. They would benefit from easier maintenance and improved security of their computer network.
 
 ------
-It seems that no real-time operating system has been written using this promising technology, probably because an important part of the companies that produce this kind of software started their business in the 80s and chose to use the relevant languages at this time, such as C/C++ with assembly. The advantages of Rust over C/C++ could significantly reduce the risks related to memory (segmentation fault, buffer overflow), keeping the flexibility of declaring variables on the heap or stack.
+It seems that no real-time operating system have been written using this promising technology, probably because an important part of the companies that produce this kind of software started their business in the 80s and chose to use the relevant languages at this time, such as C/C++ with assembly. The advantages of Rust over C/C++ could significantly reduce the risks related to memory (segmentation fault, buffer overflow), keeping the flexibility of declaring variables on the heap or stack.
 
-Embedded systems are sometime not easily remplacable or maintainable, for example a space probe sent to an asteroid, or an aircraft computer, and then are required to have the lowest dysfunction rate possible; for any events (in the processor instructions stream) leading the RTOS to become inoperative or have undefined behavior, even for a short time, can have desastrous consequences and represent a consequent loss of money or precious data. But such systems, because of their importance, are extremely sensitive to perturbations, and therefore have to be both well-designed and well-implemented, thus the choice of Rust in that case.
+Embedded systems are sometime not easily remplaceable or maintainable, for example a space probe sent to an asteroid, or an aircraft computer, and then are required to have the lowest dysfunction rate possible; for any events (in the processor instructions stream) leading the RTOS to become inoperative or have undefined behavior, even for a short time, can have disastrous consequences and represent a consequent loss of money or precious data. But such systems, because of their importance, are extremely sensitive to perturbations, and therefore have to be both well-designed and well-implemented, thus the choice of Rust in that case.
 
-This RTOS will have as objective to provide, for companies or organisations working in the fields mentioned above, a safe and realiable framework to develop & deploy applications that fits their needs in terms of real-time operations. That's also why the lisense of this project, a public copyright Creative Commons lisense, allow to remix, transform, and build upon the material.
+This RTOS will have as aim to offer, for companies or organisations working in the fields mentioned above, a safe and reliable framework to develop & deploy applications that fits their needs in terms of real-time operations. That's also why the lisense of this project, a public copyright Creative Commons license, allow to remix, transform, and build upon the material.
 
-And last but not least, this project is really important for the student itself, long been interested in operating systems, and willing to create one. Even better, in a research context. Not to mention the potential applications in astronautics, one of his centers of interests, that makes the idea thrilling.
+And finally, this project is really important for the student itself, long been interested in operating systems, and willing to create one. Even better, in a research context. Not to mention the potential applications in astronautics, one of his centers of interests, that makes the idea thrilling.
 
 ------
 
@@ -93,7 +93,7 @@ Objective 5 : testing the operating system
 
 ------
 #### Microkernel OS architecture
-Type of OS architecture where the kernel is as light as possible and only provide the necessary functions. Typically, clock driver, display driver, physical memory and scheduler. The kernel, services and programs communicate through IPC.
+Type of OS architecture where the kernel is as light as possible and only provide the necessary functions. Typically, clock driver, display driver, IPC, physical memory and scheduler. The kernel, services and programs communicate through IPC.
 - Hansen, P. (1970). The nucleus of a multiprogramming system. Communications of the ACM, 13(4), pp.238-241.
 - Wulf, W., Cohen, E., Corwin, W., Jones, A., Levin, R., Pierson, C. and Pollack, F. (1974). HYDRA: the kernel of a multiprocessor operating system. Communications of the ACM, 17(6), pp.337-345.
 
@@ -105,11 +105,11 @@ The implementation of this algorithm will manage the resources among the program
 - Meumeu Yomsi, P. and Sorel, Y. (2007). Extending Rate Monotonic Analysis with Exact Cost of Preemptions for Hard Real-Time Systems. 19th Euromicro Conference on Real-Time Systems (ECRTS'07).
 
 #### JSON data format
-Simple and widely used, this data format will be used by the processes to communicate with each other. These types of data are sufficiently generic and abstract to be able to be represented in any programming language, on the one hand, and to represent any concrete data on the other. A library for Rust is available on GitHub under free software licenses (MIT or Apache 2.0 most of the time).
+Simple and widely used, this data format will be used by the processes to communicate with each other. These types of data are sufficiently generic and abstract to be represented in any programming language, on the one hand, and to represent any concrete data on the other. A library for Rust is available on GitHub under free software licenses (MIT or Apache 2.0 most of the time).
 - The JavaScript Object Notation (JSON) Data Interchange Format. (2017).
 
 #### Asynchronous I/O operations
-As the exchange of messages between processes will have a great importance, non-blocking I/O could significantly reduce the deadlocks. Further investigatino on this topic is needed, but a polling system might be an interesting solution.
+As the exchange of messages between processes will have a great importance, non-blocking I/O could significantly reduce the deadlocks. Further investigation on this topic is needed, but a polling system might be an interesting solution.
 - Colomiets, P. (2018). Asynchronous IO in Rust – Sudo vs Root. [online] Sudo vs Root. Available at: https://blog.skcript.com/asynchronous-io-in-rust-36b623e7b965 [Accessed 27 Sep. 2018].
 
 ------
@@ -148,7 +148,17 @@ Identifying the error rate average of the mobile application on these occasions.
 Comparison of data and summary of findings.
 
 ------
-...
+Collecting and analysing research material and articles (including from professional-oriented blogs focused on programming) about RTOS
+
+Gathering RTOS online code repositories to have an overview of the goals to reach and comparison elements
+
+Learn and practice on a daily basis the Rust language through coding challenges websites
+
+Designing and implementing the clock driver, display driver, IPC, physical memory manager and scheduler plus a few services
+
+Designing and implementing and interpreter (containing a parser) for a Unix-like shell
+
+Write unit tests for all the features and benchmark tests to measure the performances
 
 ------
 
