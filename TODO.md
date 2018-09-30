@@ -14,3 +14,8 @@
 - [ ] 22/09/2019 : learn how to use **SpaceVim** ()
 - [ ] 25/09/2018 : choose **build automation utility** + *Travis Cl/Appveyor/other* ()
 
+idea for the presentation of the RTOS :
+*All the boring stuff*
+schemas and diagrams
++ advertising on social media
++ ceilling cat
