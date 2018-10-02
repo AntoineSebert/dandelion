@@ -5,7 +5,7 @@
 - [x] 20/09/2018 : create relevant **licence** (23/09/2018) CC BY-NC-SA 4.0
 - [x] 20/09/2018 : plan **meetings with AP** weekly ()
 - [x] 20/09/2018 : create 5-colors **palette** (20/09/2018)
-- [ ] 25/09/2018 : get **POSIX** ()
+- [x] 25/09/2018 : get **POSIX** (02/10/2018)
 - [ ] 27/09/2018 : write a proper **README** with **how-to** ()
 - [ ] 27/09/2018 : create **website** attached to the GitHub folder ()
 
