@@ -1,19 +1,21 @@
-# 🚀 Dandelion - Real-Time Operating System in Rust
+# 🚀 Dandelion - POSIX-compliant Microkernel Real-Time Operating System in Rust
 
 **Dandelion**. Make your mistakes more reliable.
 
-One Paragraph of project description goes here
-
 ## Table of contents
-* motivation
-* getting started
-* prerequisites
-* installing
-* running the tests
+* [**Motivation**](#Motivation)
+* Getting started
+	* Prerequisites
+	* Installing
+* Running the tests
 * ...
 
 ## Motivation
-A short description of the motivation behind the creation and maintenance of the project. This should explain why the project exists.
+This project aims to create a POSIX-compliant microkernel real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
+
+- **deterministic** execution time of the programs (or subparts of them), allowing the processes to be managed accurately
+- **correctness** of the time when a result is expected, to meet or miss the deadlines, where treatment marks the difference between soft and hard RTOS
+- **predictability** of the deadline associated with a set of constraints to define an expected state of the system
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -66,12 +68,10 @@ Give an example
 Add additional notes about how to deploy this on a live system
 
 ## Built With
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [...](http://www.example.com) - …
 
 ## Contributing
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
