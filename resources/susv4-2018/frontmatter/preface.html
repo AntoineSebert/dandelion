@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<link type="text/css" rel="stylesheet" href="style.css">
+<!-- Copyright 2001-2008 IEEE and The Open Group, All Rights Reserved -->
+<title>The Base Specifications Issue 7</title>
+</head>
+<body bgcolor="white">
+<center><font size="2">The Open Group Base Specifications Issue 7, 2018 edition<br>
+IEEE Std 1003.1-2017 (Revision of IEEE Std 1003.1-2008)<br>
+<a href="../copyr.html">Copyright</a> &copy; 2001-2018 IEEE and The Open Group</font> 
+
+<hr size="2" noshade>
+</center>
+
+<basefont size="3"> 
+<a name="top"></a>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><a name="pgfId-1005218"></a> <font size="2">POSIX.1-2017 is
+simultaneously IEEE Std 1003.1<sup>&trade;</sup>-2017 and The Open Group Technical Standard Base Specifications,
+Issue&nbsp;7.</font></p>
+
+<h2>Introduction</h2>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm; border: 1px solid #000000; padding: 0.04cm 0.14cm"><a name=
+"pgfId-1007025"></a> <font size="2">This introduction is not part of IEEE Std 1003.1-2017, Standard for Information Technology &ndash;
+Portable Operating System Interface (POSIX).</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><a name="pgfId-1007026"></a> <font size="2">This standard was
+developed, and is maintained, by a joint working group of members of the IEEE Portable Applications Standards Committee, members of
+The Open Group, and members of ISO/IEC Joint Technical Committee&nbsp;1. This joint working group is known as the Austin
+Group.<sup><a class="sdfootnoteanc" name="sdfootnote2anc" href="#sdfootnote2sym"><sup>B</sup></a></sup></font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The Austin Group arose out of discussions
+amongst the parties which started in early 1998, leading to an initial meeting and formation of the group in September 1998. The
+purpose of the Austin Group is to develop and maintain the core open systems interfaces that are the POSIX<sup>&reg;</sup> 1003.1
+(and former 1003.2) standards, ISO/IEC 9945, and the core of the Single UNIX Specification.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The approach to specification development has
+been one of &ldquo;write once, adopt everywhere&rdquo;, with the deliverables being a set of specifications that carry the IEEE
+POSIX designation, The Open Group's Technical Standard designation, and an ISO/IEC designation.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">This unique development has combined both the
+industry-led efforts and the formal standardization activities into a single initiative, and included a wide spectrum of
+participants. The Austin Group continues as the maintenance body for this document.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Anyone wishing to participate in the Austin
+Group should contact the chair with their request. There are no fees for participation or membership. You may participate as an
+observer or as a contributor. You do not have to attend face-to-face meetings to participate; electronic participation is most
+welcome. For more information on the Austin Group and how to participate, see <font color="#0000ff"><font face=
+"Times New Roman, serif"><span style="text-decoration: none"><a class="western" href=
+"http://www.opengroup.org/austin">www.opengroup.org/austin</a></span></font></font>.</font></p>
+
+<h5>Background</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The developers of POSIX.1-2017 represent a
+cross-section of hardware manufacturers, vendors of operating systems and other software development tools, software designers,
+consultants, academics, authors, applications programmers, and others.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Conceptually, POSIX.1-2017 describes a set of
+fundamental services needed for the efficient construction of application programs. Access to these services has been provided by
+defining an interface, using the C programming language, a command interpreter, and common utility programs that establish standard
+semantics and syntax. Since this interface enables application developers to write portable applications &ndash; it was developed
+with that goal in mind &ndash; it has been designated POSIX<sup><a class="sdfootnoteanc" name="sdfootnote3anc" href=
+"#sdfootnote3sym"><sup>C</sup></a></sup>, an acronym for Portable Operating System Interface.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Although originated to refer to the original
+IEEE Std 1003.1-1988, the name POSIX more correctly refers to a <i>family</i> of related standards: IEEE Std 1003.<i>n</i> and the
+parts of ISO/IEC 9945. In earlier editions of the IEEE standard, the term POSIX was used as a synonym for IEEE Std 1003.1-1988. A
+preferred term, POSIX.1, emerged. This maintained the advantages of readability of the symbol &ldquo;POSIX&rdquo; without being
+ambiguous with the POSIX family of standards.</font></p>
+
+<h5>Audience</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The intended audience for POSIX.1-2017 is all
+persons concerned with an industry-wide standard operating system based on the UNIX system. This includes at least four groups of
+people:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Persons buying hardware and software
+systems</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Persons managing companies that are deciding on
+future corporate computing directions</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Persons implementing operating systems, and
+especially</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Persons developing applications where portability is
+an objective</font></p>
+</li>
+</ul>
+
+<p style="margin-top: 0.28cm; margin-bottom: 0.07cm; page-break-before: always; page-break-after: avoid"><font face=
+"Arial, sans-serif"><font size="2" style="font-size: 9pt"><b>Purpose</b></font></font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Several principles guided the development of
+POSIX.1-2017:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Application-Oriented &ndash; The basic goal was to
+promote portability of application programs across UNIX system environments by developing a clear, consistent, and unambiguous
+standard for the interface specification of a portable operating system based on the UNIX system documentation. POSIX.1-2017
+codifies the common, existing definition of the UNIX system.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Interface, Not Implementation &ndash; POSIX.1-2017
+defines an interface, not an implementation. No distinction is made between library functions and system calls; both are referred
+to as functions. No details of the implementation of any function are given (although historical practice is sometimes indicated in
+the RATIONALE section). Symbolic names are given for constants (such as signals and error numbers) rather than numbers.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Source, Not Object, Portability &ndash; POSIX.1-2017
+has been written so that a program written and translated for execution on one conforming implementation may also be translated for
+execution on another conforming implementation. POSIX.1-2017 does not guarantee that executable (object or binary) code will
+execute under a different conforming implementation than that for which it was translated, even if the underlying hardware is
+identical.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">The C Language &ndash; The system interfaces and
+header definitions are written in terms of the standard C language as specified in the ISO C standard.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">No Superuser, No System Administration &ndash; There
+was no intention to specify all aspects of an operating system. System administration facilities and functions are excluded from
+this standard, and functions usable only by the superuser have not been included. Still, an implementation of the standard
+interface may also implement features not in POSIX.1-2017. POSIX.1-2017 is also not concerned with hardware constraints or system
+maintenance.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Minimal Interface, Minimally Defined &ndash; In
+keeping with the historical design principles of the UNIX system, the mandatory core facilities of POSIX.1-2017 have been kept as
+minimal as possible. Additional capabilities have been added as optional extensions.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Broadly Implementable &ndash; The developers of
+POSIX.1-2017 endeavored to make all specified functions implementable across a wide range of existing and potential systems,
+including:</font></p>
+</li>
+</ul>
+
+<div style="margin-left: 2em">
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">All of the current major systems that are ultimately
+derived from the original UNIX system code (Version 7 or later)</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Compatible systems that are not derived from the
+original UNIX system code</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Emulations hosted on entirely different operating
+systems</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Networked systems</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Distributed systems</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Systems running on a broad range of
+hardware</font></p>
+</li>
+</ul>
+</div>
+
+<p align="JUSTIFY" style="margin-left: 1cm; margin-top: 0.14cm; margin-bottom: 0cm"><font size="2">No direct references to this
+goal appear in POSIX.1-2017, but some results of it are mentioned in the Rationale (Informative) volume.</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Minimal Changes to Historical Implementations &ndash;
+When the original version &ndash; IEEE Std 1003.1-1988 &ndash; was published, there were no known historical implementations that
+did not have to change. However, there was a broad consensus on a set of functions, types, definitions, and concepts that formed an
+interface that was common to most historical implementations.</font></p>
+</li>
+</ul>
+
+<p align="JUSTIFY" style="margin-left: 1cm; margin-top: 0.14cm; margin-bottom: 0cm"><font size="2">The adoption of the 1988 and
+1990 IEEE system interface standards, the 1992 IEEE shell and utilities standard, the various Open Group (formerly X/Open)
+specifications, and IEEE Std 1003.1-2001 and its technical corrigenda have consolidated this consensus, and this version reflects
+the significantly increased level of consensus arrived at since the original versions. The authors of the original versions tried,
+as much as possible, to follow the principles below when creating new specifications:</font></p>
+
+<div style="margin-left: 2em">
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">By standardizing an interface like one in an
+historical implementation; for example, directories</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">By specifying an interface that is readily
+implementable in terms of, and backwards-compatible with, historical implementations, such as the extended <i>tar</i> format
+defined in the <i>pax</i> utility</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">By specifying an interface that, when added to an
+historical implementation, will not conflict with it; for example, the <i>sigaction</i>() function</font></p>
+</li>
+</ul>
+</div>
+
+<p align="JUSTIFY" style="margin-left: 1cm; margin-top: 0.14cm; margin-bottom: 0cm"><font size="2">POSIX.1-2017 is specifically not
+a codification of a particular vendor's product.</font></p>
+
+<p align="JUSTIFY" style="margin-left: 1cm; margin-top: 0.14cm; margin-bottom: 0cm"><font size="2">It should be noted that
+implementations will have different kinds of extensions. Some will reflect &ldquo;historical usage&rdquo; and will be preserved for
+execution of pre-existing applications. These functions should be considered &ldquo;obsolescent&rdquo; and the standard functions
+used for new applications. Some extensions will represent functions beyond the scope of POSIX.1-2017. These need to be used with
+careful management to be able to adapt to future extensions of POSIX.1-2017 and/or port to implementations that provide these
+services in a different manner.</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Minimal Changes to Existing Application Code &ndash;
+A goal of POSIX.1-2017 was to minimize additional work for application developers. However, because every known historical
+implementation will have to change at least slightly to conform, some applications will have to change.</font></p>
+</li>
+</ul>
+
+<h5>POSIX.1-2017</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">POSIX.1-2017 defines the Portable Operating
+System Interface (POSIX) requirements and consists of the following topics arranged as a series of volumes within the
+standard:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Base Definitions</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">System Interfaces</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Shell and Utilities</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Rationale (Informative)</font></p>
+</li>
+</ul>
+
+<h5>Base Definitions</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The Base Definitions volume provides common
+definitions for this standard, therefore readers should be familiar with it before using the other volumes.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">This volume is structured as
+follows:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 1 is an introduction.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 2 defines the conformance
+requirements.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 3 defines general terms used.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 4 describes general concepts used.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 5 describes the notation used to specify file
+input and output formats in this volume and the Shell and Utilities volume.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 6 describes the portable character set and
+the process of character set definition.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 7 describes the syntax for defining
+internationalization locales as well as the POSIX locale provided on all systems.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 8 describes the use of environment variables
+for internationalization and other purposes.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 9 describes the syntax of pattern matching
+using regular expressions employed by many utilities and matched by the <i>regcomp</i>() and <i>regexec</i>() functions.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 10 describes files and devices found on all
+systems.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 11 describes the asynchronous terminal
+interface for many of the functions in the System Interfaces volume and the <i>stty</i> utility in the Shell and Utilities
+volume.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 12 describes the policies for command line
+argument construction and parsing.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 13 defines the contents of headers which
+declare the functions and global variables, and define types, constants, macros, and data structures that are needed by programs
+using the services provided by the System Interfaces volume.</font></p>
+</li>
+</ul>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Comprehensive references are available in the
+index.</font></p>
+
+<h5>System Interfaces</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The System Interfaces volume describes the
+interfaces offered to application programs by POSIX-conformant systems. Readers are expected to be experienced C language
+programmers, and to be familiar with the Base Definitions volume.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">This volume is structured as
+follows:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 1 explains the status of this volume and its
+relationship to other formal standards.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 2 contains important concepts, terms, and
+caveats relating to the rest of this volume.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 3 defines the functional interfaces to the
+POSIX-conformant system.</font></p>
+</li>
+</ul>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Comprehensive references are available in the
+index.</font></p>
+
+<h5>Shell and Utilities</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The Shell and Utilities volume describes the
+commands and utilities offered to application programs on POSIX-conformant systems. Readers are expected to be familiar with the
+Base Definitions volume.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">This volume is structured as
+follows:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 1 explains the status of this volume and its
+relationship to other formal standards. It also describes the defaults used by the utility descriptions.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 2 describes the command language used in
+POSIX-conformant systems, and special built-in utilities.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 3 describes a set of services and utilities
+that are implemented on systems supporting the Batch Environment Services and Utilities option.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Chapter 4 consists of reference pages for all
+utilities, other than the special built-in utilities described in Chapter 2, available on POSIX-conformant systems.</font></p>
+</li>
+</ul>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Comprehensive references are available in the
+index.</font></p>
+
+<h5>Rationale (Informative)</h5>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">The Rationale volume is published to assist in
+the process of review. It contains historical information concerning the contents of this standard and why features were included
+or discarded by the standard developers. It also contains notes of interest to application programmers on recommended programming
+practices, emphasizing the consequences of some aspects of POSIX.1-2017 that may not be immediately apparent.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">This volume is organized in parallel to the
+normative volumes of this standard, with a separate part for each of the three normative volumes.</font></p>
+
+<p align="JUSTIFY" style="margin-top: 0.07cm; margin-bottom: 0.07cm"><font size="2">Within this volume, the following terms are
+used:</font></p>
+
+<ul>
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Base standard &ndash; The portions of POSIX.1-2017
+that are not optional, equivalent to the definitions of <i>classic</i> POSIX.1 and POSIX.2.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">POSIX.0 &ndash; Although this term is not used in the
+normative text of POSIX.1-2017, it is used in this volume to refer to IEEE Std 1003.0<sup>&trade;</sup>-1995.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">POSIX.1b &ndash; Although this term is not used in
+the normative text of POSIX.1-2017, it is used in this volume to refer to the elements of the POSIX Realtime Extension amendment.
+(This was earlier referred to as POSIX.4 during the standard development process.)</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">POSIX.1c &ndash; Although this term is not used in
+the normative text of POSIX.1-2017, it is used in this volume to refer to the POSIX Threads Extension amendment. (This was earlier
+referred to as POSIX.4a during the standard development process.)</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">Standard developers &ndash; The individuals and
+companies in the development organizations responsible for POSIX.1-2017: the IEEE P1003.1 working groups, The Open Group Base
+working group, advised by the hundreds of individual technical experts who balloted the draft standards within the Austin Group,
+and the member bodies and technical experts of ISO/IEC JTC 1/SC 22.</font></p>
+</li>
+
+<li>
+<p align="LEFT" style="margin-top: 0.04cm; margin-bottom: 0cm"><font size="2">XSI option &ndash; The portions of POSIX.1-2017
+addressing the extension added for support of the Single UNIX Specification.</font></p>
+</li>
+</ul>
+<hr>
+<div id="sdfootnote2">
+<p class="sdfootnote-western"><a class="sdfootnotesym" name="sdfootnote2sym" href="#sdfootnote2anc">B</a> <font size="2" style=
+"font-size: 9pt"><span lang="en-GB">The Austin Group is named after the location of the inaugural meeting held at the IBM facility
+in Austin, Texas in September 1998.</span></font></p>
+</div>
+
+<div id="sdfootnote3">
+<p class="sdfootnote-western"><a class="sdfootnotesym" name="sdfootnote3sym" href="#sdfootnote3anc">C</a> <font size="2" style=
+"font-size: 9pt"></font><font size="2" style="font-size: 9pt"><span lang="en-GB">The Name POSIX was suggested by Richard Stallman.
+It is expected to be pronounced</span></font> <font size="2" style="font-size: 9pt"><span lang=
+"en-GB"><i>pahz-icks</i></span></font><font size="2" style="font-size: 9pt"><span lang="en-GB">, as in</span></font> <font size="2"
+style="font-size: 9pt"><span lang="en-GB"><i>positive</i></span></font><font size="2" style="font-size: 9pt"><span lang="en-GB">,
+not</span></font> <font size="2" style="font-size: 9pt"><span lang="en-GB"><i>poh-six</i></span></font><font size="2" style=
+"font-size: 9pt"><span lang="en-GB">, or other variations. The pronunciation has been published in an attempt to promulgate a
+standardized way of referring to a standard operating system interface.</span></font></p>
+</div>
+
+<hr>
+<br>
+<a href="#top"><span class="topOfPage">return to top of page</span></a><br>
+<hr size="2" noshade>
+<center><font size="2">UNIX &reg; is a registered Trademark of The Open Group.<br>
+POSIX &reg; is a registered Trademark of The IEEE.<br>
+Copyright &copy; 2001-2018 IEEE and The Open Group, All Rights Reserved<br>
+[ <a href="../mindex.html">Main Index</a> | <a href="../basedefs/contents.html">XBD</a> | <a href=
+"../utilities/contents.html">XCU</a> | <a href="../functions/contents.html">XSH</a> | <a href="../xrat/contents.html">XRAT</a>
+]</font></center>
+
+<hr size="2" noshade>
+</body>
+</html>
+

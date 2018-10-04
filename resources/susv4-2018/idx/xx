@@ -1,0 +1,6 @@
+printf '%s\n\n%s\n\n%s\n' '</ul>' 'Topics' '<ul>'
+
+	sed -e "/^[^ ]* [1p]/!d" -e 's:\([^#]*\)#\([^ ]*\) \(.*\):<li type=disc><a href="../basedefs/\1.html#\2">\3</a></li>:' foo | sort -f -t\> -k 3
+
+    printf '%s\n' '</ul>' '</body>' '</html>'
+

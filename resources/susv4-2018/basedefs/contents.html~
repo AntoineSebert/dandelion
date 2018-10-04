@@ -1,0 +1,3554 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- Copyright 2001-2016 IEEE and The Open Group, All Rights Reserved -->
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<title>CONTENTS</title>
+<link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+<center><font size="2">The Open Group Base Specifications Issue 7<br>
+IEEE Std 1003.1-2008, 2016 Edition<br>
+Copyright &copy; 2001-2016 The IEEE and The Open Group</font></center>
+
+<hr size="2" noshade>
+<a name="top"></a> 
+<h2>Base Definitions: Detailed ToC</h2>
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01">Introduction</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_01">Scope</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_02">Conformance</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_03">Normative References</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_04">Change History</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05">Terminology</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_01">can</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_02">implementation-defined</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_03">legacy</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_04">may</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_05">shall</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_06">should</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_07">undefined</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_05_08">unspecified</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_06">Definitions and Concepts</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07">Portability</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_01">Codes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_02">Margin Code Notation</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_02_01">A Feature Dependent on One or Two Options</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_02_02">A Feature Dependent on Either of the Options Denoted</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_02_03">A Feature Dependent on More than Two Options</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_02_04">Large Sections Dependent on an Option</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap01.html#tag_01_07_03">Footnotes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02">Conformance</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01">Implementation Conformance</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_01">Requirements</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_02">Documentation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_03">POSIX Conformance</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_03_01">POSIX System Interfaces</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_03_02">POSIX Shell and Utilities</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_04">XSI Conformance</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_04_01">XSI System Interfaces</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_04_02">XSI Shell and Utilities Conformance</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05">Option Groups</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_01">Subprofiling Considerations</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_02">XSI Option Groups</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_03">Encryption</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_04">Realtime</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_05">Advanced Realtime</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_06">Realtime Threads</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_07">Advanced Realtime Threads</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_08">Tracing</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_05_09">XSI STREAMS</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_06">Options</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_06_01">System Interfaces</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_01_06_02">Shell and Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02">Application Conformance</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_01">Strictly Conforming POSIX Application</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_02">Conforming POSIX Application</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_02_01">ISO/IEC Conforming POSIX Application</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_02_02">&lt;National Body&gt; Conforming POSIX Application</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_03">Conforming POSIX Application Using Extensions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_04">Strictly Conforming XSI Application</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_02_05">Conforming XSI Application Using Extensions</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_03">Language-Dependent Services for the C Programming Language</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_04">Other Language-Related Specifications</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap02.html#tag_02_04_01">Footnotes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03">Definitions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_01">Abortive Release</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_02">Absolute Pathname</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_03">Access Mode</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_04">Additional File Access Control Mechanism</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_05">Address Space</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_06">Advisory Information</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_07">Affirmative Response</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_08">Alert</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_09">Alert Character (&lt;alert&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_10">Alias Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_11">Alignment</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_12">Alternate File Access Control Mechanism</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_13">Alternate Signal Stack</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_14">Ancillary Data</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_15">Angle Brackets</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_16">Apostrophe Character (&lt;apostrophe&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_17">Application</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_18">Application Address</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_19">Application Program Interface (API)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_20">Appropriate Privileges</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_21">Argument</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_22">Arm (a Timer)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_23">Asterisk Character (&lt;asterisk&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_24">Async-Cancel-Safe Function</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_25">Asynchronous Events</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_26">Asynchronous Input and Output</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_27">Async-Signal-Safe Function</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_28">Asynchronously-Generated Signal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_29">Asynchronous I/O Completion</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_30">Asynchronous I/O Operation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_31">Authentication</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_32">Authorization</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_33">Background Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_34">Background Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_35">Background Process Group (or Background Job)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_36">Backquote Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_37">Backslash Character (&lt;backslash&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_38">Backspace Character (&lt;backspace&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_39">Barrier</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_40">Basename</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_41">Basic Regular Expression (BRE)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_42">Batch Access List</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_43">Batch Administrator</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_44">Batch Client</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_45">Batch Destination</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_46">Batch Destination Identifier</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_47">Batch Directive</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_48">Batch Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_49">Batch Job Attribute</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_50">Batch Job Identifier</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_51">Batch Job Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_52">Batch Job Owner</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_53">Batch Job Priority</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_54">Batch Job State</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_55">Batch Name Service</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_56">Batch Name Space</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_57">Batch Node</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_58">Batch Operator</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_59">Batch Queue</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_60">Batch Queue Attribute</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_61">Batch Queue Position</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_62">Batch Queue Priority</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_63">Batch Rerunability</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_64">Batch Restart</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_65">Batch Server</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_66">Batch Server Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_67">Batch Service</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_68">Batch Service Request</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_69">Batch Submission</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_70">Batch System</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_71">Batch Target User</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_72">Batch User</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_73">Bind</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_74">Blank Character (&lt;blank&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_75">Blank Line</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_76">Blocked Process (or Thread)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_77">Blocking</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_78">Block-Mode Terminal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_79">Block Special File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_80">Braces</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_81">Brackets</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_82">Broadcast</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_83">Built-In Utility (or Built-In)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_84">Byte</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_85">Byte Input/Output Functions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_86">Carriage-Return Character (&lt;carriage-return&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_87">Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_88">Character Array</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_89">Character Class</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_90">Character Set</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_91">Character Special File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_92">Character String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_93">Child Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_94">Circumflex Character (&lt;circumflex&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_95">Clock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_96">Clock Jump</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_97">Clock Tick</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_98">Coded Character Set</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_99">Codeset</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_100">Collating Element</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_101">Collation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_102">Collation Sequence</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_103">Column Position</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_104">Command</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_105">Command Language Interpreter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_106">Composite Graphic Symbol</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_107">Condition Variable</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_108">Connected Socket</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_109">Connection</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_110">Connection Mode</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_111">Connectionless Mode</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_112">Control Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_113">Control Operator</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_114">Controlling Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_115">Controlling Terminal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_116">Conversion Descriptor</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_117">Core File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_118">CPU Time (Execution Time)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_119">CPU-Time Clock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_120">CPU-Time Timer</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_121">Current Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_122">Current Working Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_123">Cursor Position</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_124">Datagram</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_125">Data Segment</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_126">Deferred Batch Service</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_127">Device</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_128">Device ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_129">Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_130">Directory Entry (or Link)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_131">Directory Stream</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_132">Disarm (a Timer)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_133">Display</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_134">Display Line</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_135">Dollar-Sign Character (&lt;dollar-sign&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_136">Dot</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_137">Dot-Dot</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_138">Double-Quote Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_139">Downshifting</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_140">Driver</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_141">Effective Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_142">Effective User ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_143">Eight-Bit Transparency</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_144">Empty Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_145">Empty Line</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_146">Empty String (or Null String)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_147">Empty Wide-Character String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_148">Encoding Rule</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_149">Entire Regular Expression</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_150">Epoch</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_151">Equivalence Class</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_152">Era</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_153">Event Management</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_154">Executable File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_155">Execute</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_156">Execution Time</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_157">Execution Time Monitoring</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_158">Expand</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_159">Extended Regular Expression (ERE)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_160">Extended Security Controls</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_161">Feature Test Macro</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_162">Field</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_163">FIFO Special File (or FIFO)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_164">File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_165">File Description</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_166">File Descriptor</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_167">File Group Class</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_168">File Mode</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_169">File Mode Bits</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_170">Filename</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_171">Filename String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_172">File Offset</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_173">File Other Class</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_174">File Owner Class</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_175">File Permission Bits</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_176">File Serial Number</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_177">File System</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_178">File Type</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_179">Filter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_180">First Open (of a File)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_181">Flow Control</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_182">Foreground Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_183">Foreground Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_184">Foreground Process Group (or Foreground Job)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_185">Foreground Process Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_186">Form-Feed Character (&lt;form-feed&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_187">Graphic Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_188">Group Database</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_189">Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_190">Group Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_191">Hard Limit</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_192">Hard Link</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_193">Home Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_194">Host Byte Order</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_195">Incomplete Line</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_196">Inf</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_197">Instrumented Application</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_198">Interactive Shell</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_199">Internationalization</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_200">Interprocess Communication</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_201">Invoke</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_202">Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_203">Job Control</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_204">Job Control Job ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_205">Last Close (of a File)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_206">Line</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_207">Linger</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_208">Link</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_209">Link Count</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_210">Local Customs</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_211">Local Interprocess Communication (Local IPC)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_212">Locale</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_213">Localization</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_214">Login</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_215">Login Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_216">Map</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_217">Marked Message</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_218">Matched</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_219">Memory Mapped Files</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_220">Memory Object</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_221">Memory-Resident</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_222">Message</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_223">Message Catalog</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_224">Message Catalog Descriptor</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_225">Message Queue</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_226">Mode</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_227">Monotonic Clock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_228">Mount Point</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_229">Multi-Character Collating Element</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_230">Mutex</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_231">Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_232">Named STREAM</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_233">NaN (Not a Number)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_234">Native Language</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_235">Negative Response</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_236">Network</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_237">Network Address</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_238">Network Byte Order</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_239">Newline Character (&lt;newline&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_240">Nice Value</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_241">Non-Blocking</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_242">Non-Spacing Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_243">NUL</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_244">Null Byte</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_245">Null Pointer</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_246">Null String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_247">Null Wide-Character Code</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_248">Number-Sign Character (&lt;number-sign&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_249">Object File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_250">Octet</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_251">Offset Maximum</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_252">Opaque Address</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_253">Open File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_254">Open File Description</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_255">Operand</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_256">Operator</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_257">Option</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_258">Option-Argument</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_259">Orientation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_260">Orphaned Process Group</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_261">Page</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_262">Page Size</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_263">Parameter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_264">Parent Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_265">Parent Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_266">Parent Process ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_267">Pathname</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_268">Pathname Component</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_269">Path Prefix</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_270">Pattern</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_271">Period Character (&lt;period&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_272">Permissions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_273">Persistence</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_274">Pipe</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_275">Polling</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_276">Portable Character Set</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_277">Portable Filename</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_278">Portable Filename Character Set</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_279">Positional Parameter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_280">Preallocation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_281">Preempted Process (or Thread)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_282">Previous Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_283">Printable Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_284">Printable File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_285">Priority</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_286">Priority Band</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_287">Priority Inversion</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_288">Priority Scheduling</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_289">Priority-Based Scheduling</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_290">Privilege</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_291">Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_292">Process Group</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_293">Process Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_294">Process Group Leader</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_295">Process Group Lifetime</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_296">Process ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_297">Process Lifetime</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_298">Process Memory Locking</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_299">Process Termination</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_300">Process-To-Process Communication</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_301">Process Virtual Time</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_302">Program</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_303">Protocol</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_304">Pseudo-Terminal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_305">Radix Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_306">Read-Only File System</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_307">Read-Write Lock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_308">Real Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_309">Real Time</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_310">Realtime Signal Extension</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_311">Real User ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_312">Record</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_313">Redirection</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_314">Redirection Operator</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_315">Referenced Shared Memory Object</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_316">Refresh</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_317">Regular Expression</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_318">Region</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_319">Regular File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_320">Relative Pathname</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_321">Relocatable File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_322">Relocation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_323">Requested Batch Service</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_324">(Time) Resolution</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_325">Robust Mutex</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_326">Root Directory</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_327">Runnable Process (or Thread)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_328">Running Process (or Thread)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_329">Saved Resource Limits</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_330">Saved Set-Group-ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_331">Saved Set-User-ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_332">Scheduling</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_333">Scheduling Allocation Domain</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_334">Scheduling Contention Scope</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_335">Scheduling Policy</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_336">Screen</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_337">Scroll</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_338">Semaphore</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_339">Session</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_340">Session Leader</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_341">Session Lifetime</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_342">Shared Memory Object</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_343">Shell</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_344">Shell, the</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_345">Shell Script</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_346">Signal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_347">Signal Stack</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_348">Single-Quote Character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_349">Slash Character (&lt;slash&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_350">Socket</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_351">Socket Address</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_352">Soft Limit</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_353">Source Code</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_354">Space Character (&lt;space&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_355">Spawn</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_356">Special Built-In</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_357">Special Parameter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_358">Spin Lock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_359">Sporadic Server</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_360">Standard Error</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_361">Standard Input</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_362">Standard Output</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_363">Standard Utilities</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_364">Stream</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_365">STREAM</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_366">STREAM End</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_367">STREAM Head</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_368">STREAMS Multiplexor</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_369">String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_370">Subshell</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_371">Successfully Transferred</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_372">Supplementary Group ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_373">Suspended Job</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_374">Symbolic Constant</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_375">Symbolic Link</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_376">Synchronized Input and Output</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_377">Synchronized I/O Completion</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_378">Synchronized I/O Data Integrity Completion</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_379">Synchronized I/O File Integrity Completion</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_380">Synchronized I/O Operation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_381">Synchronous I/O Operation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_382">Synchronously-Generated Signal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_383">System</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_384">System Boot</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_385">System Clock</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_386">System Console</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_387">System Crash</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_388">System Databases</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_389">System Documentation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_390">System Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_391">System Reboot</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_392">System Trace Event</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_393">System-Wide</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_394">Tab Character (&lt;tab&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_395">Terminal (or Terminal Device)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_396">Text Column</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_397">Text File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_398">Thread</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_399">Thread ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_400">Thread List</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_401">Thread-Safe</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_402">Thread-Specific Data Key</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_403">Tilde Character (&lt;tilde&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_404">Timeouts</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_405">Timer</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_406">Timer Overrun</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_407">Token</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_408">Trace Analyzer Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_409">Trace Controller Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_410">Trace Event</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_411">Trace Event Type</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_412">Trace Event Type Mapping</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_413">Trace Filter</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_414">Trace Generation Version</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_415">Trace Log</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_416">Trace Point</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_417">Trace Stream</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_418">Trace Stream Identifier</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_419">Trace System</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_420">Traced Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_421">Tracing Status of a Trace Stream</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_422">Typed Memory Name Space</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_423">Typed Memory Object</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_424">Typed Memory Pool</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_425">Typed Memory Port</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_426">Unbind</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_427">Unit Data</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_428">Upshifting</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_429">User Database</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_430">User ID</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_431">User Name</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_432">User Trace Event</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_433">Utility</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_434">Variable</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_435">Vertical-Tab Character (&lt;vertical-tab&gt;)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_436">White Space</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_437">Wide-Character Code (C Language)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_438">Wide-Character Input/Output Functions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_439">Wide-Character String</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_440">Word</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_441">Working Directory (or Current Working Directory)</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_442">Worldwide Portability Interface</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_443">Write</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_444">XSI</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_445">XSI-Conformant</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_446">Zombie Process</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap03.html#tag_03_447">&plusmn;0</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04">General Concepts</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_01">Concurrent Execution</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_02">Directory Protection</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_03">Extended Security Controls</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_04">File Access Permissions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_05">File Hierarchy</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_06">Filenames</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_07">Filename Portability</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_08">File Times Update</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_09">Host and Network Byte Orders</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_10">Measurement of Execution Time</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_11">Memory Synchronization</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_12">Pathname Resolution</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_13">Process ID Reuse</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_14">Scheduling Policy</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_15">Seconds Since the Epoch</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_16">Semaphore</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_16_00_01">Semaphore Lock Operation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_16_00_02">Semaphore Unlock Operation</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_17">Thread-Safety</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_18">Tracing</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19">Treatment of Error Conditions for Mathematical Functions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19_01">Domain Error</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19_02">Pole Error</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19_03">Range Error</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19_03_01">Result Overflows</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_19_03_02">Result Underflows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_20">Treatment of NaN Arguments for the Mathematical Functions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_21">Utility</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_22">Variable Assignment</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap04.html#tag_04_22_01">Footnotes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap05.html#tag_05">File Format Notation</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap05.html#tag_05_00_00_01">Examples</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06">Character Set</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_01">Portable Character Set</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_02">Character Encoding</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_03">C Language Wide-Character Codes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_04">Character Set Description File</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_04_00_01">Example</a></li>
+</ul>
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap06.html#tag_06_04_01">State-Dependent Character Encodings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07">Locale</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_01">General</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_02">POSIX Locale</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03">Locale Definition</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_01">LC_CTYPE</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_01_01">LC_CTYPE Category in the POSIX Locale</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02">LC_COLLATE</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_01">The collating-element Keyword</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_02">The collating-symbol Keyword</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_03">The order_start Keyword</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_04">Collation Order</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_05">The order_end Keyword</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_02_06">LC_COLLATE Category in the POSIX Locale</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_03">LC_MONETARY</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_03_01">LC_MONETARY Category in the POSIX Locale</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_04">LC_NUMERIC</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_04_01">LC_NUMERIC Category in the POSIX Locale</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_05">LC_TIME</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_05_01">LC_TIME Locale Definition</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_05_02">LC_TIME C-Language Access</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_05_03">LC_TIME Category in the POSIX Locale</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_06">LC_MESSAGES</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_03_06_01">LC_MESSAGES Category in the POSIX Locale</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_04">Locale Definition Grammar</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_04_01">Locale Lexical Conventions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap07.html#tag_07_04_02">Locale Grammar</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap08.html#tag_08">Environment Variables</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap08.html#tag_08_01">Environment Variable Definition</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap08.html#tag_08_02">Internationalization Variables</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap08.html#tag_08_03">Other Environment Variables</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09">Regular Expressions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01">Regular Expression Definitions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01_01">entire regular expression</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01_02">matched</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01_03">BRE (ERE) matching a single character</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01_04">BRE (ERE) matching multiple characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_01_05">invalid</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_02">Regular Expression General Requirements</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03">Basic Regular Expressions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_01">BREs Matching a Single Character or Collating Element</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_02">BRE Ordinary Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_03">BRE Special Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_04">Periods in BREs</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_05">RE Bracket Expression</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_06">BREs Matching Multiple Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_07">BRE Precedence</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_03_08">BRE Expression Anchoring</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04">Extended Regular Expressions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_01">EREs Matching a Single Character or Collating Element</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_02">ERE Ordinary Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_03">ERE Special Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_04">Periods in EREs</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_05">ERE Bracket Expression</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_06">EREs Matching Multiple Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_07">ERE Alternation</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_08">ERE Precedence</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_04_09">ERE Expression Anchoring</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_05">Regular Expression Grammar</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_05_01">BRE/ERE Grammar Lexical Conventions</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_05_02">RE and Bracket Expression Grammar</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap09.html#tag_09_05_03">ERE Grammar</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap10.html#tag_10">Directory Structure and Devices</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap10.html#tag_10_01">Directory Structure and Files</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap10.html#tag_10_02">Output Devices and Terminal Types</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11">General Terminal Interface</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01">Interface Characteristics</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_01">Opening a Terminal Device File</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_02">Process Groups</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_03">The Controlling Terminal</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_04">Terminal Access Control</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_05">Input Processing and Reading Data</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_06">Canonical Mode Input Processing</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_07">Non-Canonical Mode Input Processing</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_07_01">Case A: MIN&gt;0, TIME&gt;0</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_07_02">Case B: MIN&gt;0, TIME=0</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_07_03">Case C: MIN=0, TIME&gt;0</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_07_04">Case D: MIN=0, TIME=0</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_08">Writing Data and Output Processing</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_09">Special Characters</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_10">Modem Disconnect</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_01_11">Closing a Terminal Device File</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02">Parameters that Can be Set</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_01">The termios Structure</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_02">Input Modes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_03">Output Modes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_04">Control Modes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_05">Local Modes</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap11.html#tag_11_02_06">Special Control Characters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap12.html#tag_12">Utility Conventions</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap12.html#tag_12_01">Utility Argument Syntax</a></li>
+
+<li type="disc"><a href="../basedefs/V1_chap12.html#tag_12_02">Utility Syntax Guidelines</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/V1_chap13.html#tag_13">Headers</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/V1_chap13.html#tag_13_00_00_01">Format of Entries</a></li>
+</ul>
+
+<ul>
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01">&lt;aio.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/aio.h.html#tag_13_01_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02">&lt;arpa/inet.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/arpa_inet.h.html#tag_13_02_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03">&lt;assert.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/assert.h.html#tag_13_03_09">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04">&lt;complex.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/complex.h.html#tag_13_04_08">CHANGE HISTORY</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05">&lt;cpio.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/cpio.h.html#tag_13_05_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06">&lt;ctype.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/ctype.h.html#tag_13_06_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07">&lt;dirent.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/dirent.h.html#tag_13_07_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08">&lt;dlfcn.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/dlfcn.h.html#tag_13_08_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09">&lt;errno.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/errno.h.html#tag_13_09_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10">&lt;fcntl.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/fcntl.h.html#tag_13_10_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11">&lt;fenv.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_05">RATIONALE</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_05_01">The fexcept_t Type</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_05_02">Exception and Rounding Macros</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/fenv.h.html#tag_13_11_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12">&lt;float.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/float.h.html#tag_13_12_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13">&lt;fmtmsg.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/fmtmsg.h.html#tag_13_13_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14">&lt;fnmatch.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/fnmatch.h.html#tag_13_14_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15">&lt;ftw.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/ftw.h.html#tag_13_15_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16">&lt;glob.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/glob.h.html#tag_13_16_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17">&lt;grp.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/grp.h.html#tag_13_17_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18">&lt;iconv.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/iconv.h.html#tag_13_18_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19">&lt;inttypes.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_04">EXAMPLES</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_05">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_06">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_07">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_08">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_09">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/inttypes.h.html#tag_13_19_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20">&lt;iso646.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/iso646.h.html#tag_13_20_08">CHANGE HISTORY</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21">&lt;langinfo.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/langinfo.h.html#tag_13_21_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22">&lt;libgen.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/libgen.h.html#tag_13_22_10">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23">&lt;limits.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03">DESCRIPTION</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_01">Runtime Invariant Values (Possibly Indeterminate)</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_02">Pathname Variable Values</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_03">Runtime Increasable Values</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_04">Maximum Values</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_05">Minimum Values</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_06">Numerical Limits</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_03_07">Other Invariant Values</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/limits.h.html#tag_13_23_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24">&lt;locale.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/locale.h.html#tag_13_24_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25">&lt;math.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/math.h.html#tag_13_25_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26">&lt;monetary.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/monetary.h.html#tag_13_26_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27">&lt;mqueue.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/mqueue.h.html#tag_13_27_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28">&lt;ndbm.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/ndbm.h.html#tag_13_28_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29">&lt;net/if.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/net_if.h.html#tag_13_29_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30">&lt;netdb.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_03">DESCRIPTION</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_03_01">Address Information Structure</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_03_02">Address Information Errors</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/netdb.h.html#tag_13_30_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31">&lt;netinet/in.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_in.h.html#tag_13_31_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32">&lt;netinet/tcp.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/netinet_tcp.h.html#tag_13_32_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33">&lt;nl_types.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/nl_types.h.html#tag_13_33_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34">&lt;poll.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/poll.h.html#tag_13_34_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35">&lt;pthread.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/pthread.h.html#tag_13_35_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36">&lt;pwd.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/pwd.h.html#tag_13_36_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37">&lt;regex.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/regex.h.html#tag_13_37_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38">&lt;sched.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sched.h.html#tag_13_38_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39">&lt;search.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/search.h.html#tag_13_39_09">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40">&lt;semaphore.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/semaphore.h.html#tag_13_40_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41">&lt;setjmp.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/setjmp.h.html#tag_13_41_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42">&lt;signal.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/signal.h.html#tag_13_42_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43">&lt;spawn.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/spawn.h.html#tag_13_43_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44">&lt;stdarg.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_04">EXAMPLES</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_05">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_06">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_07">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_08">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_09">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stdarg.h.html#tag_13_44_10">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45">&lt;stdbool.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stdbool.h.html#tag_13_45_08">CHANGE HISTORY</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46">&lt;stddef.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stddef.h.html#tag_13_46_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47">&lt;stdint.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_03">DESCRIPTION</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_03_01">Integer Types</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_03_02">Limits of Specified-Width Integer Types</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_03_03">Limits of Other Integer Types</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_03_04">Macros for Integer Constant Expressions</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stdint.h.html#tag_13_47_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48">&lt;stdio.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/stdio.h.html#tag_13_48_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49">&lt;stdlib.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/stdlib.h.html#tag_13_49_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50">&lt;string.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/string.h.html#tag_13_50_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51">&lt;strings.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/strings.h.html#tag_13_51_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52">&lt;stropts.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/stropts.h.html#tag_13_52_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53">&lt;sys/ipc.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_ipc.h.html#tag_13_53_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54">&lt;sys/mman.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_mman.h.html#tag_13_54_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55">&lt;sys/msg.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_msg.h.html#tag_13_55_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56">&lt;sys/resource.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_resource.h.html#tag_13_56_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57">&lt;sys/select.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_select.h.html#tag_13_57_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58">&lt;sys/sem.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_sem.h.html#tag_13_58_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59">&lt;sys/shm.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_shm.h.html#tag_13_59_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60">&lt;sys/socket.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_socket.h.html#tag_13_60_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61">&lt;sys/stat.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_stat.h.html#tag_13_61_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62">&lt;sys/statvfs.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_statvfs.h.html#tag_13_62_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63">&lt;sys/time.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_time.h.html#tag_13_63_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64">&lt;sys/times.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_times.h.html#tag_13_64_08">CHANGE HISTORY</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65">&lt;sys/types.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_types.h.html#tag_13_65_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66">&lt;sys/uio.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_uio.h.html#tag_13_66_09">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67">&lt;sys/un.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_un.h.html#tag_13_67_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68">&lt;sys/utsname.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_utsname.h.html#tag_13_68_09">Issue 6</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69">&lt;sys/wait.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/sys_wait.h.html#tag_13_69_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70">&lt;syslog.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/syslog.h.html#tag_13_70_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71">&lt;tar.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/tar.h.html#tag_13_71_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72">&lt;termios.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03">DESCRIPTION</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_01">The termios Structure</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_02">Input Modes</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_03">Output Modes</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_04">Baud Rate Selection</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_05">Control Modes</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_06">Local Modes</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_07">Attribute Selection</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_03_08">Line Control</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/termios.h.html#tag_13_72_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73">&lt;tgmath.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/tgmath.h.html#tag_13_73_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74">&lt;time.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/time.h.html#tag_13_74_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75">&lt;trace.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/trace.h.html#tag_13_75_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76">&lt;ulimit.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/ulimit.h.html#tag_13_76_09">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77">&lt;unistd.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03">DESCRIPTION</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_01">Version Test Macros</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_02">Constants for Options and Option Groups</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_03">Execution-Time Symbolic Constants</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_04">Constants for Functions</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_05">Type Definitions</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_03_06">Declarations</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_05">RATIONALE</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_05_01">Version Test Macros</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_05_02">Compile-Time Symbolic Constants for System-Wide
+Options</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/unistd.h.html#tag_13_77_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78">&lt;utime.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/utime.h.html#tag_13_78_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79">&lt;utmpx.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/utmpx.h.html#tag_13_79_08">CHANGE HISTORY</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80">&lt;wchar.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_09">Issue 5</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_10">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/wchar.h.html#tag_13_80_11">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81">&lt;wctype.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/wctype.h.html#tag_13_81_10">Issue 7</a></li>
+</ul>
+</li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82">&lt;wordexp.h&gt;</a> 
+
+<ul>
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_01">NAME</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_02">SYNOPSIS</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_03">DESCRIPTION</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_04">APPLICATION USAGE</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_05">RATIONALE</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_06">FUTURE DIRECTIONS</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_07">SEE ALSO</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_08">CHANGE HISTORY</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_09">Issue 6</a></li>
+
+<li type="disc"><a href="../basedefs/wordexp.h.html#tag_13_82_10">Issue 7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+</ul>
+
+<p>&nbsp;</p>
+
+<a href="#top"><span class="topOfPage">return to top of page</span></a><br>
+<hr size="2" noshade>
+<center><font size="2">UNIX &reg; is a registered Trademark of The Open Group.<br>
+POSIX &reg; is a registered Trademark of The IEEE.<br>
+Copyright &copy; 2001-2016 The IEEE and The Open Group, All Rights Reserved<br>
+[ <a href="../mindex.html">Main Index</a> | XBD | <a href="../functions/contents.html">XSH</a> | <a href=
+"../utilities/contents.html">XCU</a> | <a href="../xrat/contents.html">XRAT</a> ]</font></center>
+
+<hr size="2" noshade>
+</body>
+</html>
+

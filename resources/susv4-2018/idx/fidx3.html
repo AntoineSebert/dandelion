@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+<head> 
+<link type="text/css" rel="stylesheet" href="style.css">
+<!-- Copyright 2008 The Open Group, All Rights Reserved --> 
+<title>Frame Index</title>
+</head> 
+<body bgcolor=white>
+<center>
+<h3>Search</h3>
+<form method="POST" action="/cgi/susv4search.cgi" target="contents">
+Enter keyword or keywords using <i>and</i> and <i>or</i>
+<INPUT NAME="KEYWORDS"  SIZE=20><BR>
+<INPUT TYPE="submit" VALUE="Submit Query">
+<br><br>
+<inPUT TYPE="checkbox" NAME="SUBSTRING"
+VALUE="substring" checked>Substring Matching.
+<br>
+Select a Volume:
+<br>
+<INPUT NAME=CONTEXT checked TYPE=radio VALUE="">&nbsp; All
+<INPUT NAME=CONTEXT TYPE=radio VALUE="(/functions/)">&nbsp; XSH
+<INPUT NAME=CONTEXT TYPE=radio VALUE="(/utilities/)">&nbsp; XCU
+<INPUT NAME=CONTEXT TYPE=radio VALUE="(/basedefs/)">&nbsp; XBD
+<INPUT NAME=CONTEXT TYPE=radio VALUE="(/xrat/)">&nbsp; XRAT 
+<p>
+<a href="fidx2.html" target="index">Return to Main Index</a>
+</p>
+</FORM>
+</center>
+</body>
+</html>

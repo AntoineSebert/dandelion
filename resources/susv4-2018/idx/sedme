@@ -1,0 +1,1 @@
+sed -e 's/<li type="disc">/<li>/g' -e 's/<small>//g' -e 's/<\/small>//g'

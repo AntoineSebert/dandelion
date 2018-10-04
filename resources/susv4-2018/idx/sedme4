@@ -1,0 +1,3 @@
+sed -e 's/HTML 3\.2/HTML 4.01 Transitional/g' $1 >$1.tmp
+cp $1.tmp $1
+rm $1.tmp

@@ -1,0 +1,1 @@
+sed -e "s/href=\"javascript:open_code[(].\([A-Z0-9* ]*\)['][)]/name=\"\1/g"

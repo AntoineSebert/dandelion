@@ -1,0 +1,23 @@
+<!-- Copyright 2001-2013 IEEE and The Open Group, All Rights Reserved -->
+%
+<center><font size="2">
+The Open Group Base Specifications Issue 7<br>
+IEEE Std 1003.1-2008, 2016 Edition<br>
+Copyright &copy; 2001-2016 The IEEE and The Open Group</font></center>
+<hr size="2" noshade>
+<a name="top"></a>
+%
+<p>&nbsp;</p>
+<a href="#top"><span class="topOfPage">return to top of page</span></a><br>
+<hr size="2" noshade>
+<center><font size="2">UNIX &reg; is a registered Trademark of The Open Group.<br>
+POSIX &reg; is a registered Trademark of The IEEE.<br>
+Copyright &copy; 2001-2016 The IEEE and The Open Group, All Rights Reserved<br>
+[ <a href="../mindex.html">Main Index</a> | 
+<a href="../basedefs/contents.html">XBD</a> | 
+<a href="../functions/contents.html">XSH</a> | 
+<a href="../utilities/contents.html">XCU</a> | 
+<a href="../xrat/contents.html">XRAT</a> ]
+</font></center>
+<hr size="2" noshade>
+
