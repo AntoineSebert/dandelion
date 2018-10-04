@@ -1,4 +1,0 @@
-sed -e s'/..\/functions\/\([a-zA-Z0-9_]*\)\.html" target="main">\([a-zA-Z0-9_]*\)<\/a>/..\/functions\/\1.html" target="main">\1()<\/a>/g' $1 >$1.tmp
-cp $1.tmp $1
-rm $1.tmp
-
