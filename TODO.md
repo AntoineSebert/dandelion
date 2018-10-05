@@ -8,13 +8,13 @@
 - [x] 25/09/2018 : get **POSIX** (02/10/2018)
 - [ ] 27/09/2018 : write a proper **README** with **how-to** ()
 - [ ] 27/09/2018 : create **website** attached to the GitHub folder ()
-- [ ] 04/10/2018 : choose a **documentation standard** () Cargo ?
-- [ ] 04/10/2018 : choose a **build automation tool** () Doxidize ?
+- [ ] 04/10/2018 : choose a **documentation standard** ()
+- [ ] 04/10/2018 : choose a **documentation generator tool** () Doxidize ?
 
 # Development
 - [ ] 20/09/2018 : set up **environment** ()
 - [ ] 22/09/2019 : learn how to use **SpaceVim** ()
-- [ ] 25/09/2018 : choose **build automation tool** + *Travis Cl/Appveyor/other* + **keep it simple** ()
+- [x] 25/09/2018 : choose **build automation tool** + *Travis Cl/Appveyor/other* + **keep it simple** (05/10/2018) Cargo + Appveyor
 
 idea for the presentation of the RTOS :
 *All the boring stuff*
