@@ -1,16 +1,29 @@
+<a href="https://github.com/AntoineSebert/RTOS-dandelion"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></a>
+
 # 🚀 Dandelion - POSIX-compliant Microkernel Real-Time Operating System in Rust
 
 **Dandelion**. Make your mistakes more reliable.
 
+[![License: CC BY-NC-SA 
+4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 ------
 
 ## Table of contents
-- [Motivation](#motivation)
-- Getting started
-	- Prerequisites
-	- Installing
-- Running the tests
-- ...
+- :fallen_leaf: [Motivation](#motivation)
+- :ear_of_rice: [Getting started]
+  - :hibiscus: [Prerequisites]
+  - :cherry_blossom: [Installing]
+- :sunflower: [Running the tests]
+  - :tulip: [End to end tests]
+  - :blossom: [Coding style tests]
+- :herb: [Deployment]
+- :maple_leaf: [Built tool]
+- :seedling: [Contributing](#contributing)
+- :cactus: [Versioning](#versioning)
+- :leaves: [Authors](#authors)
+- :four_leaf_clover: [License](#license)
+- :deciduous_tree: [Acknowledgments](#acknowledgments)
 
 ------
 
@@ -61,14 +74,14 @@ End with an example of getting some data out of the system or using it for a lit
 ## Running the tests
 Explain how to run the automated tests for this system.
 
-### Break down into end to end tests
+### End to end tests
 Explain what these tests test and why.
 
 ```
 Give an example
 ```
 
-### And coding style tests
+### Coding style tests
 Explain what these tests test and why.
 
 ```
@@ -102,7 +115,11 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ------
 
 ## Authors
-* **Antoine/Anthony Sébert** - *Initial work* - [...](https://github.com/AntoineSebert)
+* [**Antoine/Anthony Sébert**](https://github.com/AntoineSebert) - *Design*
+* [**Antoine/Anthony Sébert's clone**](https://github.com/AntoineSebert) - *Implementation*
+* [**Antoine/Anthony Sébert's evil twin**](https://github.com/AntoineSebert) - *Bug creation*
+* [**Antoine/Anthony Sébert's future self**](https://github.com/AntoineSebert) - *Testing*
+* [**Antoine/Anthony Sébert from a parallel dimension**](https://github.com/AntoineSebert) - *Documentation*
 
 ------
 
@@ -112,6 +129,5 @@ This project is licensed under the CC BY-NC-SA License - see the [LICENSE.md](LI
 -------
 
 ## Acknowledgments
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc.
+* My supervisor, [Andrei Petrovski](https://orcid.org/0000-0002-0987-2791)
+* My friends for being here

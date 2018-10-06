@@ -30,13 +30,22 @@ highlight min gaps and opportunities discovered and proposing ...
 
 ### **read** the abstracts, then the paper if it looks good
 
+...
+
 ### **make notes**, identify techniques, pros and cons
+
+...
 
 ### **link**, search for consens and disagreement
 
+...
+
 ### **plan** out how you will present this to the reader
 
+...
+
 ### good examples
+
 http://campusmoodle.rgu.ac.uk/pluginfile.php/4424058/mod_resource/content/0/Pretty-Good-LitReview.pdf
 http://campusmoodle.rgu.ac.uk/pluginfile.php/4424060/mod_resource/content/0/Good_LitReview.pdf
 http://campusmoodle.rgu.ac.uk/pluginfile.php/4424059/mod_resource/content/0/Good_Litreview2.pdf
