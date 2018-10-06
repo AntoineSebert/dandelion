@@ -5,12 +5,12 @@
 ------
 
 ## Table of contents
-* [**Motivation**](#motivation)
-* Getting started
-  * Prerequisites
-  * Installing
-* Running the tests
-* ...
+- [Motivation](#motivation)
+- Getting started
+	- Prerequisites
+	- Installing
+- Running the tests
+- ...
 
 ------
 
