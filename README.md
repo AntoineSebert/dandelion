@@ -11,6 +11,7 @@
 
 ## Table of contents
 - :fallen_leaf: [Motivation](#motivation)
+- 🌴 [Main design characteristics]
 - :ear_of_rice: [Getting started]
   - :hibiscus: [Prerequisites]
   - :cherry_blossom: [Installing]
@@ -19,6 +20,7 @@
   - :blossom: [Coding style tests]
 - :herb: [Deployment]
 - :maple_leaf: [Built tool]
+- 🌲 [Documentation]
 - :seedling: [Contributing](#contributing)
 - :cactus: [Versioning](#versioning)
 - :leaves: [Authors](#authors)
@@ -33,6 +35,12 @@ This project aims to create a POSIX-compliant microkernel real-time operating sy
 - **deterministic** execution time of the programs (or subparts of them), allowing the processes to be managed accurately
 - **correctness** of the time when a result is expected, to meet or miss the deadlines, where treatment marks the difference between soft and hard RTOS
 - **predictability** of the deadline associated with a set of constraints to define an expected state of the system
+
+------
+
+## Main design characteristics
+
+...
 
 ------
 
@@ -96,9 +104,15 @@ Add additional notes about how to deploy this on a live system.
 
 ------
 
-## Built With
+## Built tool
 
 * [...](http://www.example.com) - …
+
+------
+
+## Documentation
+
+...
 
 ------
 
