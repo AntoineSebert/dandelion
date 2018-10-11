@@ -2,16 +2,18 @@
 
 ## Alpha
 
-### 0.1.0-alpha
+### 0.1.0-alpha “Pillars of Creation”
 
 - ehics form
 - project spcification
 - WIP poster
 
-### 0.1.0-alpha+1
+### 0.2.0-alpha “Tactical Knowledge Review”
 - literature review
 
 ## Beta
+
+**… “Anorexia Nervosa”**
 
 ## Final
 

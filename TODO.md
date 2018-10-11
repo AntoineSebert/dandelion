@@ -17,6 +17,9 @@
 - [ ] 06/10/2018 : create **release tag** ()
 - [x] 06/102018 : add **documentation section** in readme (07/10/2018)
 - [x] 07/10/2018 : create proper **current version number** (07/10/2018)
+- [ ] 08/10/2018 : create a **wiki** for the project ()
+- [ ] 08/10/2018 : create a **poster** ()
+- [ ] 11/10/2018 : add **keywords** and ACM **content descriptors** ()
 
 # Development
 - [ ] 20/09/2018 : set up **environment** ()
