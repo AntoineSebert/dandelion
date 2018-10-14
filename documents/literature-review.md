@@ -19,28 +19,131 @@ highlight min gaps and opportunities discovered and proposing ...
 
 ## Draft
 
-### **search** for relevant papers
+### search for relevant papers
+
 * Real-Time Operating Systems
 	* Scheduling
-	* Virtual memory management
 	* VxWorks
+* Virtual memory management
 * Microkernel Operating Systems
-	* IPC
-	* File system
+* IPC
+* File system
 
-### **read** the abstracts, then the paper if it looks good
+### make notes, identify techniques, pros and cons
+
+#### Core features
+
+##### ipc
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+###### ...
+
+- general notes
+- techniques
+- pros
+- cons
+
+##### microkernel
 
 ...
 
-### **make notes**, identify techniques, pros and cons
+##### rtos case studies
 
 ...
 
-### **link**, search for consens and disagreement
+##### rtos general review
 
 ...
 
-### **plan** out how you will present this to the reader
+##### rtos techniques
+
+...
+
+##### rust
+
+...
+
+##### scheduling
+
+...
+
+##### virtual memory management
+
+...
+
+#### Optional features
+
+##### asynchronous IO
+
+...
+
+##### bootloader
+
+...
+
+##### filesystem
+
+...
+
+
+##### vxworks
+
+...
+
+
+### link, search for consens and disagreement
+
+...
+
+### plan out how you will present this to the reader
 
 ...
 
