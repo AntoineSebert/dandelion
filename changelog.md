@@ -10,10 +10,11 @@
 
 ### 0.2.0-alpha “Tactical Knowledge Review”
 - literature review
+- …
 
 ## Beta
 
-**… “Anorexia Nervosa”**
+**0..0-beta “Anorexia Nervosa”**
 
 ## Final
 

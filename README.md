@@ -12,6 +12,7 @@
 ## Table of contents
 - :fallen_leaf: [Motivation](#motivation)
 - 🌴 [Main design characteristics]
+- 💐 [Technical choices]
 - :ear_of_rice: [Getting started]
   - :hibiscus: [Prerequisites]
   - :cherry_blossom: [Installing]
@@ -41,6 +42,19 @@ This project aims to create a POSIX-compliant microkernel real-time operating sy
 ## Main design characteristics
 
 ...
+
+time-driven
+hard RTOS
+
+------
+
+## Technical choices
+
+* configuration files : toml
+* data exchange format : JSON
+* documents format : Markdown
+* 
+[btrfs](https://github.com/kdave/btrfs-devel/tree/master/fs/btrfs)
 
 ------
 
@@ -145,3 +159,4 @@ This project is licensed under the CC BY-NC-SA License - see the [LICENSE.md](LI
 ## Acknowledgments
 * My supervisor, [Andrei Petrovski](https://orcid.org/0000-0002-0987-2791)
 * My friends for being here
+* My family
