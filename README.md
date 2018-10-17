@@ -53,14 +53,14 @@ hard RTOS
 * configuration files : toml
 * data exchange format : JSON
 * documents format : Markdown
-* 
-[btrfs](https://github.com/kdave/btrfs-devel/tree/master/fs/btrfs)
+* [btrfs](https://github.com/kdave/btrfs-devel/tree/master/fs/btrfs)
+* Rust
 
 ------
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#Deployment) for notes on how to deploy the project on a live system.
 ```
 git clone https://github.com/AntoineSebert/RTOS-dandelion
 make ... ?
@@ -68,7 +68,8 @@ run dandelion
 ```
 
 ### Prerequisites
-What things you need to install the software and how to install them. Qemu ?
+What things you need to install the software and how to install them.
+Qemu, rustc
 
 ```
 Give examples

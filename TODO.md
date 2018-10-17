@@ -27,6 +27,8 @@
 - [ ] 08/10/2018 : create a **poster** ()
 - [ ] 11/10/2018 : add **keywords** and ACM **content descriptors** ()
 - [ ] 11/10/2018 : create **banner** and **logo variations** ()
+- [ ] 15/10/2018 : investigate whether **GRUB2 can boot non-Linux OS** or not ()
+- [ ] 16/10/2018 : investigate **Gitter** for the project ()
 
 # Development
 
