@@ -1,20 +1,29 @@
 # Changelog
 
-## Alpha
+## Preparatory work
 
-### 0.1.0-alpha “Pillars of Creation”
+### 0.1.0-preparatory “Pillars of Creation”
 
 - ehics form
 - project spcification
 - WIP poster
 
-### 0.2.0-alpha “Tactical Knowledge Review”
+### 0.2.0-preparatory“Tactical Knowledge Review”
 - literature review
 - …
+
+## Prototype
+
+## Alpha
 
 ## Beta
 
 **0..0-beta “Anorexia Nervosa”**
 
-## Final
+**0..0-beta “Old Mornings Dawn”**
 
+## Release Candidate
+
+## Stable
+
+## Nightly
