@@ -212,11 +212,12 @@
 > This paper describes the philosophy and structure of a multiprogramming system that can be extended with a hierarchy of operating systems to suit diverse requirements of program scheduling and resource allocation. The system nucleus simulates an environment in which program  execution and input/output are handled uniformly as parallel, cooperating processes. A fundamental set of primitives allows the dynamic creation and control of a hierarchy of processes as well as the communication among them.
 
 - general notes
-  * defines the notion of "kernel"
+  * defines the notion of kernel and IPC
+  * theoretical
 - techniques
   * *null*
 - pros
-  * 
+  * simple API
 - cons
   * old
 - supervisor notes
@@ -352,6 +353,8 @@
 ### VxWorks
 
 ...
+
+http://www.cs.cornell.edu/Info/Projects/Isis/
 
 
 # Link, search for consens and disagreement - TODO
