@@ -10,7 +10,7 @@
 - [x] 20/09/2018 : create 5-colors **palette** (20/09/2018)
 - [x] 25/09/2018 : get **POSIX** (02/10/2018)
 - [ ] 27/09/2018 : write a proper **README** ()
-- [ ] 27/09/2018 : create **website** attached to the GitHub folder ()
+- [ ] 27/09/2018 : create **website** attached to the Github folder ()
 
 ## October Rust
 
@@ -29,6 +29,8 @@
 - [ ] 11/10/2018 : create **banner** and **logo variations** ()
 - [ ] 15/10/2018 : investigate whether **GRUB2 can boot non-Linux OS** or not ()
 - [ ] 16/10/2018 : investigate **Gitter** for the project ()
+- [ ] 18/10/2018 : switch to **Github project management tool** ()
+- [ ] 18/10/2018 : recreate **versions** ()
 
 # Development
 
