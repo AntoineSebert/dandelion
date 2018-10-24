@@ -230,11 +230,16 @@
 - general notes
   * **probably too old**
 - techniques
-  * 
+  * separation of mechanism and policy
+  * rejection of strict hierarchical layering
+  * object oriented
 - pros
-  * 
+  * multiprocessor computer system
+  * interesting design philosophies
+  * covers main areas
 - cons
   * old
+  * too generalist (quality/weakness)
 - supervisor notes
   * 
 
@@ -243,26 +248,32 @@
 > Application domains such as multimedia, databases, and parallel computing, require operating system services with high performance and high functionality. Existing operating systems provide fixed interfaces and implementations to system services and resources. This makes them inappropriate for applications whose resource demands and usage patterns are poorly matched by the services provided. The SPIN operating system enables system services to be defined in an application-specific fashion through an extensible microkernel. It offers applications fine-grained control over a machine's logical and physical resources through run-time adaptation of the system to application requirements.
 
 - general notes
-  * 
+  * microkernel OS oriented
 - techniques
-  * 
+  * install service at kernel level
+  * run application code (service) as a kernel module (tightly coupled)
+  * application level libray (loosely coupled)
+  * extended IPC (message interpretation left to receiver)
 - pros
-  * 
+  * adaptability
 - cons
-  * 
+  * security (must trust app publishers)
 - supervisor notes
   * 
 
 #### (1996) Toward Real Microkernels
 
+> The inefficient, inflexible first generation inspired development of the vastly improved second generation, which may yet support a variety of operating systems.
+
 - general notes
   * magazine
+  * overview of microkernels
 - techniques
-  * 
+  * *null*
 - pros
-  * 
+  * quick concept reminder
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -271,28 +282,32 @@
 > EMERALDS (Extensible Microkernel for Embedded, ReAL-time, Distributed Systems) is a real-time microkernel designed for small-memory embedded applications. These applications must run on slow (15-25MHz) processors with just 32-128 kbytes of memory, either to keep production costs down in mass-produced systems or to keep weight and power consumption low. To be feasible for such applications, the OS must not only be small in size (less than 20 kbytes), but also have low-overhead kernel services. Unlike commercial embedded OSs which rely on carefully-crafted code to achieve efficiency, EMERALDS takes the approach of re-designing the basic OS services of task scheduling, synchronization, communication, and system call mechanism by using characteristics found in small-memory embedded systems, such as small code size and a priori knowledge of task execution and communication patterns. With these new schemes, the overheads of various OS services are reduced 20-40% without compromising any OS functionality.
 
 - general notes
-  * 
+  * embedded OS oriented
 - techniques
-  * 
+  * strong design constraints (25 Mhz processor, 128kb RAM, 20kb max size)
+  * IPC based on message-passing, mailboxes, and shared memory
 - pros
-  * 
+  * IoT friendly
+  * highly optimized context switching and interrupt handling
+  * support for user-level device drivers
 - cons
-  * 
+  * constraints does not exist anymore
 - supervisor notes
   * 
 
 #### (2005) A Programmable Microkernel for Real-Time Systems
 
-> We present a new software system architecture for the implementation of hard real-time applications. The core of the system is a microkernel whose reactivity (interrupt handling as in synchronous reactive programs) and proactivity (task scheduling as in traditional RTOSs) are fully programmable. The microkernel, which we implemented on a StrongARM processor, consists of two interacting domain-specific virtual machines, a reactive E (Embedded) machine and a proactive S (Scheduling) machine. The microkernel code (or microcode) that runs on the microkernel is partitioned into E and S code. E code manages the interaction of the system with the physical environment: the execution of E code is triggered by environment interrupts, which signal external events such as the arrival of a message or sensor value, and it releases application tasks to the S machine. S code manages the interaction of the system with the processor: the execution of S code is triggered by hardware interrupts, which signal internal events such as the completion of a task or time slice, and it dispatches application tasks to the CPU, possibly preempting a running task. This partition of the system orthogonalizes the two main concerns of real-time implementations: E code refers to environment time and thus defines the reactivity of the system in a hardware- and scheduler-independent fashion; S code refers to CPU time and defines a system scheduler. If both time lines can be reconciled, then the code is called time safe; violations of time safety are handled again in a programmable way, by run-time exceptions. The separation of E from S code permits the independent programming, verification, optimization, composition, dynamic adaptation, and reuse of both reaction and scheduling mechanisms. Our measurements show that the system overhead is very acceptable even for large sets of task, generally in the 0.2--0.3% range.
+> We present a new software system architecture for the implementation of hard real-time applications. The core of the system is a microkernel whose reactivity (interrupt handling as in synchronous reactive programs) and proactivity (task scheduling as in traditional RTOSs) are fully programmable. The microkernel, which we implemented on a StrongARM processor, consists of two interacting domain-specific virtual machines, a reactive E (Embedded) machine and a proactive S (Scheduling) machine. The microkernel code (or microcode) that runs on the microkernel is partitioned into E and S code. E code manages the interaction of the system with the physical environment: the execution of E code is triggered by environment interrupts, which signal external events such as the arrival of a message or sensor value, and it releases application tasks to the S machine. S code manages the interaction of the system with the processor: the execution of S code is triggered by hardware interrupts, which signal internal events such as the completion of a task or time slice, and it dispatches application tasks to the CPU, possibly preempting a running task. This partition of the system orthogonalizes the two main concerns of real-time implementations: E code refers to environment time and thus defines the reactivity of the system in a hardware- and scheduler-independent fashion; S code refers to CPU time and defines a system scheduler. If both time lines can be reconciled, then the code is called time safe; violations of time safety are handled again in a programmable way, by run-time exceptions. The separation of E from S code permits the independent programming, verification, optimization, composition, dynamic adaptation, and reuse of both reaction and scheduling mechanisms. Our measurements show that the system overhead is very acceptable even for large sets of task, generally in the 0.2-0.3% range.
 
 - general notes
-  * 
+  * microkernel OS
 - techniques
-  * 
+  * two interacting domain-specific virtual machines, a reactive E (Embedded) machine and a proactive S (Scheduling) machine
 - pros
-  * 
+  * adaptable
+  * minimal
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -301,6 +316,23 @@
 > The functionality of embedded systems is ever increasing. This has lead to mixed time-criticality systems, where applications with a variety of real-time requirements co-exist on the same platform and share resources. Due to inter-application interference, verifying the real-time requirements of such systems is generally non trivial. In this paper, we present the CoMik microkernel that provides temporally predictable and composable processor virtualisation. CoMik's virtual processors are cycle-accurately composable, i.e. their timing cannot affect the timing of co-existing virtual processors by even a single cycle. Real-time applications executing on dedicated virtual processors can therefore be verified and executed in isolation, simplifying the verification of mixed time-criticality systems. We demonstrate these properties through experimentation on an FPGA prototyped hardware platform.
 
 - general notes
+  * microkernel RTOS
+  * very relevant
+- techniques
+  * processor virtualization
+  * divides the processor into Time Division Multiplexed (TDM) slots
+- pros
+  * context swapping scheme that ensures that absolutely no temporal interference occurs between partitions, not even a single cycle
+- cons
+  * *null*
+- supervisor notes
+  * 
+
+### RTOS case studies
+
+...
+
+- general notes
   * 
 - techniques
   * 
@@ -311,29 +343,80 @@
 - supervisor notes
   * 
 
-### RTOS case studies
-
-...
-
 ### RTOS general review
 
 ...
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 
 ### RTOS techniques
 
 ...
 
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
 ### Rust
 
 ...
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 
 ### Scheduling
 
 ...
 
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 ### Virtual memory management
 
 ...
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 
 ## Optional features
 
@@ -341,18 +424,62 @@
 
 ...
 
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
 ### Bootloader
 
 ...
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 
 ### Filesystem
 
 ...
 
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
 
 ### VxWorks
 
-...
+... not suitable for IoT ?
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
 
 http://www.cs.cornell.edu/Info/Projects/Isis/
 
