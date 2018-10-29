@@ -1,11 +1,16 @@
 <a href="https://github.com/AntoineSebert/RTOS-dandelion"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></a>
 
-# 🚀 Dandelion - POSIX-compliant Microkernel Real-Time Operating System in Rust
+# 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
 
 **Dandelion**. Make your mistakes more reliable.
 
 [![License: CC BY-NC-SA 
 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+> Ainsi, toujours poussés vers de nouveaux rivages,
+Dans la nuit éternelle emportés sans retour,
+Ne pourrons-nous jamais sur l’océan des âges
+Jeter l’ancre un seul jour ?
 
 ------
 
@@ -39,11 +44,11 @@ This project aims to create a POSIX-compliant microkernel real-time operating sy
 
 ------
 
-## Main design characteristics
+## Main design characteristics (philisophy ?)
 
 ...
 
-time-driven
+time-sharing
 hard RTOS
 
 ------
@@ -55,6 +60,10 @@ hard RTOS
 * documents format : Markdown
 * [btrfs](https://github.com/kdave/btrfs-devel/tree/master/fs/btrfs)
 * Rust
+* two level scheduling policy : short- and long-term
+	- short-time : map programs to processors
+	- long-time : estimate job completion time accept it or not
+
 
 ------
 
