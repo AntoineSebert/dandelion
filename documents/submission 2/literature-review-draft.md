@@ -330,7 +330,103 @@
 
 ### RTOS case studies
 
-...
+#### (1989) Distributed Fault-Tolerant Real-Time Systems The Mars Approach
+
+> The authors describe the Maintainable Real-Time System, a fault-tolerant distributed system for process control, developed under the Mars project started in 1980 at the Technische Universitat Berlin. They explore the characteristics of distributed real-time systems and then present the Mars approach to real-time process control, its architectural design and implementation, and one of its applications. The authors focus on the maintainability of the Mars architecture, describe the Mars operating system, and discuss timing analysis. The control of a rolling mill that produces metal plates and bars is examined.
+
+- general notes
+  * distributed RTOS oriented
+  * highly relevant
+- techniques
+  * information is *valid* if *correct* and *timely*
+  * transactions
+  * real-time data and archived data
+  * global time
+- pros
+  * fault-tolerant
+  * compares *event-driven* and *time-sharing*
+  * quite exhaustive
+- cons
+  * old
+- supervisor notes
+  * 
+
+#### (1989) The MARUTI Hard Real-Time Operating System
+
+> A description is given of the MARUTI operating system, which is designed to support real-time applications on a variety of hardware systems. The kernel supports objects as primitive entities and provides a communication mechanism that allows transparent distribution in networked systems. Fault tolerance is provided through replication and consistency-control mechanisms. MARUTI supports guaranteed-service scheduling, in which jobs that are accepted by the system are verified to satisfy general time constraints. These time constraints include those that govern interrupt processing, which allows the MARUTI approach to succeed where more rigorous approaches do not. The result is that MARUTI applications can be executed in a predictable, deterministic fashion.
+
+- general notes
+  * distributed RTOS
+  * modular OS
+  * Unix
+- techniques
+  * guaranteed-service scheduling
+- pros
+  * hard real-time
+  * fault-tolerant
+- cons
+  * old
+- supervisor notes
+  * 
+
+#### (1989) The Spring Kernel A New Paradigm for Real-Time Operating Systems
+
+> Next generation real-time systems will require greater flexibility and predictability than is commonly found in today's systems. These future systems include the space station, integrated vision/robotics/AI systems, collections of humans/robots coordinating to achieve common objectives (usually in hazardous environments such as undersea exploration or chemical plants), and various command and control applications. The Spring kernel is a research oriented kernel designed to form the basis of a flexible, hard real-time operating system for such applications. Our approach challenges several basic assumptions upon which most current real-time operating systems are built and subsequently advocates a new paradigm based on the notion of predictability and a method for on-line dynamic guarantees of deadlines. The Spring kernel is being implemented on a network of (68020 based) multiprocessors called SpringNet.
+
+- general notes
+  * hard RTOS
+  * presents defaults of time-sharing
+  * highly relevant
+- techniques
+  * dynamic scheduling algorithms
+  * pre-scheduling tasks analysis
+  * dynamic value of task, to be maximized
+  * time properties of applications & system itself
+- pros
+  * flexibility
+  * predictability
+- cons
+  * old
+- supervisor notes
+  * 
+
+#### (1997) A Linux-based Real-Time Operating System
+
+> This work describes the design, implementation, and possible applications of Real-Time Linux - a hard real-time version of the Linux operating system. In this system, a standard time-sharing OS and a real-time executive run on the same computer. Interrupt controller emulation is used to guarantee a low maximum interrupt latency independently of the base system. The use of a one-shot timer makes it possible to achieve a low task release jitter without compromising throughput. Lock-free FIFO buffers are employed for communication between real-time tasks and Linux processes. User-defined schedulers are allowed as are run-time changes in the scheduling policy.
+
+- general notes
+  * hard time RTOS
+  * Linux
+  * time-sharing OS and a real-time executive at the same time
+- techniques
+  * interrupt controller emulation (low maximum interrupt latency), platform independant
+  * one-shot timer (possible to achieve a low task release jitter without compromising throughput)
+  * lock-free FIFO buffers (communication between real-time tasks and Linux processes)
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2009) A Real Time Operating Systems (RTOS) Comparison
+
+> This  article  presents  quantitative  and  qualitative  results  obtained from the analysis of real time operating systems (RTOS). The studied systems were Windows CE, QNX Neutrino, VxWorks, Linux and RTAI-Linux, which are largely used in industrial and academic environments. Windows XP was also analysed, as a reference for conventional non-real-time operating system, since such systems are also commonly and inadvertently used for instrumentation and control purposes. The evaluations include worst case response times for latency, latency jitter and response time.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2014) The survey of Real-Time Operating System RTOS
+
+> The paper discusses the literature survey of RTOS (Real Time Operating Systems) and its contributions to the embedded world. RTOS is defined as a system in which the correctness of the system does not depend only on the logical results of computation but also on the time at which the results are produced. It has to perform critical tasks on priority basis keeping the context switching time minimum. It is often associated with few misconceptions & we have tried to throw some light on it. Since last 20 years, RTOS is undergoing continuous evolution and has resulted into development of many commercial RTOS products. We have selected few commercial RTOS of different categories of real-time applications and have discussed its real-time features. A comparison of the commercial RTOSs' is presented. We conclude by discussing the results of the survey and comparing the RTOS based on performance parameters.
 
 - general notes
   * 
