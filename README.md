@@ -8,9 +8,12 @@
 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 > Ainsi, toujours poussés vers de nouveaux rivages,
-Dans la nuit éternelle emportés sans retour,
-Ne pourrons-nous jamais sur l’océan des âges
-Jeter l’ancre un seul jour ?
+>
+> Dans la nuit éternelle emportés sans retour,
+>
+> Ne pourrons-nous jamais sur l’océan des âges
+>
+> Jeter l’ancre un seul jour ?
 
 ------
 
@@ -63,7 +66,6 @@ hard RTOS
 * two level scheduling policy : short- and long-term
 	- short-time : map programs to processors
 	- long-time : estimate job completion time accept it or not
-
 
 ------
 
