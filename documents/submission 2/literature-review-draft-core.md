@@ -417,6 +417,23 @@
 - supervisor notes
   * 
 
+#### (2009) Survey and performance evaluation of real-time operating systems for small microcontrollers
+
+> Real-time operating systems have gained popularity in microcontroller- and processor-based embedded system design. This article discusses differences between RTOSs and generic operating systems, the advantages and disadvantages of using RTOSs for small microcontroller system development, and the benchmarking methods used for RTOSs. Benchmarking results for four RTOSs show no clear winner, with each RTOS performing better on some criteria than others.
+
+- general notes
+  * benchmark
+  * microcontrollers
+  * significative (15 RTOS)
+- techniques
+  * *null*
+- pros
+  * detailed analysis
+- cons
+  * *null*
+- supervisor notes
+  * 
+
 #### (2014) The survey of Real-Time Operating System RTOS
 
 > The paper discusses the literature survey of RTOS (Real Time Operating Systems) and its contributions to the embedded world. RTOS is defined as a system in which the correctness of the system does not depend only on the logical results of computation but also on the time at which the results are produced. It has to perform critical tasks on priority basis keeping the context switching time minimum. It is often associated with few misconceptions & we have tried to throw some light on it. Since last 20 years, RTOS is undergoing continuous evolution and has resulted into development of many commercial RTOS products. We have selected few commercial RTOS of different categories of real-time applications and have discussed its real-time features. A comparison of the commercial RTOSs' is presented. We conclude by discussing the results of the survey and comparing the RTOS based on performance parameters.
@@ -437,16 +454,17 @@
 
 #### (2004) Real-Time Operating Systems
 
-> Real-time operating systems (RTOSs) provide basic support for scheduling, resource management, synchronization, communication, precise timing, and I/O. RTOSs have evolved from single-use specialized systems to a wide variety of more general-purpose operating systems (such as real-time variants of Linux). We have also seen an evolution from RTOSs which are completely predictable and support safety-critical applications to those which support soft real-time applications. Such support includes the concept of quality of service (QoS) for open real-time systems, often applied to multimedia applications as well as large, complex distributed real-time systems. Researchers in real- time operating system have developed new ideas and paradigms that enhance traditional operating systems to be more ef®cient and predictable. Some of these ideas are now found in traditional operating systems and many other ideas are found in the wide variety of RTOS on the market today. The RTOS market includes many proprietary kernels, composition-based kernels, and real-time versions of popular OSs such as Linux and Windows-NT. Many industry standards have been influenced by RTOS research including POSIX real-time extensions, Real-Time Speci®cation for Java, OSEK (automotive RTOS standard), Ada83 and Ada95. This paper provides an overview of the architectures, principles, paradigms, and new ideas developed in RTOS research over the past 20 years. The paper concentrates on research done within the context of complete RTOSs. Note that much more research on RTOSs has been accomplished and published as specific aspects on RTOS. For example, real-time synchronization and memory management research has many exciting results. Also, many ideas found in the companion paper on real-time scheduling can be found in various RTOSs as well.
+> Real-time operating systems (RTOSs) provide basic support for scheduling, resource management, synchronization, communication, precise timing, and I/O. RTOSs have evolved from single-use specialized systems to a wide variety of more general-purpose operating systems (such as real-time variants of Linux). We have also seen an evolution from RTOSs which are completely predictable and support safety-critical applications to those which support soft real-time applications. Such support includes the concept of quality of service (QoS) for open real-time systems, often applied to multimedia applications as well as large, complex distributed real-time systems. Researchers in real- time operating system have developed new ideas and paradigms that enhance traditional operating systems to be more efficient and predictable. Some of these ideas are now found in traditional operating systems and many other ideas are found in the wide variety of RTOS on the market today. The RTOS market includes many proprietary kernels, composition-based kernels, and real-time versions of popular OSs such as Linux and Windows-NT. Many industry standards have been influenced by RTOS research including POSIX real-time extensions, Real-Time Specification for Java, OSEK (automotive RTOS standard), Ada83 and Ada95. This paper provides an overview of the architectures, principles, paradigms, and new ideas developed in RTOS research over the past 20 years. The paper concentrates on research done within the context of complete RTOSs. Note that much more research on RTOSs has been accomplished and published as specific aspects on RTOS. For example, real-time synchronization and memory management research has many exciting results. Also, many ideas found in the companion paper on real-time scheduling can be found in various RTOSs as well.
 
 - general notes
-  * 
+  * general presentation
 - techniques
-  * 
+  * *null*
 - pros
-  * 
+  * present research RTOS
+  * present paradigms
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -454,12 +472,14 @@
 
 - general notes
   * lecture slides
+  * very useful
 - techniques
-  * 
+  * *null*
 - pros
-  * 
+  * very detailed
+  * gives math
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -468,6 +488,24 @@
 > Real-time systems play a considerable role in our society, and they cover a spectrum from the very simple to the very complex. Examples of current real-time systems include the control of domestic appliances like washing machines and televisions, the control of automobile engines, telecommunication switching systems, military command and control systems, industrial process control, flight control systems, and space shuttle and aircraft avionics. All of these involve gathering data from the environment, processing of gathered data, and providing timely response. A concept of time is the distinguishing issue between real-time and non-real-time systems. When a usual design goal for non- real-time systems is to maximize system's throughput, the goal for real-time system design is to guarantee, that all tasks are processed within a given time. The taxonomy of time introduces special aspects for real-time system research. Real-time operating systems are an integral part of real-time systems. Future systems will be much larger, more widely distributed, and will be expected to perform a constantly changing set of duties in dynamic environments. This also sets more requirements for future real-time operating systems. This seminar has the humble aim to convey the main ideas on Real Time System and Real Time Operating System design and implementation.
 
 - general notes
+  * general presentation
+- techniques
+  * *null*
+- pros
+  * schemas
+  * very detailed
+- cons
+  * *null*
+- supervisor notes
+  * 
+
+### RTOS techniques
+
+#### (2001) Worst-Case Execution Time Analysis of the RTEMS Real-Time Operating System
+
+> 
+
+- general notes
   * 
 - techniques
   * 
@@ -478,9 +516,39 @@
 - supervisor notes
   * 
 
-### RTOS techniques
+#### (2003) System-Level Power-Aware Design Techniques in Real-Time Systems
 
-...
+> 
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) An Interface Algebra for Real-Time Components
+
+> 
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) Predictable Interrupt Management for Real Time Kernels over Conventional PC Hardware
+
+> 
 
 - general notes
   * 
