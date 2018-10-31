@@ -503,61 +503,74 @@
 
 #### (2001) Worst-Case Execution Time Analysis of the RTEMS Real-Time Operating System
 
-> 
+> An important issue in building operating systems for hard real-time applications is to compute the worst-case execution times (WCET) of the operating system activities. Traditionally, this has been achieved by an exhaustive testing of the operating system, with a careful attention on the testing conditions to reproduce the worst-case execution scenario. In this paper we explore the alternative approach of using static analysis to predict off-line the WCET of the system calls of a real-time kernel, the RTEMS kernel. We give qualitative and quantitative results on the analysis of RTEMS, and draw some conclusions on the extent to which static analysis can be used on operating system code.
 
 - general notes
-  * 
+  * execution time estimation
 - techniques
-  * 
+  * static and dynamic analysis
 - pros
-  * 
+  * cover main performance concerns
 - cons
-  * 
+  * focused on a RTOS : RTEMS
+  * maybe highly dependant on other elements (HEPTANE, hardware)
 - supervisor notes
   * 
 
 #### (2003) System-Level Power-Aware Design Techniques in Real-Time Systems
 
-> 
+> Power and energy consumption has recently become an important issue and consequently, power-aware techniques are being devised at all levels of system design; from the circuit and device level, to the architectural, compiler, operating system, and networking layers. In this paper, we concentrate on power-aware design techniques for real-time systems. While the main focus is on hard real-time, soft real-time systems are considered as well. We start with the motivation for focusing on these systems and provide a brief discussion on power and energy objectives. We then follow with a survey of current research on a layer-by-layer basis. We conclude with illustrative examples and open research challenges. This paper provides an overview of power-aware techniques for the real-time system engineer as well as an up-to-date reference list for the researcher.
 
 - general notes
-  * 
+  * **maybe irrelevant** (but the thematic is interesting and deserves attention imo)
+  * CMOS oriented
+  * embedded OS oriented
 - techniques
-  * 
+  * energy consumption formulas
 - pros
-  * 
+  * compiler level, OS level, network level
+  * good overall quality
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
 #### (2006) An Interface Algebra for Real-Time Components
 
-> 
+> We present an assume-guarantee interface algebra for real-time components. In our formalism a component implements a set of task sequences that share a resource. A component interface consists of an arrival rate function and a latency for each task sequence, and a capacity function for the shared resource. The interface specifies that the component guarantees certain task latencies depending on assumptions about task arrival rates and allocated resource capacities. Our algebra defines compatibility and refinement relations on interfaces. Interface compatibility can be checked on partial designs, even when some component interfaces are yet unknown. In this case interface composition computes as new assumptions the weakest constraints on the unknown components that are necessary to satisfy the specified guarantees. Interface refinement is defined in a way that ensures that compatible interfaces can be refined and implemented independently. Our algebra thus formalizes an interface-based design methodology that supports both the incremental addition of new components and the independent stepwise refinement of existing components. We demonstrate the flexibility and efficiency of the framework through simulation experiments.
 
 - general notes
-  * 
+  * embedded oriented
+  * component based RTOS
+  * theoratical
 - techniques
-  * 
+  * *null*
 - pros
-  * 
+  * detailed
+  * lots of formulas
+  * maybe very useful
 - cons
-  * 
+  * lots of formulas
+  * cryptic
 - supervisor notes
   * 
 
 #### (2006) Predictable Interrupt Management for Real Time Kernels over Conventional PC Hardware
 
-> 
+> In this paper we analyze the traditional model of interrupt management and its incapacity to incorporate reliability and the temporal predictability demanded on real-time systems. As a result of this analysis, we propose a model that integrates interrupts and tasks handling. We make a schedulability analysis to evaluate and distinguish the circumstances under which this integrated model improves the traditional model. The design of a flexible and portable kernel interrupt subsystem for this integrated model is presented. In addition, we present the rationale for the implementation of our design over conventional PC interrupt hardware and the analysis of its overhead. Finally, experimental results are conducted to demonstrate the deterministic behavior of our integrated model and to quantify its overhead.
 
 - general notes
-  * 
+  * interruptions
+  * embedded RTOS oriented
 - techniques
-  * 
+  * unified mechanism of synchronization and scheduling for hardware and software interrupts
+  * two modules for each interrupt type
 - pros
-  * 
+  * highlights problems of classical solution
+  * schedulability analysis
+  * interrupts priorities from 0 to 255
 - cons
-  * 
+  * cannot be used in many existing hardware platforms
 - supervisor notes
   * 
 
