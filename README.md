@@ -1,4 +1,4 @@
-<a href="https://github.com/AntoineSebert/RTOS-dandelion"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></a>
+<a href="https://github.com/AntoineSebert/RTOS-dandelion"><img align="left" src="resources/dandelion-logo.png" alt="Dandelion" width="200"></a>
 
 # 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
 
@@ -50,6 +50,8 @@ This project aims to create a POSIX-compliant microkernel real-time operating sy
 ## Main design characteristics (philisophy ?)
 
 ...
+
+three laws of robotics
 
 time-sharing
 hard RTOS
@@ -169,6 +171,8 @@ This project is licensed under the CC BY-NC-SA License - see the [LICENSE.md](LI
 -------
 
 ## Acknowledgments
-* My supervisor, [Andrei Petrovski](https://orcid.org/0000-0002-0987-2791)
+* My supervisor, [Petrovski](https://orcid.org/0000-0002-0987-2791)
+* M. Bartlett
+* N. Wiratunga (?)
 * My friends for being here
 * My family
