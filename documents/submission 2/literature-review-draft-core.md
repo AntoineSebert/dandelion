@@ -624,25 +624,11 @@ In this paper, we show how a language with an advanced type system can address m
 - supervisor notes
   * 
 
-#### (2017) System Programming in Rust Beyond Safety
-
-> Rust is a new system programming language that offers a practical and safe alternative to C. Rust is unique in that it enforces safety without runtime overhead, most importantly, without the overhead of garbage collection. While zero-cost safety is remarkable on its own, we argue that the superpowers of Rust go beyond safety. In particular, Rust's linear type system enables capabilities that cannot be implemented efficiently in traditional languages, both safe and unsafe, and that dramatically improve security and reliability of system software. We show three examples of such capabilities: zero-copy software fault isolation, efficient static information flow analysis, and automatic checkpointing. While these capabilities have been in the spotlight of systems research for a long time, their practical use is hindered by high cost and complexity. We argue that with the adoption of Rust these mechanisms will become commoditized.
-
-- general notes
-  * 
-- techniques
-  * 
-- pros
-  * 
-- cons
-  * 
-- supervisor notes
-  * 
-
 ### Scheduling
 
-...
+#### 
 
+> 
 
 - general notes
   * 
@@ -654,9 +640,72 @@ In this paper, we show how a language with an advanced type system can address m
   * 
 - supervisor notes
   * 
+
 ### Virtual memory management
 
-...
+#### (1981) WSCLock - A Simple and Effective Algorithm for Virtual Memory Management
+
+> A new virtual memory management algorithm WSCLOCK has been synthesized from the local working set (WS) algorithm, the global CLOCK algorithm, and a new load control mechanism for auxiliary memory access. The new algorithm combines the most useful feature of WS—a natural and effective load control that prevents thrashing—with the simplicity and efficiency of CLOCK. Studies are presented to show that the performance of WS and WSCLOCK are equivalent, even if the savings in overhead are ignored.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (1985) The Integration of Virtual Memory Management and Interprocess Communication in Accent
+
+> The integration of virtual memory management and interprocess communication in the Accent network operating system kernel is examined. The design and implementation of the Accent memory management system is discussed and its performance, both on a series of message-oriented benchmarks and in normal operation, is analyzed in detail.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (1987) Machine-Independent Virtual Memory Management for Paged Uniprocessor and Multiprocessor Architectures
+
+> This paper describes the design and implementation of virtual memory management within the CMU Mach Operating System and the experiences gained by the Mach kernel group in porting that system to a variety of architectures. As of this writing, Mach runs on more than half a dozen uniprocessors and multiprocessors including the VAX family of uniprocessors and multiprocessors, the IBM RT PC, the SUN 3, the Encore MultiMax, the Sequent Balance 21000 and several experimental computers. Although these systems vary considerably in the kind of hardware support for memory management they provide, the machine-dependent portion of Mach virtual memory consists of a single code module and its related header file. This separation of software memory management from hardware support has been accomplished without sacrificing system performance. In addition to improving portability, it makes possible a relatively unbiased examination of the pros and cons of various hardware memory management schemes, especially as they apply to the support of multiprocessors.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (1989) Generic Virtual Memory Management for Operating System Kernels
+
+> We discuss the rationale and design of a Generic Memory management Interface, for a family of scalable operating systems. It consists of a general interface for managing virtual memory, independently of the underlying hardware architecture (e.g. paged versus segmented memory), and independently of the operating system kernel in which it is to be integrated. In particular, this interface provides abstractions for support of a single, consistent cache for both mapped objects and explicit I/O, and control of data caching in real memory. Data management policies are delegated to external managers. A portable implementation of the Generic Memory management Interface for paged architectures, the Paged Virtual Memory manager, is detailed. The PVM uses the novel history object technique for efficient deferred copying. The GMI is used by the Chorus Nucleus, in particular to support a distributed version of Unix. Performance measurements compare favorably with other systems.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (1998) Pin-down cache A virtual memory management technique for zero-copy communication
+
+> The overhead of copying data through the central processor by a message passing protocol limits data transfer bandwidth. If the network interface directly transfers the user's memory to the network by issuing DMA, such data copies may be eliminated. Since the DMA facility accesses the physical memory address space, user virtual memory must be pinned down to a physical memory location before the message is sent or received. If each message transfer involves pin-down and release kernel primitives, message transfer bandwidth will decrease since those primitives are quite expensive. The authors propose a zero copy message transfer with a pin-down cache technique which reuses the pinned-down area to decrease the number of calls to pin-down and release primitives. The proposed facility has been implemented in the PM low-level communication library on the RWC PC Cluster II, consisting of 64 Pentium Pro 200 MHz CPUs connected by a Myricom Myrinet network, and running NetBSD. The PM achieves 108.8 MBytes/sec for a 100% pin-down cache hit ratio and 78.7 MBytes/sec for all pin-down cache miss. The MPI library has been implemented on top of PM. According to the NAS parallel benchmarks result, an application is still better performance in case that cache miss ratio is very high.
 
 - general notes
   * 
