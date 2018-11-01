@@ -576,7 +576,57 @@
 
 ### Rust
 
-...
+#### (2014) The Rust Language
+
+> Rust is a new programming language for developing reliable and efficient systems. It is designed to support concurrency and parallelism in building applications and libraries that take full advantage of modern hardware. Rust's static type system is safe and expressive and provides strong guarantees about isolation, concurrency, and memory safety.
+Rust also offers a clear performance model, making it easier to predict and reason about program efficiency. One important way it accomplishes this is by allowing fine-grained control over memory representations, with direct support for stack allocation and contiguous record storage. The language balances such controls with the absolute requirement for safety: Rust's type system and runtime guarantee the absence of data races, buffer overflows, stack overflows, and accesses to uninitialized or deallocated memory.
+
+- general notes
+  * describes the language
+- techniques
+  * ownership/borrow
+  * lifetime-polymorphism
+- pros
+  * concurrency
+  * parallelism
+  * safe type system
+  * process isolation
+  * memory safety
+  * performance
+- cons
+  * young
+- supervisor notes
+  * 
+
+#### (2016) Engineering the Servo Web Browser Engine using Rust
+
+> All modern web browsers --- Internet Explorer, Firefox, Chrome, Opera, and Safari --- have a core rendering engine written in C++. This language choice was made because it affords the systems programmer complete control of the underlying hardware features and memory in use, and it provides a transparent compilation model. Unfortunately, this language is complex (especially to new contributors!), challenging to write correct parallel code in, and highly susceptible to memory safety issues that potentially lead to security holes.
+Servo is a project started at Mozilla Research to build a new web browser engine that preserves the capabilities of these other browser engines but also both takes advantage of the recent trends in parallel hardware and is more memory-safe. We use a new language, Rust, that provides us a similar level of control of the underlying system to C++ but which statically prevents many memory safety issues and provides direct support for parallelism and concurrency.
+In this paper, we show how a language with an advanced type system can address many of the most common security issues and software engineering challenges in other browser engines, while still producing code that has the same performance and memory profile. This language is also quite accessible to new open source contributors and employees, even those without a background in C++ or systems programming. We also outline several pitfalls encountered along the way and describe some potential areas for future improvement.
+
+- general notes
+  * web browser engine oriented
+  * language overview
+- techniques
+  * affine type system
+  * monomorphization (compilation strategy)
+  * session types
+- pros
+  * methods dispatched statically -> eligible for inlining and aggressive optimization
+  * data-race free
+  * nearly complete interoperability with C code
+  * hygienic macro system
+- cons
+  * lack of interoperability with C++
+  * just-in-time code
+  * unsafe code correctness
+  * incremental computation
+- supervisor notes
+  * 
+
+#### (2017) System Programming in Rust Beyond Safety
+
+> Rust is a new system programming language that offers a practical and safe alternative to C. Rust is unique in that it enforces safety without runtime overhead, most importantly, without the overhead of garbage collection. While zero-cost safety is remarkable on its own, we argue that the superpowers of Rust go beyond safety. In particular, Rust's linear type system enables capabilities that cannot be implemented efficiently in traditional languages, both safe and unsafe, and that dramatically improve security and reliability of system software. We show three examples of such capabilities: zero-copy software fault isolation, efficient static information flow analysis, and automatic checkpointing. While these capabilities have been in the spotlight of systems research for a long time, their practical use is hindered by high cost and complexity. We argue that with the adoption of Rust these mechanisms will become commoditized.
 
 - general notes
   * 
