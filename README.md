@@ -1,4 +1,4 @@
-<a align="center" href="https://github.com/AntoineSebert/RTOS-dandelion"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></a>
+<p align="center"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></p>
 
 # 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
 
