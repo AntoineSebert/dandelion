@@ -626,9 +626,211 @@ In this paper, we show how a language with an advanced type system can address m
 
 ### Scheduling
 
-#### 
+#### (1973) Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment
 
-> 
+> The problem of multiprogram scheduling on a single processor is studied from the viewpoint of the characteristics peculiar to the program functions that need guaranteed service. It is shown that an optimum fixed priority scheduler possesses an upper bound to processor utilization which may be as low as 70 percent for large task sets. It is also shown that full processor utilization can be achieved by dynamically assigning priorities on the basis of their current deadlines. A combination of these two scheduling techniques is also discussed.
+
+- general notes
+  * algorithms
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2002) Feedback Control Real-Time Scheduling Framework Modeling and Algorithms
+
+> This paper presents a feedback control real-time scheduling (FCS) framework for adaptive real-time systems. An advantage of the FCS framework is its use of feedback control theory (rather than ad hoc solutions) as a scientific underpinning. We apply a control theory based methodology to systematically design FCS algorithms to satisfy the transient and steady state performance specifications of real-time systems. In particular, we establish dynamic models of real-time systems and develop performance analyses of FCS algorithms, which are major challenges and key steps for the design of control theory based adaptive real-time systems. We also present a FCS architecture that allows plug-ins of different real-time scheduling policies and QoS optimization algorithms. Based on our framework, we identify different categories of real-time applications where different FCS algorithms should be applied. Performance evaluation results demonstrate that our analytically tuned FCS algorithms provide robust transient and steady state performance guarantees for periodic and aperiodic tasks even when the task execution times vary by as much as 100% from the initial estimate.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2004) A Categorization of Real-time Multiprocessor Scheduling Problems and Algorithms
+
+> Real-time multiprocessor systems are now commonplace. Designs range from single-chip architectures, with a modest number of processors, to large-scale signal-processing systems, such as synthetic-aperture radar systems. For uniprocessor systems, the problem of ensuring that deadline constraints are met has been widely studied: effective scheduling algorithms that take into account the many complexities that arise in real systems (e.g., synchronization costs, system overheads, etc.) are well understood. In contrast, researchers are just beginning to understand the trade-offs that exist in multiprocessor systems. In this chapter we analyze the trade-offs involved in scheduling independent, periodic real-time tasks on a multiprocessor.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2005) Rate Monotonic vs. EDF Judgment Day
+
+> Since the first results published in 1973 by Liu and Layland on the Rate Monotonic (RM) and Earliest Deadline First (EDF) algorithms, a lot of progress has been made in the schedulability analysis of periodic task sets. Unfortunately, many misconceptions still exist about the properties of these two scheduling methods, which usually tend to favor RM more than EDF. Typical wrong statements often heard in technical conferences and even in research papers claim that RM is easier to analyze than EDF, it introduces less runtime overhead, it is more predictable in overload conditions, and causes less jitter in task execution.
+Since the above statements are either wrong, or not precise, it is time to clarify these issues in a systematic fashion, because the use of EDF allows a better exploitation of the available resources and significantly improves system's performance.
+This paper compares RM against EDF under several aspects, using existing theoretical results, specific simulation experiments, or simple counterexamples to show that many common beliefs are either false or only restricted to specific situations.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2005) Real-Time Scheduling on Multicore Platforms
+
+> Multicore architectures, which have multiple processing units on a single chip, are widely viewed as a way to achieve higher processor performance, given that thermal and power problems impose limits on the performance of single-core designs. Accordingly, several chip manufacturers have already released, or will soon release, chips with dual cores, and it is predicted that chips with up to 32 cores will be available within a decade. To effectively use the available processing resources on multicore platforms, software designs should avoid co-executing applications or threads that can worsen the performance of shared caches, if not thrash them. While cache-aware scheduling techniques for such platforms have been proposed for throughput-oriented applications, to the best of our knowledge, no such work has targeted real-time applications. In this paper, we propose and evaluate a cache-aware Pfair-based scheduling scheme for real-time tasks on multicore platforms.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) Bounding Preemption Delay within Data Cache Reference Patterns for Real-Time Tasks
+
+> Caches have become invaluable for higher-end architectures to hide, in part, the increasing gap between processor speed and memory access times. While the effect of caches on timing predictability of single real-time tasks has been the focus of much research, bounding the overhead of cache warm-ups after preemptions remains a challenging problem, particularly for data caches. In this paper, we bound the penalty of cache interference for real-time tasks by providing accurate predictions of the data cache behavior across preemptions. For every task, we derive data cache reference patterns for all scalar and non-scalar references. Partial timing of a task is performed up to a preemption point using these patterns. The effects of cache interference are then analyzed using a settheoretic approach, which identifies the number and location of additional misses due to preemption. A feedback mechanism provides the means to interact with the timing analyzer, which subsequently times another interval of a task bounded by the next preemption. Our experimental results demonstrate that it is sufficient to consider the n most expensive preemption points, where n is the maximum possible number of preemptions. Further, it is shown that such accurate modeling of data cache behavior in preemptive systems significantly improves the WCET predictions for a task. To the best of our knowledge, our work of bounding preemption delay for data caches is unprecedented.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) FSF A Real-Time Scheduling Architecture Framework
+
+> Scheduling theory generally assumes that real-time systems are mostly composed of activities with hard real-time requirements. Many systems are built today by composing different applications or components in the same system, leading to a mixture of many different kinds of requirements with small parts of the system having hard real-time requirements and other larger parts with requirements for more flexible scheduling and for quality of service. Hard real-time scheduling techniques are extremely pessimistic for the latter part of the application, and consequently it is necessary to use techniques that let the system resources be fully utilized to achieve the highest possible quality. This paper presents a framework for a scheduling architecture that provides the ability to compose several applications or components into the system, and to flexibly schedule the available resources while guaranteeing hard real-time requirements. The framework (called FSF) is independent of the underlying implementation, and can run on different underlying scheduling strategies. It is based on establishing service contracts that represent the complex and flexible requirements of the applications, and which are managed by the underlying system to provide the required level of service.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) Interface-Based Design of Real-Time Systems with Hierarchical Scheduling
+
+> In interface-based design, components are described by a component interface. In contrast to a component description that describes what a component does, a component interface describes how a component can be used, and a well designed component interface provides enough information to decide whether two or more components can work together properly in a system. Real-Time Interfaces expand the idea of interfacebased design to the area of real-time system design, where the term of working together properly refers to questions like: Does the composed system satisfy all requested real-time properties such as delay and throughput constraints? In this work, we extend the theory of Real-Time Interfaces and prove its applicability for the design of systems with hierarchical scheduling. We introduce a component system for interface-based design of systems with mixed FP, RM and EDF scheduling. We then further extend the ability for hierarchic scheduling by introducing server components. The introduced component system with Real-Time Interfaces not only allows interface-based design of complex real-time systems with hierarchical scheduling, but also inherently enables detailed schedulability analysis of such systems.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2006) Task Partitioning with Replication upon Heterogeneous Multiprocessor Systems
+
+> The heterogeneous multiprocessor task partitioning with replication problem involves determining a mapping of recurring tasks upon a set consisting of different processing units in such a way that all tasks meet their timing constraints and no two replicas of the same task are assigned to the same processing unit. The replication requirement improves the resilience of the real-time system to a finite number of processor failures. This problem is NP-hard in the strong sense. We develop a Fully Polynomial-Time Approximation Scheme (FPTAS) for this problem.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2007) Extending Rate Monotonic Analysis with Exact Cost of Preemptions for Hard
+
+> In this paper we study hard real-time systems composed of independent periodic preemptive tasks where we assume that tasks are scheduled by using Liu & Layland's pioneering model following the rate monotonic analysis (RMA). For such systems, the designer must guarantee that all the deadlines of all the tasks are met, otherwise dramatic consequences occur. Certainly, guaranteeing deadlines is not always achievable because the preemption is approximated when using this analysis, and this approximation may lead to a wrong real-time execution whereas the schedulability analysis concluded that the system was schedulable. To cope with this problem the designer usually allows margins which are difficult to assess, and thus in any case lead to a waste of resources. This paper makes multiple contributions. First, we show that, when considering the cost of the preemption during the analysis, the critical instant does not occur upon simultaneous release of all tasks. Second, we provide a technique which counts the exact number of preemptions of each instance for all the tasks of a given system. Finally, we present an RMA extension which takes into account the exact cost due to preemption in the schedulability analysis rather than an approximation, thus yielding a new and stronger schedulability condition which eliminates the waste of resources since margins are not necessary.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2008) Scheduling The Multi-Level Feedback Queue
+
+> In this chapter, we’ll tackle the problem of developing one of the most well-known approaches to scheduling, known as the Multi-level Feed-back Queue (MLFQ). The Multi-level Feedback Queue (MLFQ) scheduler was first described by Corbato et al. in 1962 [C+62] in a system known as the Compatible Time-Sharing System (CTSS), and this work, along with later work on Multics, led the ACM to award Corbato its highest honor, the Turing Award. The scheduler has subsequently been
+refined throughout the years to the implementations you will encounter in some modern systems.
+The fundamental problem MLFQ tries to address is two-fold. First, it would like to optimize turnaround time, which, as we saw in the previous note, is done by running shorter jobs first; unfortunately, the OS doesn’t generally know how long a job will run for, exactly the knowledge that algorithms like SJF (or STCF) require. Second, MLFQ would like to make a system feel responsive to interactive users (i.e., users sitting and staring at the screen, waiting for a process to finish), and thus minimize response time; unfortunately, algorithms like Round Robin reduce response time but are terrible for turnaround time. Thus, our problem: given that we in general do not know anything about a process, how can we build a scheduler to achieve these goals? How can the scheduler learn, as the system runs, the characteristics of the jobs it is running, and thus make better scheduling decisions?
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2011) Predictable Scheduling Algorithms and Applications
+
+> Real-time computing plays a crucial role in our society since an increasing number of complex systems rely, in part or completely, on computer control. Examples of applications that require real-time computing include nuclear power plants, railway switching systems, automotive and avionic systems, air traffic control, telecommunications, robotics, and military systems. In the last several years, real-time computing has been required in new applications areas, such as medical equipments, consumer electronics, multimedia systems, flight simulation systems, virtual reality, and interactive games.
+Despite this large application domain, most of the current real-time systems are still designed and implemented using low-level programming and empirical techniques, without the support of a scientific methodology. This approach results in a lack of reliability, which in critical applications may cause serious environmental damage or even loss of life.
+This book is a basic treatise on real-time computing, with particular emphasis on predictable scheduling algorithms. The main objectives of the book are to introduce the basic concepts of real-time computing, illustrate the most significant results in the field, and provide the basic methodologies for designing predictable computing systems useful in supporting critical control applications.
+This book is written for instructional use and is organized to enable readers without a strong knowledge of the subject matter to quickly grasp the material. Technical concepts are clearly defined at the beginning of each chapter, and algorithm descriptions are corroborated through concrete examples, illustrations, and tables.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2014) Adaptive Heterogeneous Scheduling for Integrated GPUs
+
+> Many processors today integrate a CPU and GPU on the same die, which allows them to share resources like physical memory and lowers the cost of CPU-GPU communication. As a consequence, programmers can effectively utilize both the CPU and GPU to execute a single application. This paper presents novel adaptive scheduling techniques for integrated CPU-GPU processors. We present two online profiling-based scheduling algorithms: naïve and asymmetric. Our asymmetric scheduling algorithm uses low-overhead online profiling to automatically partition the work of dataparallel kernels between the CPU and GPU without input from application developers. It does profiling on the CPU and GPU in a way that doesn't penalize GPU-centric workloads that run significantly faster on the GPU. It adapts to application characteristics by addressing: 1) load imbalance via irregularity caused by, e.g., data-dependent control flow, 2) different amounts of work on each kernel call, and 3) multiple kernels with different characteristics. Unlike many existing approaches primarily targeting NVIDIA discrete GPUs, our scheduling algorithm does not require offline processing. We evaluate our asymmetric scheduling algorithm on a desktop system with an Intel 4 th Generation Core Processor using a set of sixteen regular and irregular workloads from diverse application areas. On average, our asymmetric scheduling algorithm performs within 3.2% of the maximum throughput with a CPU-and-GPU oracle that always chooses the best work partitioning between the CPU and GPU. These results underscore the feasibility of online profile-based heterogeneous scheduling on integrated CPU-GPU processors.
+
+- general notes
+  * 
+- techniques
+  * 
+- pros
+  * 
+- cons
+  * 
+- supervisor notes
+  * 
+
+#### (2017) Research on Real - time Scheduling Method of RTAI - Linux Based on EDF Algorithm
+
+> This paper uses Linux4.2.0 and RTAI3.8.13 to form a dual-core solution to study the real-time performance of Linux systems. This paper studies the basic structure of RTAI-Linux kernel. On this basis, the ADBORROW algorithm is used to improve the time slice rotation strategy of EDF dynamic scheduling algorithm. Assign tasks to RTAI-Linux systems based on dual-core ×86 architectures and perform real-time performance testing and analysis of new task scheduling algorithms. The scheduling model can make the real-time performance of RTAI-Linux system be further improved.
 
 - general notes
   * 
@@ -648,13 +850,15 @@ In this paper, we show how a language with an advanced type system can address m
 > A new virtual memory management algorithm WSCLOCK has been synthesized from the local working set (WS) algorithm, the global CLOCK algorithm, and a new load control mechanism for auxiliary memory access. The new algorithm combines the most useful feature of WS—a natural and effective load control that prevents thrashing—with the simplicity and efficiency of CLOCK. Studies are presented to show that the performance of WS and WSCLOCK are equivalent, even if the savings in overhead are ignored.
 
 - general notes
-  * 
+  * algorithm
 - techniques
-  * 
+  * combination of two algorithms (WS and CLOCK)
 - pros
-  * 
+  * less memory consuming than WS
+  * simpler than both
+  * less page faults
 - cons
-  * 
+  * more processor consuming
 - supervisor notes
   * 
 
@@ -663,13 +867,20 @@ In this paper, we show how a language with an advanced type system can address m
 > The integration of virtual memory management and interprocess communication in the Accent network operating system kernel is examined. The design and implementation of the Accent memory management system is discussed and its performance, both on a series of message-oriented benchmarks and in normal operation, is analyzed in detail.
 
 - general notes
-  * 
+  * overview of memory management
 - techniques
-  * 
+  * four basic abstractions : message, port, process, memory object
+  * memory object can be : permanent disk, temporary disk, physical memory, port
+  * asynchronous IPC
+  * messages in transit stored in buffers in the kernel space
+  * process map for each user process and one for the operating system kernel
+  * VP table (virtual to physical address translation table)
+  * memory errors handling
 - pros
-  * 
+  * simple way to handle messages
 - cons
-  * 
+  * total amount of message data in transit is limited
+  * performance comparable to that of more traditional operating system designs
 - supervisor notes
   * 
 
@@ -678,13 +889,16 @@ In this paper, we show how a language with an advanced type system can address m
 > This paper describes the design and implementation of virtual memory management within the CMU Mach Operating System and the experiences gained by the Mach kernel group in porting that system to a variety of architectures. As of this writing, Mach runs on more than half a dozen uniprocessors and multiprocessors including the VAX family of uniprocessors and multiprocessors, the IBM RT PC, the SUN 3, the Encore MultiMax, the Sequent Balance 21000 and several experimental computers. Although these systems vary considerably in the kind of hardware support for memory management they provide, the machine-dependent portion of Mach virtual memory consists of a single code module and its related header file. This separation of software memory management from hardware support has been accomplished without sacrificing system performance. In addition to improving portability, it makes possible a relatively unbiased examination of the pros and cons of various hardware memory management schemes, especially as they apply to the support of multiprocessors.
 
 - general notes
-  * 
+  * a bit too theoretical
 - techniques
-  * 
+  * machine dependent code decoupled from machine independent
 - pros
-  * 
+  * describes virtual memory operations
+  * describes virtual memory data structures
+  * efficient (in 1987)
+  * machine independent
 - cons
-  * 
+  * issues
 - supervisor notes
   * 
 
@@ -693,13 +907,22 @@ In this paper, we show how a language with an advanced type system can address m
 > We discuss the rationale and design of a Generic Memory management Interface, for a family of scalable operating systems. It consists of a general interface for managing virtual memory, independently of the underlying hardware architecture (e.g. paged versus segmented memory), and independently of the operating system kernel in which it is to be integrated. In particular, this interface provides abstractions for support of a single, consistent cache for both mapped objects and explicit I/O, and control of data caching in real memory. Data management policies are delegated to external managers. A portable implementation of the Generic Memory management Interface for paged architectures, the Paged Virtual Memory manager, is detailed. The PVM uses the novel history object technique for efficient deferred copying. The GMI is used by the Chorus Nucleus, in particular to support a distributed version of Unix. Performance measurements compare favorably with other systems.
 
 - general notes
-  * 
+  * generic memory management interface
 - techniques
-  * 
+  * context : program’s protected virtual address space, sparsely populated by regions
+  * region : contiguous portion of virtual address space
+  * region is mapped to a segment through a local cache
+  * region may map a whole segment, or may be a window into part of it
+  * protection (e.g. read/write/execute, user/system) is associated with each entire region
+  * concurrent access to a segment is allowed
+  * segment is always accessed via its corresponding cache
+  * memory manager implemented underneath
 - pros
-  * 
+  * paged and/or segmented memory
+  * written in C++
+  * allows efficient implementations
 - cons
-  * 
+  * written in C++
 - supervisor notes
   * 
 
@@ -708,12 +931,14 @@ In this paper, we show how a language with an advanced type system can address m
 > The overhead of copying data through the central processor by a message passing protocol limits data transfer bandwidth. If the network interface directly transfers the user's memory to the network by issuing DMA, such data copies may be eliminated. Since the DMA facility accesses the physical memory address space, user virtual memory must be pinned down to a physical memory location before the message is sent or received. If each message transfer involves pin-down and release kernel primitives, message transfer bandwidth will decrease since those primitives are quite expensive. The authors propose a zero copy message transfer with a pin-down cache technique which reuses the pinned-down area to decrease the number of calls to pin-down and release primitives. The proposed facility has been implemented in the PM low-level communication library on the RWC PC Cluster II, consisting of 64 Pentium Pro 200 MHz CPUs connected by a Myricom Myrinet network, and running NetBSD. The PM achieves 108.8 MBytes/sec for a 100% pin-down cache hit ratio and 78.7 MBytes/sec for all pin-down cache miss. The MPI library has been implemented on top of PM. According to the NAS parallel benchmarks result, an application is still better performance in case that cache miss ratio is very high.
 
 - general notes
-  * 
+  * zero copy message transfer mechanism
+  * cluster oriented
 - techniques
-  * 
+  * user-level library
+  * pinned memory pages in the pin-down area
 - pros
-  * 
+  * eliminate data copy between user specific data area and message buffer
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
