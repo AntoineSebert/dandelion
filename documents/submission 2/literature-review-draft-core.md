@@ -632,12 +632,33 @@ In this paper, we show how a language with an advanced type system can address m
 
 - general notes
   * algorithms
+  * important
+  * old but gold
 - techniques
-  * 
+  * priority-driven algorithms
+  * EDF/RM algorithms
+  * scheduling algorithm
+  	* static (fixed priority scheduling algorithm) : priorities are assigned to tasks once and for all
+  	* dynamic : priorities of tasks might change from request to request
+  	* mixed : priorities of some of the tasks are fixed yet the priorities of the remaining tasks vary from request to request
 - pros
-  * 
+  * algorithm which assigns priorities to tasks in a monotonic relation to their request rates was shown to be optimum among the class of all fixed priority scheduling algorithms
+  * dynamic deadline driven scheduling algorithm was then shown to be globally optimum and capable of achieving full processor utilization
+  * combination of the two scheduling algorithms was then discussed; this appears to provide most of the benefits of the deadline driven scheduling algorithm
 - cons
-  * 
+  * several assumptions
+    * (A1) The requests for all tasks for which hard deadlines exist are periodic, with
+  	constant interval between requests.
+    * (A2) Deadlines consist of run-ability constraints only--i.e, each task must be
+  	completed before the next request for it occurs.
+    * (A3) The tasks are independent in that requests for a certain task do not depend
+  	on the initiation or the completion of requests for other tasks.
+    * (A4) Run-time for each task is constant for that task and does not vary with
+  	time. Run-time here refers to the time wbich is taken by a processor to execute the
+  	task without interruption.
+    * (A5) Any nonperiodic tasks in the system are special; they are initialization or
+  	failure-recovery routines; they displace periodic tasks while they themselves are
+  	being run, and do not themselves have hard, critical deadlines.
 - supervisor notes
   * 
 
@@ -646,13 +667,26 @@ In this paper, we show how a language with an advanced type system can address m
 > This paper presents a feedback control real-time scheduling (FCS) framework for adaptive real-time systems. An advantage of the FCS framework is its use of feedback control theory (rather than ad hoc solutions) as a scientific underpinning. We apply a control theory based methodology to systematically design FCS algorithms to satisfy the transient and steady state performance specifications of real-time systems. In particular, we establish dynamic models of real-time systems and develop performance analyses of FCS algorithms, which are major challenges and key steps for the design of control theory based adaptive real-time systems. We also present a FCS architecture that allows plug-ins of different real-time scheduling policies and QoS optimization algorithms. Based on our framework, we identify different categories of real-time applications where different FCS algorithms should be applied. Performance evaluation results demonstrate that our analytically tuned FCS algorithms provide robust transient and steady state performance guarantees for periodic and aperiodic tasks even when the task execution times vary by as much as 100% from the initial estimate.
 
 - general notes
-  * 
+  * feedback control real-time scheduling (FCS) framework
 - techniques
-  * 
+  * two dynamic scheduling categories : in resource sufficient environment and resource insufficient environment
+  * resource sufficient environment : guaranteed that all tasks are a priori schedulable
+  * FCS algorithms
+  	* FC-U (feedback utilization control)
+  	* FC-M (feedback miss ratio control)
+  	* FC-UM (integrated utilization/miss ratio control)
+  * framework’s elements
+  	* scheduling architecture mapping feedback control structure to adaptive resource scheduling
+  	* a set of performance specifications and metrics to characterize both transient and steady state performance
+  	* control theory based design and methodology for resource scheduling algorithms
 - pros
-  * 
+  * allows developer to systematically design adaptive real-time systems to achieve desired performance guarantees in unpredictable environment
+  * stability
+  * system miss ratio and utilization remain close to the corresponding performance reference
+  * achieve satisfactory settling time and zero overshoot under the condition of equation in transient state
+  * periodic and aperiodic tasks
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -661,13 +695,51 @@ In this paper, we show how a language with an advanced type system can address m
 > Real-time multiprocessor systems are now commonplace. Designs range from single-chip architectures, with a modest number of processors, to large-scale signal-processing systems, such as synthetic-aperture radar systems. For uniprocessor systems, the problem of ensuring that deadline constraints are met has been widely studied: effective scheduling algorithms that take into account the many complexities that arise in real systems (e.g., synchronization costs, system overheads, etc.) are well understood. In contrast, researchers are just beginning to understand the trade-offs that exist in multiprocessor systems. In this chapter we analyze the trade-offs involved in scheduling independent, periodic real-time tasks on a multiprocessor.
 
 - general notes
-  * 
+  * theoretical
+  * exhaustive
 - techniques
-  * 
+  * scheduling periodic task systems on multiprocessors
+  * partitioning
+    * each task is assigned to a single processor, on which each of its jobs will execute, and processors are scheduled independently
+    * main advantage of partitioning approaches is that they reduce a multiprocessor scheduling problem to a set of uniprocessor ones
+    *  finding an optimal assignment of tasks to processors is a bin-packing problem, which is NP-hard in the strong sense. Thus, tasks are usually partitioned using non-optimal heuristics
+    * second, as shown later, task systems exist that are schedulable if and 2 only if tasks are not partitioned
+  * global scheduling 
+    * all eligible tasks are stored in a single priority-ordered queue; the global scheduler selects for execution the highest priority tasks from this queue
+    * using this approach with optimal uniprocessor scheduling algorithms, such as RM and EDF may result in arbitrarily low processor utilization in multiprocessor systems
+    * recent research on proportionate fair (Pfair) scheduling has shown considerable promise in that it has produced the only known optimal method for scheduling periodic tasks on multiprocessors
+  * middle
+    * each job is assigned to a single processor, while a task is allowed to migrate. In other words, inter-processor task migration is permitted only at job boundaries
+  * complexity of the priority scheme. Along this dimension, scheduling disciplines are categorized according to whether task priorities are
+    * static (RM)
+    * dynamic but fixed within a job (EDF)
+    * fully dynamic (LLF)
+  * The degree of migration allowed. Along this dimension, disciplines are ranked as follows
+    * no migration
+    * migration allowed, but only at job boundaries
+    * unrestricted migration
+  * work-conserving scheduling algorithms
+    * at each instant, a priority is associated with each active job, and the highest-priority jobs that are eligible to execute are selected for execution upon the available processors
+    * job is said to be active at time instant t in a given schedule if
+      * it has arrived at or prior to time t
+      * its deadline occurs after time t
+      * it has not yet completed execution
+  * scheduling algorithms taxonomy
+  	* Migration-based classification
+  		* Interprocessor migration has traditionally been forbidden in real-time systems for the following reasons:
+			* In many systems, the cost associated with each migration can be prohibitive
+			* Until recently, traditional real-time scheduling theory lacked the techniques, tools, and results to permit a detailed analysis of systems that allow migration. Hence, partitioning has been the preferred approach due largely to the non-existence of viable alternative approaches.
+		* No migration (partitioned) : set of tasks is partitioned into as many disjoint subsets as there are processors available, and each such subset is associated with a unique processor. All jobs generated by the tasks in a subset must execute only upon the corresponding processor.
+		* Restricted migration : each job must execute entirely upon a single processor. However, different jobs of the same task may execute upon different processors. Thus, the runtime context of each job needs to be maintained upon only one processor; however, the task-level context may be migrated
+		* Full migration : No restrictions are placed upon interprocessor migration
+	* Priority-based classification
+		* Static priorities : unique priority is associated with each task, and all jobs generated by a task have the priority associated with that task. Thus, if task T1 has higher priority than task T2, then whenever both have active jobs, T1’s job will have priority over T2’s job (RM)
+		* Job-level dynamic priorities : For every pair of jobs Ji and Jj, if Ji has higher priority than Jj at some instant in time, then Ji always has higher priority than Jj (EDF)
+		* Unrestricted dynamic priorities : No restrictions are placed on the priorities that may be assigned to jobs, and the relative priority of two jobs may change at any time (LLF)
 - pros
-  * 
+  * *null*
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -680,26 +752,17 @@ This paper compares RM against EDF under several aspects, using existing theoret
 - general notes
   * 
 - techniques
-  * 
+  * under EDF, deadlines need to be updated by the kernel at each job activation, because in a periodic task the absolute deadline changes from a job to the other
+  * EDF introduces less runtime overhead than RM, when context switches are taken into account
+  * number of preemptions that typically occur under RM is much higher than under EDF
+  * real advantage of RM with respect to EDF is its simpler implementation in commercial kernels that do not provide explicit support for timing constraints, such as periods and deadlines
+  * Other properties typically claimed for RM, such as predictability during overload conditions, or better jitter control, only apply for the highest priority task, and do not hold in general
+  * On the other hand, EDF allows a full processor utilization, which implies a more efficient exploitation of computational resources and a much better responsiveness of aperiodic activities. These properties become very important for embedded systems working with limited computational resources, and for multimedia systems, where quality of service is controlled through resource reservation mechanisms that are much more efficient under EDF
+  * both RM and EDF are not very well suited to work in overload conditions and to achieve jitter control. To cope with overloads, specific extensions have been proposed in the literature, both for aperiodic (Buttazzo and Stankovic, 1995) and periodic (Koren and Shasha, 1995) load. Also a method for jitter control under EDF has been addressed in Baruah et al. (1999) and can be adopted whenever needed
 - pros
-  * 
+  * *null*
 - cons
-  * 
-- supervisor notes
-  * 
-
-#### (2005) Real-Time Scheduling on Multicore Platforms
-
-> Multicore architectures, which have multiple processing units on a single chip, are widely viewed as a way to achieve higher processor performance, given that thermal and power problems impose limits on the performance of single-core designs. Accordingly, several chip manufacturers have already released, or will soon release, chips with dual cores, and it is predicted that chips with up to 32 cores will be available within a decade. To effectively use the available processing resources on multicore platforms, software designs should avoid co-executing applications or threads that can worsen the performance of shared caches, if not thrash them. While cache-aware scheduling techniques for such platforms have been proposed for throughput-oriented applications, to the best of our knowledge, no such work has targeted real-time applications. In this paper, we propose and evaluate a cache-aware Pfair-based scheduling scheme for real-time tasks on multicore platforms.
-
-- general notes
-  * 
-- techniques
-  * 
-- pros
-  * 
-- cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
