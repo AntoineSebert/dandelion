@@ -771,13 +771,17 @@ This paper compares RM against EDF under several aspects, using existing theoret
 > Caches have become invaluable for higher-end architectures to hide, in part, the increasing gap between processor speed and memory access times. While the effect of caches on timing predictability of single real-time tasks has been the focus of much research, bounding the overhead of cache warm-ups after preemptions remains a challenging problem, particularly for data caches. In this paper, we bound the penalty of cache interference for real-time tasks by providing accurate predictions of the data cache behavior across preemptions. For every task, we derive data cache reference patterns for all scalar and non-scalar references. Partial timing of a task is performed up to a preemption point using these patterns. The effects of cache interference are then analyzed using a settheoretic approach, which identifies the number and location of additional misses due to preemption. A feedback mechanism provides the means to interact with the timing analyzer, which subsequently times another interval of a task bounded by the next preemption. Our experimental results demonstrate that it is sufficient to consider the n most expensive preemption points, where n is the maximum possible number of preemptions. Further, it is shown that such accurate modeling of data cache behavior in preemptive systems significantly improves the WCET predictions for a task. To the best of our knowledge, our work of bounding preemption delay for data caches is unprecedented.
 
 - general notes
-  * 
+  * accurate predictions of the data cache behavior across preemptions
+  * preemptive system : task may be interrupted at any time by task with higher priority. some cache blocks may potentially be evicted from cache and would need to be reloaded when preempted task resumes execution
 - techniques
-  * 
+  * method to obtain the worst-case data cache related preemption delay for every task in a given task set
+  	* delay is added to the timing analysis results to derive a safe upper bound on the Worst Case Execution Time (WCET) of the task in the light of preemptions
+  	* use the WCET thus obtained in a response time analysis (RTA) equation to calculate the response time of every task
+  	* thus, we perform schedulability analysis on a task set. Any task whose response time is less than or equal to its deadline leads to a schedulable task set.
 - pros
-  * 
+  * tighter estimates of the WCET of tasks
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -786,58 +790,35 @@ This paper compares RM against EDF under several aspects, using existing theoret
 > Scheduling theory generally assumes that real-time systems are mostly composed of activities with hard real-time requirements. Many systems are built today by composing different applications or components in the same system, leading to a mixture of many different kinds of requirements with small parts of the system having hard real-time requirements and other larger parts with requirements for more flexible scheduling and for quality of service. Hard real-time scheduling techniques are extremely pessimistic for the latter part of the application, and consequently it is necessary to use techniques that let the system resources be fully utilized to achieve the highest possible quality. This paper presents a framework for a scheduling architecture that provides the ability to compose several applications or components into the system, and to flexibly schedule the available resources while guaranteeing hard real-time requirements. The framework (called FSF) is independent of the underlying implementation, and can run on different underlying scheduling strategies. It is based on establishing service contracts that represent the complex and flexible requirements of the applications, and which are managed by the underlying system to provide the required level of service.
 
 - general notes
-  * 
+  * scheduling framework
+  * many modern real-time systems : small fraction of the system could be considered to have hard deadlines, yet most of the rest of the system might have important timing or performance requirements
+  * abstract API
 - techniques
-  * 
+  * hierarchical scheduling architecture based on servers
+  * contract between application and scheduler
+  * Application requirements are defined as service contracts which provide an interface layer to the underlying servers provided by the operating system. Contracts can be verified at design time by providing off-line guarantees, or can be negotiated at runtime, when they may or may not be admitted
 - pros
-  * 
+  * *null*
 - cons
-  * 
+  * *null*
 - supervisor notes
-  * 
+  *  
 
-#### (2006) Interface-Based Design of Real-Time Systems with Hierarchical Scheduling
-
-> In interface-based design, components are described by a component interface. In contrast to a component description that describes what a component does, a component interface describes how a component can be used, and a well designed component interface provides enough information to decide whether two or more components can work together properly in a system. Real-Time Interfaces expand the idea of interfacebased design to the area of real-time system design, where the term of working together properly refers to questions like: Does the composed system satisfy all requested real-time properties such as delay and throughput constraints? In this work, we extend the theory of Real-Time Interfaces and prove its applicability for the design of systems with hierarchical scheduling. We introduce a component system for interface-based design of systems with mixed FP, RM and EDF scheduling. We then further extend the ability for hierarchic scheduling by introducing server components. The introduced component system with Real-Time Interfaces not only allows interface-based design of complex real-time systems with hierarchical scheduling, but also inherently enables detailed schedulability analysis of such systems.
-
-- general notes
-  * 
-- techniques
-  * 
-- pros
-  * 
-- cons
-  * 
-- supervisor notes
-  * 
-
-#### (2006) Task Partitioning with Replication upon Heterogeneous Multiprocessor Systems
-
-> The heterogeneous multiprocessor task partitioning with replication problem involves determining a mapping of recurring tasks upon a set consisting of different processing units in such a way that all tasks meet their timing constraints and no two replicas of the same task are assigned to the same processing unit. The replication requirement improves the resilience of the real-time system to a finite number of processor failures. This problem is NP-hard in the strong sense. We develop a Fully Polynomial-Time Approximation Scheme (FPTAS) for this problem.
-
-- general notes
-  * 
-- techniques
-  * 
-- pros
-  * 
-- cons
-  * 
-- supervisor notes
-  * 
-
-#### (2007) Extending Rate Monotonic Analysis with Exact Cost of Preemptions for Hard
+#### (2007) Extending Rate Monotonic Analysis with Exact Cost of Preemptions for Hard Real-Time Systems
 
 > In this paper we study hard real-time systems composed of independent periodic preemptive tasks where we assume that tasks are scheduled by using Liu & Layland's pioneering model following the rate monotonic analysis (RMA). For such systems, the designer must guarantee that all the deadlines of all the tasks are met, otherwise dramatic consequences occur. Certainly, guaranteeing deadlines is not always achievable because the preemption is approximated when using this analysis, and this approximation may lead to a wrong real-time execution whereas the schedulability analysis concluded that the system was schedulable. To cope with this problem the designer usually allows margins which are difficult to assess, and thus in any case lead to a waste of resources. This paper makes multiple contributions. First, we show that, when considering the cost of the preemption during the analysis, the critical instant does not occur upon simultaneous release of all tasks. Second, we provide a technique which counts the exact number of preemptions of each instance for all the tasks of a given system. Finally, we present an RMA extension which takes into account the exact cost due to preemption in the schedulability analysis rather than an approximation, thus yielding a new and stronger schedulability condition which eliminates the waste of resources since margins are not necessary.
 
 - general notes
-  * 
+  * often consist of independent periodic preemptive tasks that must meet their deadlines
+  * scheduling of the tasks is based on the assumption that the cost of the preemption is approximated within the worst case execution time (WCET) of tasks
+  * this approximation may be wrong : difficult to count exact number of preemptions of each instance for a given task even though the cost α of one preemption is easy to know for a given processor. Actually, this cost α represents the context switching time that the processor needs when a preemption occurs. The context switch includes the storage of the context as well as the restoration of the context
 - techniques
-  * 
+  * counts the exact number of preemptions for every intance of the task under consideration in a given task set
+  * RMA extension which takes into account the exact cost due to preemption in the  schedulability analysis
 - pros
-  * 
+  * guarantees a correct execution of the system and eliminates the waste of resources
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -848,13 +829,22 @@ refined throughout the years to the implementations you will encounter in some m
 The fundamental problem MLFQ tries to address is two-fold. First, it would like to optimize turnaround time, which, as we saw in the previous note, is done by running shorter jobs first; unfortunately, the OS doesn’t generally know how long a job will run for, exactly the knowledge that algorithms like SJF (or STCF) require. Second, MLFQ would like to make a system feel responsive to interactive users (i.e., users sitting and staring at the screen, waiting for a process to finish), and thus minimize response time; unfortunately, algorithms like Round Robin reduce response time but are terrible for turnaround time. Thus, our problem: given that we in general do not know anything about a process, how can we build a scheduler to achieve these goals? How can the scheduler learn, as the system runs, the characteristics of the jobs it is running, and thus make better scheduling decisions?
 
 - general notes
-  * 
+  * Multi-level Feed-back Queue
+  * optimize turnaround time
+  * not RTOS oriented
 - techniques
-  * 
+  * MLFQ varies the priority of a job based on its observed behavior
+  * Rule 1: If Priority(A) > Priority(B), A runs (B doesn’t)
+  * Rule 2: If Priority(A) = Priority(B), A & B run in round-robin fashion using the time slice (quantum length) of the given queue
+  * Rule 3: When a job enters the system, it is placed at the highest priority (the topmost queue)
+  * Rule 4: Once a job uses up its time allotment at a given level (regardless of how many times it has given up the CPU), its priority is reduced (i.e., it moves down one queue)
+  * Rule 5: After some time period S, move all the jobs in the system to the topmost queue.
 - pros
-  * 
+  * can deliver excellent overall performance (similar to SJF/STCF) for short-running interactive jobs
+  * fair
+  * makes progress for long-running CPU-intensive workloads
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -866,28 +856,16 @@ This book is a basic treatise on real-time computing, with particular emphasis o
 This book is written for instructional use and is organized to enable readers without a strong knowledge of the subject matter to quickly grasp the material. Technical concepts are clearly defined at the beginning of each chapter, and algorithm descriptions are corroborated through concrete examples, illustrations, and tables.
 
 - general notes
-  * 
+  * book
+  * dense
+  * general presentation of RTOS aspects
 - techniques
-  * 
+  * *null*
 - pros
-  * 
+  * very detailed
+  * comparative
 - cons
-  * 
-- supervisor notes
-  * 
-
-#### (2014) Adaptive Heterogeneous Scheduling for Integrated GPUs
-
-> Many processors today integrate a CPU and GPU on the same die, which allows them to share resources like physical memory and lowers the cost of CPU-GPU communication. As a consequence, programmers can effectively utilize both the CPU and GPU to execute a single application. This paper presents novel adaptive scheduling techniques for integrated CPU-GPU processors. We present two online profiling-based scheduling algorithms: naïve and asymmetric. Our asymmetric scheduling algorithm uses low-overhead online profiling to automatically partition the work of dataparallel kernels between the CPU and GPU without input from application developers. It does profiling on the CPU and GPU in a way that doesn't penalize GPU-centric workloads that run significantly faster on the GPU. It adapts to application characteristics by addressing: 1) load imbalance via irregularity caused by, e.g., data-dependent control flow, 2) different amounts of work on each kernel call, and 3) multiple kernels with different characteristics. Unlike many existing approaches primarily targeting NVIDIA discrete GPUs, our scheduling algorithm does not require offline processing. We evaluate our asymmetric scheduling algorithm on a desktop system with an Intel 4 th Generation Core Processor using a set of sixteen regular and irregular workloads from diverse application areas. On average, our asymmetric scheduling algorithm performs within 3.2% of the maximum throughput with a CPU-and-GPU oracle that always chooses the best work partitioning between the CPU and GPU. These results underscore the feasibility of online profile-based heterogeneous scheduling on integrated CPU-GPU processors.
-
-- general notes
-  * 
-- techniques
-  * 
-- pros
-  * 
-- cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
@@ -898,11 +876,19 @@ This book is written for instructional use and is organized to enable readers wi
 - general notes
   * 
 - techniques
-  * 
+  * ADBORROW algorithm is used to improve the time slice rotation strategy of EDF dynamic scheduling algorithm
+  * disadvantage of EDF : if a realtime task has completed the work in this cycle ahead of the allocated time slice, the rest of the free time and the rest of the real-time tasks can not use the CPU will cause the processor to be idle
+  * ADBORROW idea is to assign real-time tasks to several levels of service level, each server in accordance with a certain proportion of CPU
+  * (1) high priority tasks can preempt resources for low priority tasks
+  * (2) the cost of preemptive process can be ignored
+  * (3) only CPU resources are competitive, memory, I/O and other resources are sufficient
+  * (4) there is no binding between tasks
+  * (5) all tasks in the task set are periodic
+  * (6) the relative time limit of the task is equal to its cycle
 - pros
-  * 
+  * ADBORROW algorithm improves the real-time response of EDF to a certain extent
 - cons
-  * 
+  * *null*
 - supervisor notes
   * 
 
