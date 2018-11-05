@@ -19,9 +19,9 @@
   * lightweight
   * low-level
   * quite performant
+  * many-to-many communication
 - cons
   * focus about network characteristics/issues
-  * maybe for one-to-one communication
   * old
 - supervisor notes
   * 
@@ -101,6 +101,7 @@
   * focuses on Java/C++
 - techniques
   * Remote Method Invocation (RMI), Remote Procedure Call (RPC)
+  * serialization
 - pros
   * IPC through different languages
 - cons
@@ -132,7 +133,8 @@
 
 - general notes
   * patent
-  * data processing -related
+  * data processing-related
+  * not for use on a single machine
 - techniques
   * shared memory
 - pros
