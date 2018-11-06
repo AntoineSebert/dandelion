@@ -1,11 +1,10 @@
 <p align="center"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></p>
+[![License: CC BY-NC-SA 
+4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 # 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
 
 **Dandelion**. Make your mistakes more reliable.
-
-[![License: CC BY-NC-SA 
-4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 > Ainsi, toujours poussés vers de nouveaux rivages,
 >
@@ -158,6 +157,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 * [**Antoine/Anthony Sébert**](https://github.com/AntoineSebert) - *Design*
+	* I do not declare any conflict of interest. Besides trying to increase humanity's knowledge, this project is necessary for me to complete my cursus at The Robert Gordon University.
 * [**Antoine/Anthony Sébert's clone**](https://github.com/AntoineSebert) - *Implementation*
 * [**Antoine/Anthony Sébert's evil twin**](https://github.com/AntoineSebert) - *Bug creation*
 * [**Antoine/Anthony Sébert's future self**](https://github.com/AntoineSebert) - *Testing*
@@ -173,6 +173,6 @@ This project is licensed under the CC BY-NC-SA License - see the [LICENSE.md](LI
 ## Acknowledgments
 * My supervisor, [Petrovski](https://orcid.org/0000-0002-0987-2791)
 * M. Bartlett
-* N. Wiratunga (?)
+* N. Wiratunga
 * My friends for being here
 * My family
