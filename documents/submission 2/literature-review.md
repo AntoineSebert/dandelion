@@ -2,21 +2,20 @@
 
 ## Introduction
 
-* general description of your topic
-* highlight its importance
-* State that a review of the literature is valuable in understanding important aspects of your research area
-* Clarify the scope that overall organisation of the idea
+Real-Time Operating Systems (RTOS) is a type of Operating System (OS) that are bound to real-time constraints, often translated as deadlines, and meant to run real-time applications. Real-Time Computing (RTC) brings dedicated concepts to characterize such systems (the *jitter* for example), and divide the RTOS into three categories, depending on their tolerance :
+- hard: missing a deadline is considered a failure
+- firm: infrequent deadline misses are tolerated, but might deteriorate the system's reliability
+- soft: missing a deadline is tolerated but might deteriorate the system's reliability
 
-Real-Time Operating Systems (RTOS) are a type of Operating System (OS) that are bound to real-time constraints, often translated as deadlines, and meant to run real-time applications. Real-Time Computing (RTC) brings dedicated concepts to characterize such systems (the *jitter* for example, and divide the RTOS in three categories, depending on their tolerance :
-- hard : missing a deadline is considered a failure
-- firm : infrequent deadline misses are tolerated, but might deteriorate the system's reliability
-- soft : missing a deadline is tolerated, but might deteriorate the system's reliability
+RTOS encompasses many other computer science domains. In addition to the classics virtual memory management, file system, I/O handling, and IPC, they draw a particular attention to the scheduling algorithm (which is almost systematically preemptive), the processes management and the interrupts. Two main design philosophies currently coexist :
+- event-driven: preemption based on event's priorities
+- time-sharing: preemption on system clock interrupts and on events
 
-RTOS encompasses many other computer science domains. In addition to the classics virtual memory management, file system, I/O handling and IPC, they draw a particular attentin to the scheduling algorithm (which is almost systematically preemptive), the processes management and the interrupts. Two main design philosophies currently coexist :
-- event-driven : preemption based on event's priorities
-- time-sharing : preemption on system clock interrupts and on events
+Applications of such systems are multiple, especially in areas where reliability is a key aspect, even with radically different purposes. RTOS are typically found in astronautics, mainframes, aeronautics, robotics, or embedded systems in general (and IoT in particular). They are typically more tolerant to failures and more predictable, and particular care is taken about the implementation and the tests.
 
+However, new possibilities recently arose with the emergence of new tools centered around solving well-defined problems with commonly-used techniques. This brings us to Rust: originally created by Graydon Hoare, who worked at the Mozilla Foundation, it is now developed by the Rust project developers, centered around the language's Github repository. Designed to be fast and reliable, this language is memory safe, uses Resource Acquisition Is Initialization (RAII) to manage memory (avoiding the necessity of a garbage collector), supports polymorphism and natively supports concurrency.
 
+Whereas the majority of current RTOS have been conceived when Rust did not exist, they are written in C++. Hence a RTOS implemented in Rust seems very promising. Very few attempts in this area have been made, and yet RTC is a growing field in the need for a new generation of RTOS aimed to solve arising challenges.
 
 ## Body
 by **theme** : useful if several trends that can logically be considered separately before being brought together
