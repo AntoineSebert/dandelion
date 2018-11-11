@@ -40,26 +40,47 @@ Formally described long ago [**Hansen, 1970**], microkernels include at least a 
 
 ## Scheduling
 
-There are two main approaches when it comes to scheduling : preemptive scheduling and earliest deadline first. We will explore them in the next sections. Note that other approaches such as stochastic digraphs with multi-threaded graph traversal and cooperative scheduling can also be found.
+There are two main approaches when it comes to scheduling: preemptive scheduling and earliest deadline first. We will explore them in the next sections. Note that other approaches such as stochastic digraphs with multi-threaded graph traversal and cooperative scheduling can also be found.
 
 ### Preemptive scheduling
 
-The tasks can be interupted by another task with a higher priority or the scheduler itself, exception of the kernel tasks running in kernel mode which are usually not preemptible. So as not to be a bottleneck in systems where tasks are often preempted, context switches must be as fast as possible. The concept is itself divided in several derived scheduling policies, among which the most widespread are:
-- rate-monotonic scheduling : proven to be optimal in an environment of periodic tasks with static execution times [**Liu & Layland, 1973**], it assigns static priorities to tasks
-- round-robin scheduling : each task is allocated a fixed quantum of time, during which it is guaranteed to have access to a resource over all the other tasks [**Kleinrock, 1970**]
+The tasks can be interrupted by another task with a higher priority or the scheduler itself, exception of the kernel tasks running in kernel mode which are usually not preemptible. So as not to be a bottleneck in systems where tasks are often preempted, context switches must be as fast as possible. The concept is itself divided into several derived scheduling policies, among which the most widespread are:
+- rate-monotonic scheduling (RM): proven to be optimal in an environment of periodic tasks with static execution times [**Liu & Layland, 1973**], it assigns static priorities to tasks
+- round-robin scheduling (RR): each task is allocated a fixed quantum of time, during which it is guaranteed to have access to a resource over all the other tasks [**Kleinrock, 1970**]
 
-Preemptive scheduling can sometimes produce priority inversino hazards, which can be avoided by implementing priority inheritance [**Sha et al, 1990**], even it seems to raise deeper problems [**Yodaiken, 2004**].
+Preemptive scheduling can sometimes produce priority inversion hazards, which can be avoided by implementing priority inheritance [**Sha et al, 1990**], even it seems to raise deeper problems [**Yodaiken, 2004**].
 
-### Earliest deadline first
+### Earliest deadline first (EDF)
 
-[**Liu & Layland, 1973**]
+Dynamic priority algorithm based on a priority queue (a container that can be implemented in nearly all imperative languages). On a regular basis, and/or the occurrence of a particular event, the algorithm computes the priorities of the tasks in connection with their deadlines. It has been shown to reach a global optimum and capable of achieving full processor utilization [**Liu & Layland, 1973**].
+
+### Case studies
+
+According to a benchmarking study [**Buttazzo, 2005**], the processor utilization of EDF makes it more desirable for embedded applications and more responsive to aperiodic tasks, which tend to degrade predictability. The advantages of RM seems to mostly apply to high priority tasks. Modifications have been made to solve those problems and improve the two algorithms  [**Buttazzo & Stankovic, 1995; Koren & Shasha, 1995**].
 
 ## Virtual Memory Management
 
+The virtual memory is an abstraction provided by the OS to the programs and is a key feature for ensuring process isolation and other safety concerns. The virtual memory manager is responsible for load the needed data so as to be accessible to the processes as fast as possible. Despite the growth of the RAM and cache components in terms of available space, memory consumption increased as well, and the need to adequately manage data in fast memory units remained. It is worth mentioning that computers did not include this functionality until the early 1970s; we can cite THE multiprogramming system as a notable exception [**Dijkstra, 1967**], along with a few others. There are two ways to organize memory, paged memory and segmented memory, each resulting of a different point of view, that can also be combined [**Denning, 1970**].
 
+### Paged memory
+
+An organization based on blocks of contiguous addresses (page sizes can be variable, even inside an OS, but are typically 4kB nowadays). The addresses are translated using page tables and the pages themselves are managed by a paging supervisor including a page replacement algorithm. It is possible to pin memory pages, meaning they cannot be backed to a secondary storage, in order to guarantee a fast memory access to the OS processes and/or provide a fast IPC mechanism [**Tezuka & al, 1998**].
+
+### Segmented memory
+
+The memory is divided into segments that fit the processes logic. Addresses consist of a segment number and an offset within the segment. It is possible for programs to share segments, creating an IPC mechanism as fast as pinned memory (see above) that can be used by regular tasks [**Englander, 2003**]. It is possible to provide a fine control of the memory by associating permissions to segments.
+
+### Segmented paging
+
+In this solution, each segment is bound to a page table address. Increasing the memory available can be simply done by adding another page to the segment's page table. It is often cited as the best approach. [**Denning, 1970**]
+
+### Page replacement algorithms
+
+In a paged memory system, the page replacement algorithm is responsible for swapping memory pages to be allocated when a page fault occurs. Although there have been attempts to provide generic interfaces for page replacement algorithms [**Rashid et al, 1987; Abrossimov & Rozier, 1989**], the theoretically optimal page replacement algorithm has been found [**Belady, 1966**]. The other existing algorithms are Not recently used (NRU), First-in, first-out (FIFO), Second chance, Clock, Least recently used (LRU), Random, Not frequently used (NFU), Aging and Longest distance first (LDF). Those algorithms will not be studied in detail here. LRU-k, a derivate of LRU [**O'Neil et al, 1993**] may be a good choice for a RTOS, by its good use of Bayesian formula [**O'Neil et al, 1999**]. Derivates from Clock can also show good results [**Carr & Hennecy, 1981**]. Surprisingly, the Random algorithm is not a mediocre candidate and might be considered as a reasonable choice for a first virtual memory manager implementation. Finally, comparative of the most used page replacement algorithms make clear that beyond the differences in terms of performance or memory consumption in particular cases, the choice of an algorithm mainly depends on the environment [**Chavan et al, 2011**].
 
 ## Rust (vs other languages)
 
+Since Rust is quite a new technology and still maturing, very few scientific papers can be found. A part of the literature emanate from the developers of the project, and describe its design and operating; thus Rust has been guaranteed free from common problems related to memory (overflows, pointers) [**Anderson et al, 2016**]. Another part deal with implementations of various systems in Rust. The most important is without a doubt an implementation of an RTOS in Rust [**Heldring, 2018**], which is closely related to this project. However, a more attentive looks reveal that it is possible to go beyond, especially by adopting a Rust-only axis and a full utilization of the language's features. In the conclusion, the author is confident that "it is possible to build an RTOS in Rust with competitive performance to C or C++ RTOSes", and this is clear that this project aims to prove.
 
 ## Summary
 
