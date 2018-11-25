@@ -24,7 +24,7 @@ Written in C and originally developed by Victor Yodaiken, Michael Barabanov, Cor
 
 ### QNX
 
-QNX is a proprietary Unix-like RTOS developed by Blackberry Ltd. and aiming to run on embedded systems. First released in 1986, it is still active nowadays. Minimal (scheduler, IPC, interrupts and timers), QNX has been ported to a large number of platforms. Its IPC (including I/O) is based on task priority, which is uncommon enough to be noted [**Hildebrand, 1992**]. The scheduling policy is priority-preemptive and supports adaptive partition scheduling, to guarantee a minimal amount of resources to a group of tasks [**Dodge et al, 2005**]. It can run on multiprocessors systems; similarly to VxWorks, it shows a high reliability and determinism but is less performant [**Aroca & Caurin, 2009**].
+QNX is a proprietary Unix-like RTOS developed by Blackberry Ltd. and aiming to run on embedded systems. First released in 1986, it is still active nowadays. Minimal (scheduler, IPC, interrupts and timers), QNX has been ported to a large number of platforms. Its IPC (including I/O) is based on task priority, which is uncommon enough to be noted [**Hildebrand, 1992**]. The scheduling policy is priority-preemptive and supports adaptive partition scheduling, to guarantee a minimal amount of resources to a group of tasks [**Dodge et al, 2013**]. It can run on multiprocessors systems; similarly to VxWorks, it shows a high reliability and determinism but is less performant [**Aroca & Caurin, 2009**].
 
 ### RTAI
 
@@ -36,7 +36,7 @@ As a core feature of an OS, IPC is a very important topic. It is possible to div
 
 ## Microkernel
 
-Formally described long ago [**Hansen, 1970**], microkernels include at least a virtual memory manager, a scheduler and an IPC mechanism. Further characterization of the essential components has also been shown [**Kirsch et all, 2005**]. Although this design is widely accepted, it is only a theoretical definition, that does not prevent microkernel OS to encompass more features, or to provide interfaces for extensibility [**Bershad et all, 1994**], bringing a certain scalability to the system. With the same idea, running non- real-time applications on a guest OS, by virtualizing the hardware through interfaces, is possible [**Nelson et al, 2014**]. The choice of a microkernel is often related to embedded devices, which by nature are more limited in resources, in terms of computing [**Zuberi et all, 1999**] or electrical power [**Osman & Koren, 2003**].
+Formally described long ago [**Hansen, 1970**], microkernels include at least a virtual memory manager, a scheduler and an IPC mechanism. Further characterization of the essential components has also been shown [**Kirsch et al, 2005**]. Although this design is widely accepted, it is only a theoretical definition, that does not prevent microkernel OS to encompass more features, or to provide interfaces for extensibility [**Bershad et al, 1994**], bringing a certain scalability to the system. With the same idea, running non- real-time applications on a guest OS, by virtualizing the hardware through interfaces, is possible [**Nelson et al, 2014**]. The choice of a microkernel is often related to embedded devices, which by nature are more limited in resources, in terms of computing [**Zuberi et al, 1999**] or electrical power [**Osman & Koren, 2003**].
 
 ## Scheduling
 
@@ -80,7 +80,7 @@ In a paged memory system, the page replacement algorithm is responsible for swap
 
 ## Rust (vs other languages)
 
-Since Rust is quite a new technology and still maturing, very few scientific papers can be found. A part of the literature emanate from the developers of the project, and describe its design and operating; thus Rust has been guaranteed free from common problems related to memory (overflows, pointers) [**Anderson et al, 2016**]. Another part deal with implementations of various systems in Rust. The most important is without a doubt an implementation of an RTOS in Rust [**Heldring, 2018**], which is closely related to this project. However, a more attentive looks reveal that it is possible to go beyond, especially by adopting a Rust-only axis and a full utilization of the language's features. In the conclusion, the author is confident that "it is possible to build an RTOS in Rust with competitive performance to C or C++ RTOSes", and this is clear that this project aims to prove.
+Since Rust is quite a new technology and still maturing, very few scientific papers can be found. A part of the literature emanate from the developers of the project, and describe its design and operating; thus Rust has been guaranteed free from common problems related to memory (overflows, pointers) [**Anderson et al, 2016**]. Another part deal with implementations of various systems in Rust. The most important is without a doubt an implementation of an RTOS in Rust, which is closely related to this project. However, a more attentive looks reveal that it is possible to go beyond, especially by adopting a Rust-only axis and a full utilization of the language's features. In the conclusion, the author is confident that "*it is possible to build an RTOS in Rust with competitive performance to C or C++ RTOSes*" [**Heldring, 2018**], and this is clear that this project aims to prove.
 
 ## Summary
 
