@@ -6,7 +6,7 @@ by order of priority
 
 ### Virtual memory manager
 
-- the RTOS will ensure process isolation, memory safety, and the load/unload of process' data
+- the RTOS will ensure process isolation, memory safety, and the load/unload of process' data/context
 - segmented paging with P-LRU or LRU-k for page replacement
 - reach a very low page miss ratio (advance a precise value would be too hazardous for it is dependant on the environment characteristics)
 - one month estimation
