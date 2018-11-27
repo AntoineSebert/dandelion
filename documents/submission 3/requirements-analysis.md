@@ -22,8 +22,8 @@ by order of priority
 
 - bring to jobs a framework to communicate with each other
 - using signals, POSIX sockets
-- provide "confidentiality, integrity, and availability of information"1
-- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"2
+- provide "confidentiality, integrity, and availability of information"[^1]
+- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"[^2]
 - two weeks estimation
 
 ## Should
@@ -49,8 +49,8 @@ by order of priority
 
 - bring to jobs a framework to communicate with each other
 - using message queues, pipes, named pipes, shared memory
-- provide "confidentiality, integrity, and availability of information"1
-- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"2
+- provide "confidentiality, integrity, and availability of information"
+- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"
 - three weeks estimation
 
 ### filesystem
