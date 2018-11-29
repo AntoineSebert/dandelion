@@ -6,14 +6,14 @@ by order of priority
 
 ### Virtual memory manager
 
-- the RTOS will ensure process isolation, memory safety, and the load/unload of process' data/context
+- the RTOS will ensure process isolation, memory safety, and the load/unload of processes' data/context
 - segmented paging with P-LRU or LRU-k for page replacement
 - reach a very low page miss ratio (advance a precise value would be too hazardous for it is dependant on the environment characteristics)
 - one month estimation
 
 ### Scheduler
 
-- the scheduler will have a twofold aim: decide whether or not accept new jobs, and assign processor cores to jobs
+- the scheduler will have a threefold aim: decide whether or not accept new jobs, swap processes between the main memory and the secondary memory, and assign processor cores to jobs
 - will use EDF for short-term scheduling and RM for jobs acceptance
 - cause all jobs to meet their deadlines
 - two weeks estimation
@@ -22,13 +22,13 @@ by order of priority
 
 - bring to jobs a framework to communicate with each other
 - using signals, POSIX sockets
-- provide "confidentiality, integrity, and availability of information"[^1]
-- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"[^2]
+- provide "confidentiality, integrity, and availability of information"1
+- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"2
 - two weeks estimation
 
 ## Should
 
-### shell
+### Shell
 
 - create a command interpreter based on UNIX shells
 - the shell will include a recursive descent LALR parser with bottom-up passes
@@ -36,7 +36,7 @@ by order of priority
 - interact with the RTOS using a command interpreter
 - one week estimate
 
-### shell commands
+### Shell commands
 
 - create a set of basic commands to interact with the RTOS, based on Linux commands
 - the names and the syntax will be similar
@@ -53,7 +53,7 @@ by order of priority
 - allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"
 - three weeks estimation
 
-### filesystem
+### Filesystem
 
 - provide an abstraction layer to manage files
 - will use btrfs or an ad hoc solution
@@ -70,7 +70,7 @@ by order of priority
 
 ## Won't
 
-### network protocol
+### Network protocol
 
 - a network protocol to create a communication system where entities can exchange information
 - out of the scope of his project
