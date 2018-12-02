@@ -10,7 +10,8 @@
 
 ### 0.2.0-preparatory“Tactical Knowledge Review”
 - literature review
-- …
+- requirements analysis
+- diagrams
 
 ## Prototype
 
