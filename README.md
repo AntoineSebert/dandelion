@@ -17,17 +17,17 @@
 ## Table of contents
 
 - :fallen_leaf: [Motivation](#motivation)
-- 🌴 [Main design characteristics]
-- 💐 [Technical choices]
-- :ear_of_rice: [Getting started]
-  - :hibiscus: [Prerequisites]
+- 🌴 [Main design characteristics](#main design characteristics)
+- 💐 [Technical choices](#technical choices)
+- :ear_of_rice: [Getting started](#getting started)
+  - :hibiscus: [Prerequisites](#prerequisites)
   - :cherry_blossom: [Installing]
 - :sunflower: [Running the tests]
   - :tulip: [End to end tests]
   - :blossom: [Coding style tests]
 - :herb: [Deployment]
-- :maple_leaf: [Built tool]
-- 🌲 [Documentation]
+- :maple_leaf: [Built tool](#build tool)
+- 🌲 [Documentation](#documentation)
 - 🌹 [File hierarchy]
 - :seedling: [Contributing](#contributing)
 - :cactus: [Versioning](#versioning)
@@ -70,41 +70,47 @@ Dandelion is a hard time-sharing RTOS with a three-level scheduler
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#Deployment) for notes on how to deploy the project on a live system.
 
-```
-git clone https://github.com/AntoineSebert/dandelion
-make ... ?
-run dandelion
-```
-
 ### Prerequisites
-What things you need to install the software and how to install them.
-Qemu, rustc
 
-```
-Give examples
-```
+First of all, you need to install the Rust toolchain, available on the [official website](https://www.rust-lang.org).
+Then you need to install an emulator to run the RTOS. We recommand [Qemu](https://www.qemu.org/), but any other emulator able to read iso images is suitable for the job.
 
 ### Installing
-A step by step series of examples that tell you how to get a development env running.
 
+A step by step series of examples that tell you how to get a development env running.
 Say what the step will be
 
 ```
-Give the example
+git clone https://github.com/AntoineSebert/dandelion
+cd dandelion
 ```
 
-And repeat
+If you want to clone dandelion in a particular folder, use
 
 ```
-until finished
+git clone https://github.com/AntoineSebert/dandelion location
+cd location/dandelion
+```
+
+Then you need to build the project and generate an iso image of the RTOS.
+
+```
+cargo build
+cargo run parameters
+```
+
+```
+qemu ... dandelion.iso
 ```
 
 End with an example of getting some data out of the system or using it for a little demo.
 
 ## Running the tests
+
 Explain how to run the automated tests for this system.
 
 ### End to end tests
+
 Explain what these tests test and why.
 
 ```
@@ -112,6 +118,7 @@ Give an example
 ```
 
 ### Coding style tests
+
 Explain what these tests test and why.
 
 ```
@@ -124,11 +131,11 @@ Add additional notes about how to deploy this on a live system.
 
 ## Built tool
 
-* [cargo](http://www.example.com) - …
+* [cargo](http://www.example.com) - the official Rust build tool
 
 ## Documentation
 
-...
+The documentation for this repository can be found at https://github.com/AntoineSebert/dandelion/documentation
 
 ## File hierarchy
 
@@ -205,6 +212,28 @@ Add additional notes about how to deploy this on a live system.
   |  +--dandelion_logo.png
   |  +--dandelion_logo.svg
   +--src/
+  |  +--kernel/
+  |  |  +--core/
+  |  |  +-optional/
+  |  |     +--filesystem/
+  |  |     |  +--ipc_mechanism/
+  |  |     |  |  +--optional/
+  |  |     |  |  |  +--pipes/
+  |  |     |  |  |  | +--named_pipes/
+  |  |     |  |  |  +--queues/
+  |  |     |  |  |  +--shared_memory/
+  |  |     |  |  +--signals/
+  |  |     |  |  +--sockets/
+  |  |     |  +--scheduler/
+  |  |     |  +--shell/
+  |  |     |  |  +--commands/
+  |  |     |  |  +--interpreter/
+  |  |     |  +--virtual_memory_manager/
+  |  |     +--io/
+  |  |        +--keyboard/
+  |  |        +--screen/
+  |  |        +--speaker/
+  |  +--modules/
   +--target/
   +--tests/
 
