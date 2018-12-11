@@ -1,4 +1,6 @@
-<p align="center"><img src="resources/dandelion-logo.png" alt="Dandelion" width="200"></p>
+<p align=center><img src=resources/dandelion_logo.svg alt=Dandelion width=200></p>
+
+
 [![License: CC BY-NC-SA 
 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
@@ -66,7 +68,7 @@ Dandelion is a hard time-sharing RTOS with a three-level scheduler
 * data exchange format : JSON
 * documents format : Markdown
 
-## Getting Started
+## Getting started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#Deployment) for notes on how to deploy the project on a live system.
 
@@ -129,7 +131,7 @@ Give an example
 
 Add additional notes about how to deploy this on a live system.
 
-## Built tool
+## Build tool
 
 * [cargo](http://www.example.com) - the official Rust build tool
 
