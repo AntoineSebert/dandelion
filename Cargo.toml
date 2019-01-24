@@ -4,19 +4,15 @@ version = "0.1.0"
 authors = ["Antoine \"Anthony\" Sébert <antoine.sb@orange.fr>"]
 publish = false
 description = "Microkernel Real-Time Operating System in Rust"
-
-# These URLs point to more information about the package. These are intended to be webviews of the relevant data, not necessarily compatible with VCS tools and the like.
-documentation = "..."
+documentation = "https://github.com/AntoineSebert/dandelion/documentation"
 homepage = "https://github.com/AntoineSebert/dandelion"
 repository = "https://github.com/AntoineSebert/dandelion"
-
 readme = "README.md"
 keywords = ["real-time", "OS", "RTOS", "microkernel"]
 categories = ["embedded", "no-std"]
 license = "CC-BY-NC-SA-4.0"
 
 # Optional specification of badges to be displayed on crates.io.
-#
 # - The badges pertaining to build status that are currently available are Appveyor, CircleCI, GitLab, and TravisCI.
 # - Available badges pertaining to code test coverage are Codecov and Coveralls.
 # - There are also maintenance-related badges based on isitmaintained.com which state the issue resolution time, percent of open issues, and future maintenance intentions.
@@ -49,7 +45,16 @@ bench = true
 doc = true
 
 [dependencies]
-bootloader = "0.3.12"
+bootloader = "^0.3.12"
+volatile = "^0.2.3"
+spin = "^0.4.9"
+
+[dependencies.lazy_static]
+version = "^1.0"
+features = ["spin_no_std"]
+
+[dev-dependencies]
+array-init = "0.0.3"
 
 [package.metadata.bootimage]
 default-target = "x86_64-dandelion.json"

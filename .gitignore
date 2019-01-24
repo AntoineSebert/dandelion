@@ -5,3 +5,4 @@ resources/osal-2.10
 target/debug/
 target/sysroot/
 target/x86_64-dandelion/debug/
+target/.rustc_info.json
