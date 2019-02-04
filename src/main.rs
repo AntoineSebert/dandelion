@@ -17,8 +17,8 @@ bootable USB
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 
-// crates
-//extern crate x86_64;
+extern crate pic8259_simple;
+extern crate dandelion;
 
 // modules
 mod vga_buffer;
@@ -32,12 +32,17 @@ mod serial;
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+	use dandelion::interrupts::PICS;
+
 	println!("Hello World{}", "!");
 
 	dandelion::gdt::init();
 	dandelion::interrupts::init_idt();
+	unsafe { PICS.lock().initialize() };
+	x86_64::instructions::interrupts::enable();
+
 	println!("It did not crash!");
-	loop {}
+	dandelion::hlt_loop();
 }
 
 /*
@@ -50,5 +55,5 @@ use core::panic::PanicInfo;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
-	loop {}
+	dandelion::hlt_loop();
 }

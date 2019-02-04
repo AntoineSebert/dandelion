@@ -6,6 +6,7 @@
 extern crate lazy_static;
 extern crate spin;
 extern crate volatile;
+extern crate x86_64;
 
 use core::fmt;
 use self::lazy_static::lazy_static;
@@ -165,7 +166,11 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
 	use core::fmt::Write;
-	WRITER.lock().write_fmt(args).unwrap();
+	use self::x86_64::instructions::interrupts;
+
+	interrupts::without_interrupts(|| {
+		WRITER.lock().write_fmt(args).unwrap();
+	});
 }
 
 /*

@@ -6,6 +6,7 @@
 extern crate uart_16550;
 extern crate spin;
 extern crate lazy_static;
+extern crate x86_64;
 
 use self::uart_16550::SerialPort;
 use self::spin::Mutex;
@@ -26,7 +27,14 @@ lazy_static! {
  #[doc(hidden)]
 pub fn _print(args: ::core::fmt::Arguments) {
 	use core::fmt::Write;
-	SERIAL1.lock().write_fmt(args).expect("Printing to serial failed");
+	use self::x86_64::instructions::interrupts;
+
+	interrupts::without_interrupts(|| {
+		SERIAL1
+			.lock()
+			.write_fmt(args)
+			.expect("Printing to serial failed");
+	});
 }
 
 /// Prints to the host through the serial interface.

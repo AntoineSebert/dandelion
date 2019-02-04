@@ -8,6 +8,10 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
+extern crate dandelion;
+extern crate lazy_static;
+extern crate x86_64;
+
 use dandelion::{exit_qemu, serial_println};
 use core::panic::PanicInfo;
 use lazy_static::lazy_static;
@@ -56,8 +60,11 @@ lazy_static! {
 	static ref TEST_IDT: InterruptDescriptorTable = {
 		let mut idt = InterruptDescriptorTable::new();
 		unsafe {
-			idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(dandelion::gdt::DOUBLE_FAULT_IST_INDEX);
+			idt.double_fault
+				.set_handler_fn(double_fault_handler)
+				.set_stack_index(dandelion::gdt::DOUBLE_FAULT_IST_INDEX);
 		}
+
 		idt
 	};
 }
