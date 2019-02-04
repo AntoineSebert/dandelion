@@ -1,3 +1,8 @@
+/*
+ * @author	Antoine "Anthony" Louis Thibaut Sébert
+ * @date	03/02/2019
+ */
+
 #![feature(abi_x86_interrupt)]
 #![no_std]
 #![cfg_attr(not(test), no_main)]

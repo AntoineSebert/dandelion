@@ -1,6 +1,6 @@
 /*
- * @author  Antoine "Anthony" Louis Thibaut Sébert
- * @date    03/02/2019
+ * @author	Antoine "Anthony" Louis Thibaut Sébert
+ * @date	03/02/2019
  */
 
 extern crate x86_64;
