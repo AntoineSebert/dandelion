@@ -37,19 +37,12 @@ is-it-maintained-open-issues = { repository = "..." }
 
 maintenance = { status = "actively-developed" }
 
-[[bin]]
-name = "dandelion"
-path = "src/kernel/core/main.rs"
-test = true
-bench = true
-doc = true
-
 [dependencies]
 bootloader = "^0.3.12"
 volatile = "^0.2.3"
 spin = "^0.4.9"
 uart_16550 = "^0.1.0"
-x86_64 = "^0.3.5"
+x86_64 = "^0.4.0"
 
 [dependencies.lazy_static]
 version = "^1.0"
@@ -60,6 +53,3 @@ array-init = "^0.0.3"
 
 [package.metadata.bootimage]
 default-target = "x86_64-dandelion.json"
-
-[features]
-integration-test = []
