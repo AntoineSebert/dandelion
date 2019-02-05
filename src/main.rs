@@ -25,10 +25,13 @@ bootable USB
 extern crate dandelion;
 extern crate pic8259_simple;
 extern crate x86_64;
+extern crate bootloader;
 
-// modules
-mod serial;
-mod vga_buffer;
+use dandelion::println;
+use dandelion::memory;
+use bootloader::{bootinfo::BootInfo, entry_point};
+
+entry_point!(kernel_main);
 
 /*
  * OS entry point override
@@ -37,7 +40,7 @@ mod vga_buffer;
 
 #[cfg(not(test))]
 #[no_mangle]
-pub extern "C" fn _start() -> ! {
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::interrupts::PICS;
 
 	println!("Hello World{}", "!");
@@ -47,17 +50,12 @@ pub extern "C" fn _start() -> ! {
 	unsafe { PICS.lock().initialize() };
 	x86_64::instructions::interrupts::enable();
 
-	 use dandelion::memory::{self, translate_addr};
+	let mut recursive_page_table = unsafe { memory::init(boot_info.p4_table_addr as usize) };
+	let mut frame_allocator = memory::init_frame_allocator(&boot_info.memory_map);
 
-	const LEVEL_4_TABLE_ADDR: usize = 0o_177777_777_777_777_777_0000;
-	let recursive_page_table = unsafe { memory::init(LEVEL_4_TABLE_ADDR) };
+	memory::create_example_mapping(&mut recursive_page_table, &mut frame_allocator);
+	unsafe { (0xdeadbeaf900 as *mut u64).write_volatile(0xf021f077f065f04e) };
 
-	// the identity-mapped vga buffer page
-	println!("0xb8000 -> {:?}", translate_addr(0xb8000, &recursive_page_table));
-	// some code page
-	println!("0x20010a -> {:?}", translate_addr(0x20010a, &recursive_page_table));
-	// some stack page
-	println!("0x57ac001ffe48 -> {:?}", translate_addr(0x57ac001ffe48, &recursive_page_table));
 
 	println!("It did not crash!");
 	dandelion::hlt_loop();
