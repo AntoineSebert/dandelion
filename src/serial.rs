@@ -3,14 +3,14 @@
  * @date	20/01/2019
  */
 
-extern crate uart_16550;
-extern crate spin;
 extern crate lazy_static;
+extern crate spin;
+extern crate uart_16550;
 extern crate x86_64;
 
-use self::uart_16550::SerialPort;
-use self::spin::Mutex;
 use self::lazy_static::lazy_static;
+use self::spin::Mutex;
+use self::uart_16550::SerialPort;
 
 lazy_static! {
 	pub static ref SERIAL1: Mutex<SerialPort> = {
@@ -24,10 +24,10 @@ lazy_static! {
  * Macros
  */
 
- #[doc(hidden)]
+#[doc(hidden)]
 pub fn _print(args: ::core::fmt::Arguments) {
-	use core::fmt::Write;
 	use self::x86_64::instructions::interrupts;
+	use core::fmt::Write;
 
 	interrupts::without_interrupts(|| {
 		SERIAL1

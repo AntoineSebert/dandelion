@@ -18,7 +18,9 @@ use dandelion::{exit_qemu, serial_println};
 pub extern "C" fn _start() -> ! {
 	serial_println!("ok");
 
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }
 
@@ -30,6 +32,8 @@ fn panic(info: &PanicInfo) -> ! {
 
 	serial_println!("{}", info);
 
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }

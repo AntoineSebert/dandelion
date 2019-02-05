@@ -6,13 +6,13 @@
 #![cfg_attr(not(test), no_std)] // don't link the Rust standard library
 #![feature(abi_x86_interrupt)]
 #[cfg(not(windows))]
-
 extern crate x86_64;
 
-pub mod vga_buffer;
-pub mod serial;
-pub mod interrupts;
 pub mod gdt;
+pub mod interrupts;
+pub mod serial;
+pub mod vga_buffer;
+pub mod memory;
 
 pub unsafe fn exit_qemu() {
 	use x86_64::instructions::port::Port;

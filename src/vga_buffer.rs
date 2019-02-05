@@ -8,10 +8,10 @@ extern crate spin;
 extern crate volatile;
 extern crate x86_64;
 
-use core::fmt;
 use self::lazy_static::lazy_static;
 use self::spin::Mutex;
 use self::volatile::Volatile;
+use core::fmt;
 
 lazy_static! {
 	pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
@@ -113,7 +113,6 @@ impl Writer {
 				// not part of printable ASCII range
 				_ => self.write_byte(0xfe),
 			}
-
 		}
 	}
 	fn new_line(&mut self) {
@@ -165,8 +164,8 @@ macro_rules! println {
 
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
-	use core::fmt::Write;
 	use self::x86_64::instructions::interrupts;
+	use core::fmt::Write;
 
 	interrupts::without_interrupts(|| {
 		WRITER.lock().write_fmt(args).unwrap();
@@ -217,12 +216,10 @@ mod test {
 				if i == BUFFER_HEIGHT - 1 && j == 0 {
 					assert_eq!(screen_char.ascii_character, b'X');
 					assert_eq!(screen_char.color_code, writer.color_code);
-				}
-				else if i == BUFFER_HEIGHT - 1 && j == 1 {
+				} else if i == BUFFER_HEIGHT - 1 && j == 1 {
 					assert_eq!(screen_char.ascii_character, b'Y');
 					assert_eq!(screen_char.color_code, writer.color_code);
-				}
-				else {
+				} else {
 					assert_eq!(screen_char, empty_char());
 				}
 			}

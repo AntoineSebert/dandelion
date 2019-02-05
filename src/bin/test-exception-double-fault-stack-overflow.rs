@@ -12,8 +12,8 @@ extern crate dandelion;
 extern crate lazy_static;
 extern crate x86_64;
 
-use dandelion::{exit_qemu, serial_println};
 use core::panic::PanicInfo;
+use dandelion::{exit_qemu, serial_println};
 use lazy_static::lazy_static;
 
 #[cfg(not(test))]
@@ -73,7 +73,10 @@ pub fn init_test_idt() {
 	TEST_IDT.load();
 }
 
-extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn double_fault_handler(
+	_stack_frame: &mut ExceptionStackFrame,
+	_error_code: u64,
+) {
 	serial_println!("ok");
 
 	unsafe {
