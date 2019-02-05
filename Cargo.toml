@@ -1,6 +1,6 @@
 [package]
 name = "dandelion"
-version = "1.0.0"
+version = "0.1.0"
 authors = ["Antoine \"Anthony\" Sébert <antoine.sb@orange.fr>"]
 publish = false
 description = "Microkernel Real-Time Operating System in Rust"
