@@ -54,7 +54,10 @@ extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut ExceptionStackFra
 	println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn double_fault_handler(
+	stack_frame: &mut ExceptionStackFrame,
+	_error_code: u64,
+) {
 	println!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 	hlt_loop();
 }
@@ -89,7 +92,10 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Exceptio
 	unsafe { PICS.lock().notify_end_of_interrupt(KEYBOARD_INTERRUPT_ID) }
 }
 
-extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
+extern "x86-interrupt" fn page_fault_handler(
+	stack_frame: &mut ExceptionStackFrame,
+	_error_code: PageFaultErrorCode,
+) {
 	use crate::hlt_loop;
 	use x86_64::registers::control::Cr2;
 

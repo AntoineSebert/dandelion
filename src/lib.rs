@@ -10,9 +10,9 @@ extern crate x86_64;
 
 pub mod gdt;
 pub mod interrupts;
+pub mod memory;
 pub mod serial;
 pub mod vga_buffer;
-pub mod memory;
 
 pub unsafe fn exit_qemu() {
 	use x86_64::instructions::port::Port;

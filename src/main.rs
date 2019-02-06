@@ -22,14 +22,14 @@ bootable USB
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 
+extern crate bootloader;
 extern crate dandelion;
 extern crate pic8259_simple;
 extern crate x86_64;
-extern crate bootloader;
 
-use dandelion::println;
-use dandelion::memory;
 use bootloader::{bootinfo::BootInfo, entry_point};
+use dandelion::memory;
+use dandelion::println;
 
 entry_point!(kernel_main);
 
@@ -55,7 +55,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 	memory::create_example_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0xdeadbeaf900 as *mut u64).write_volatile(0xf021f077f065f04e) };
-
 
 	println!("It did not crash!");
 	dandelion::hlt_loop();
