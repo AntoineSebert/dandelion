@@ -27,10 +27,10 @@ extern crate bootloader;
 extern crate dandelion;
 extern crate pic8259_simple;
 extern crate x86_64;
+extern crate integer_sqrt;
 
 // uses
 use bootloader::{bootinfo::BootInfo, entry_point};
-use dandelion::memory;
 use dandelion::println;
 
 /*
@@ -52,6 +52,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	unsafe { PICS.lock().initialize() };
 	x86_64::instructions::interrupts::enable();
 
+	sample_job(4294967296);
+
 	println!("It did not crash!");
 	dandelion::hlt_loop();
 }
@@ -72,6 +74,29 @@ fn panic(info: &PanicInfo) -> ! {
 /*
  * Sample job streaming prime numbers up to 2^64
  */
-fn sample_job () {
-
+fn sample_job (limit: u64) {
+	use integer_sqrt::IntegerSquareRoot;
+	println!("2");
+	let mut counter: u64 = 3;
+	loop {
+		if limit < counter {
+			break;
+		}
+		let mut counter2 = 3;
+		let mut is_prime = true;
+		loop {
+			if counter.integer_sqrt() < counter2 {
+				break;
+			}
+			if counter % counter2 == 0 {
+				is_prime = false;
+				break;
+			}
+			counter2 += 2;
+		}
+		if is_prime {
+			println!("{}", counter);
+		}
+		counter += 2;
+	}
 }
