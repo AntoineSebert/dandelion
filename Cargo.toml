@@ -12,6 +12,10 @@ readme = "README.md"
 keywords = ["real-time", "OS", "RTOS", "microkernel"]
 categories = ["embedded", "no-std"]
 license = "CC-BY-NC-SA-4.0"
+doc = true
+test = true
+doctest = true
+bench = true
 
 # Optional specification of badges to be displayed on crates.io.
 # - The badges pertaining to build status that are currently available are Appveyor, CircleCI, GitLab, and TravisCI.
@@ -27,8 +31,18 @@ appveyor = { repository = "...", branch = "master", service = "github" }
 # Travis CI: `repository` in format "<user>/<project>" is required. `branch` is optional; default is `master`
 travis-ci = { repository = "...", branch = "master" }
 
+# Circle CI: `repository` is required. `branch` is optional; default is `master`
+circle-ci = { repository = "...", branch = "master" }
+
+# GitLab: `repository` is required. `branch` is optional; default is `master`
+gitlab = { repository = "...", branch = "master" }
+
 # Codecov: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default), `bitbucket`, and `gitlab`.
 codecov = { repository = "...", branch = "master", service = "github" }
+
+# Coveralls: `repository` is required. `branch` is optional; default is `master`
+# `service` is optional; valid values are `github` (default) and `bitbucket`.
+coveralls = { repository = "...", branch = "master", service = "github" }
 
 # Is it maintained resolution time: `repository` is required.
 is-it-maintained-issue-resolution = { repository = "..." }
@@ -57,3 +71,5 @@ array-init = "^0.0.3"
 
 [package.metadata.bootimage]
 default-target = "x86_64-dandelion.json"
+
+#[[example]]

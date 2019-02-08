@@ -5,9 +5,11 @@
 
 /*
 run
-	cls && bootimage build && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04
+	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04
 tests
-	bootimage test
+	cls && bootimage test
+both
+	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
 bootable USB
 	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
 */
@@ -31,7 +33,7 @@ extern crate x86_64;
 
 // uses
 use bootloader::{bootinfo::BootInfo, entry_point};
-use dandelion::println;
+use dandelion::{println, memory};
 
 /*
  * OS entry point override
