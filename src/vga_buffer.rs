@@ -8,9 +8,7 @@ extern crate spin;
 extern crate volatile;
 extern crate x86_64;
 
-use self::lazy_static::lazy_static;
-use self::spin::Mutex;
-use self::volatile::Volatile;
+use self::{lazy_static::lazy_static, spin::Mutex, volatile::Volatile};
 use core::fmt;
 
 lazy_static! {
@@ -99,14 +97,12 @@ impl Writer {
 				let col = self.column_position;
 
 				let color_code = self.color_code;
-				self.buffer.chars[row][col].write(ScreenChar {
-					ascii_character: byte,
-					color_code: color_code,
-				});
+				self.buffer.chars[row][col].write(ScreenChar { ascii_character: byte, color_code: color_code });
 				self.column_position += 1;
 			}
 		}
 	}
+
 	pub fn write_string(&mut self, s: &str) {
 		for byte in s.bytes() {
 			match byte {
@@ -117,6 +113,7 @@ impl Writer {
 			}
 		}
 	}
+
 	fn new_line(&mut self) {
 		for row in 1..BUFFER_HEIGHT {
 			for col in 0..BUFFER_WIDTH {
@@ -127,11 +124,9 @@ impl Writer {
 		self.clear_row(BUFFER_HEIGHT - 1);
 		self.column_position = 0;
 	}
+
 	fn clear_row(&mut self, row: usize) {
-		let blank = ScreenChar {
-			ascii_character: b' ',
-			color_code: self.color_code,
-		};
+		let blank = ScreenChar { ascii_character: b' ', color_code: self.color_code };
 		for col in 0..BUFFER_WIDTH {
 			self.buffer.chars[row][col].write(blank);
 		}
@@ -194,16 +189,11 @@ mod test {
 
 	fn construct_buffer() -> Buffer {
 		use self::array_init::array_init;
-		Buffer {
-			chars: array_init(|_| array_init(|_| Volatile::new(empty_char()))),
-		}
+		Buffer { chars: array_init(|_| array_init(|_| Volatile::new(empty_char()))) }
 	}
 
 	fn empty_char() -> ScreenChar {
-		ScreenChar {
-			ascii_character: b' ',
-			color_code: ColorCode::new(Color::Green, Color::Brown),
-		}
+		ScreenChar { ascii_character: b' ', color_code: ColorCode::new(Color::Green, Color::Brown) }
 	}
 
 	#[test]

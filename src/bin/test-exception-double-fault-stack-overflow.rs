@@ -69,14 +69,9 @@ lazy_static! {
 	};
 }
 
-pub fn init_test_idt() {
-	TEST_IDT.load();
-}
+pub fn init_test_idt() { TEST_IDT.load(); }
 
-extern "x86-interrupt" fn double_fault_handler(
-	_stack_frame: &mut ExceptionStackFrame,
-	_error_code: u64,
-) {
+extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
 	serial_println!("ok");
 
 	unsafe {

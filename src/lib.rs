@@ -6,7 +6,6 @@
 #![cfg_attr(not(test), no_std)] // don't link the Rust standard library
 #![feature(abi_x86_interrupt)]
 #[cfg(not(windows))]
-
 extern crate x86_64;
 
 pub mod gdt;

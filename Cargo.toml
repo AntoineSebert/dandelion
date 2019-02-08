@@ -2,6 +2,7 @@
 name = "dandelion"
 version = "0.1.0"
 authors = ["Antoine \"Anthony\" Sébert <antoine.sb@orange.fr>"]
+edition = "2018"
 publish = false
 description = "Microkernel Real-Time Operating System in Rust"
 documentation = "https://github.com/AntoineSebert/dandelion/documentation"

@@ -5,7 +5,7 @@
 
 /*
 run
-	cls && bootimage build && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 -display none
+	cls && bootimage build && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04
 tests
 	bootimage test
 bootable USB
@@ -15,7 +15,7 @@ bootable USB
 /*
  * #[pure] : pure function
  * #[] : no side effects
-*/
+ */
 
 // configuration
 #![cfg_attr(not(test), no_std)]
@@ -25,9 +25,9 @@ bootable USB
 // crates
 extern crate bootloader;
 extern crate dandelion;
+extern crate integer_sqrt;
 extern crate pic8259_simple;
 extern crate x86_64;
-extern crate integer_sqrt;
 
 // uses
 use bootloader::{bootinfo::BootInfo, entry_point};
@@ -52,6 +52,9 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	unsafe { PICS.lock().initialize() };
 	x86_64::instructions::interrupts::enable();
 
+	let mut recursive_page_table = unsafe { memory::init(boot_info.p4_table_addr as usize) };
+	let mut frame_allocator = memory::init_frame_allocator(&boot_info.memory_map);
+
 	sample_job(4294967296);
 
 	println!("It did not crash!");
@@ -74,7 +77,7 @@ fn panic(info: &PanicInfo) -> ! {
 /*
  * Sample job streaming prime numbers up to 2^64
  */
-fn sample_job (limit: u64) {
+fn sample_job(limit: u64) {
 	use integer_sqrt::IntegerSquareRoot;
 	println!("2");
 	let mut counter: u64 = 3;

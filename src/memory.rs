@@ -6,11 +6,13 @@
 extern crate bootloader;
 extern crate x86_64;
 
-use self::bootloader::bootinfo::{MemoryMap, MemoryRegionType};
-use self::x86_64::structures::paging::{
-	FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB,
+use self::{
+	bootloader::bootinfo::{MemoryMap, MemoryRegionType},
+	x86_64::{
+		structures::paging::{FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB},
+		PhysAddr, VirtAddr,
+	},
 };
-use self::x86_64::{PhysAddr, VirtAddr};
 
 /// Creates a RecursivePageTable instance from the level 4 address.
 ///
@@ -30,13 +32,9 @@ pub unsafe fn init(level_4_table_addr: usize) -> RecursivePageTable<'static> {
 }
 
 /// Create a FrameAllocator from the passed memory map
-pub fn init_frame_allocator(
-	memory_map: &'static MemoryMap,
-) -> BootInfoFrameAllocator<impl Iterator<Item = PhysFrame>> {
+pub fn init_frame_allocator(memory_map: &'static MemoryMap) -> BootInfoFrameAllocator<impl Iterator<Item = PhysFrame>> {
 	// get usable regions from memory map
-	let regions = memory_map
-		.iter()
-		.filter(|r| r.region_type == MemoryRegionType::Usable);
+	let regions = memory_map.iter().filter(|r| r.region_type == MemoryRegionType::Usable);
 	// map each region to its address range
 	let addr_ranges = regions.map(|r| r.range.start_addr()..r.range.end_addr());
 	// transform to an iterator of frame start addresses
@@ -76,9 +74,7 @@ pub fn create_example_mapping(
 pub struct EmptyFrameAllocator;
 
 impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
-	fn allocate_frame(&mut self) -> Option<PhysFrame> {
-		None
-	}
+	fn allocate_frame(&mut self) -> Option<PhysFrame> { None }
 }
 
 pub struct BootInfoFrameAllocator<I>
@@ -92,7 +88,5 @@ impl<I> FrameAllocator<Size4KiB> for BootInfoFrameAllocator<I>
 where
 	I: Iterator<Item = PhysFrame>,
 {
-	fn allocate_frame(&mut self) -> Option<PhysFrame> {
-		self.frames.next()
-	}
+	fn allocate_frame(&mut self) -> Option<PhysFrame> { self.frames.next() }
 }
