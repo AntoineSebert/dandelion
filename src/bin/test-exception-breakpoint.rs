@@ -3,12 +3,15 @@
  * @date	03/02/2019
  */
 
+// configuration
 #![no_std]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
+// crates
 extern crate dandelion;
 
+// uses
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 

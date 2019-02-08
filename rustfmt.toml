@@ -16,3 +16,4 @@ color = "always"
 unstable_features = true
 license_template_path = ""
 normalize_doc_attributes = true
+brace_style = "PreferSameLine"

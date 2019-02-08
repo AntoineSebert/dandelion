@@ -3,15 +3,18 @@
  * @date	03/02/2019
  */
 
+// configuration
 #![feature(abi_x86_interrupt)]
 #![no_std]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
+// crates
 extern crate dandelion;
 extern crate lazy_static;
 extern crate x86_64;
 
+// uses
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 use lazy_static::lazy_static;

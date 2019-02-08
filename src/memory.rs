@@ -3,9 +3,11 @@
  * @date	05/02/2019
  */
 
+// crates
 extern crate bootloader;
 extern crate x86_64;
 
+// uses
 use self::{
 	bootloader::bootinfo::{MemoryMap, MemoryRegionType},
 	x86_64::{
@@ -15,9 +17,7 @@ use self::{
 };
 
 /// Creates a RecursivePageTable instance from the level 4 address.
-///
-/// This function is unsafe because it can break memory safety if an invalid
-/// address is passed.
+/// This function is unsafe because it can break memory safety if an invalid address is passed.
 pub unsafe fn init(level_4_table_addr: usize) -> RecursivePageTable<'static> {
 	/// Rust currently treats the whole body of unsafe functions as an unsafe
 	/// block, which makes it difficult to see which operations are unsafe. To
@@ -45,8 +45,7 @@ pub fn init_frame_allocator(memory_map: &'static MemoryMap) -> BootInfoFrameAllo
 	BootInfoFrameAllocator { frames }
 }
 
-/// Returns the physical address for the given virtual address, or `None` if
-/// the virtual address is not mapped.
+/// Returns the physical address for the given virtual address, or `None` if the virtual address is not mapped.
 pub fn translate_addr(addr: u64, recursive_page_table: &RecursivePageTable) -> Option<PhysAddr> {
 	let addr = VirtAddr::new(addr);
 	let page: Page = Page::containing_address(addr);
@@ -73,15 +72,14 @@ pub fn create_example_mapping(
 /// A FrameAllocator that always returns `None`.
 pub struct EmptyFrameAllocator;
 
-impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
-	fn allocate_frame(&mut self) -> Option<PhysFrame> { None }
-}
-
 pub struct BootInfoFrameAllocator<I>
 where
-	I: Iterator<Item = PhysFrame>,
-{
+	I: Iterator<Item = PhysFrame>, {
 	frames: I,
+}
+
+impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
+	fn allocate_frame(&mut self) -> Option<PhysFrame> { None }
 }
 
 impl<I> FrameAllocator<Size4KiB> for BootInfoFrameAllocator<I>

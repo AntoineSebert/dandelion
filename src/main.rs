@@ -12,12 +12,9 @@ both
 	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
 bootable USB
 	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
+format
+	cargo +nightly fmt
 */
-
-/*
- * #[pure] : pure function
- * #[] : no side effects
- */
 
 // configuration
 #![cfg_attr(not(test), no_std)]
@@ -33,13 +30,12 @@ extern crate x86_64;
 
 // uses
 use bootloader::{bootinfo::BootInfo, entry_point};
-use dandelion::{println, memory};
+use dandelion::{memory, println};
 
 /*
  * OS entry point override
  * This function is the entry point, since the linker looks for a function named `_start` by default
  */
-
 entry_point!(kernel_main);
 
 #[cfg(not(test))]
@@ -67,7 +63,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
  * This function is called on panic.
  * @param	info	information about the panic error
  */
-
 use core::panic::PanicInfo;
 #[cfg(not(test))]
 #[panic_handler]

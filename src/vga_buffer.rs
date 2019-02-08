@@ -3,11 +3,13 @@
  * @date	20/01/2019
  */
 
+// crates
 extern crate lazy_static;
 extern crate spin;
 extern crate volatile;
 extern crate x86_64;
 
+// uses
 use self::{lazy_static::lazy_static, spin::Mutex, volatile::Volatile};
 use core::fmt;
 

@@ -3,12 +3,20 @@
  * @date	03/02/2019
  */
 
+// crates
 extern crate lazy_static;
 extern crate x86_64;
 
+// uses
 use self::{
 	lazy_static::lazy_static,
-	x86_64::{structures::tss::TaskStateSegment, VirtAddr},
+	x86_64::{
+		structures::{
+			gdt::{Descriptor, GlobalDescriptorTable, SegmentSelector},
+			tss::TaskStateSegment,
+		},
+		VirtAddr,
+	},
 };
 
 pub const DOUBLE_FAULT_IST_INDEX: u16 = 0;
@@ -27,8 +35,6 @@ lazy_static! {
 		tss
 	};
 }
-
-use self::x86_64::structures::gdt::{Descriptor, GlobalDescriptorTable, SegmentSelector};
 
 lazy_static! {
 	static ref GDT: (GlobalDescriptorTable, Selectors) = {
