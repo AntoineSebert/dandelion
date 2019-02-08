@@ -17,6 +17,9 @@ test = true
 doctest = true
 bench = true
 
+[doc]
+#https://doc.rust-lang.org/rustdoc
+
 # Optional specification of badges to be displayed on crates.io.
 # - The badges pertaining to build status that are currently available are Appveyor, CircleCI, GitLab, and TravisCI.
 # - Available badges pertaining to code test coverage are Codecov and Coveralls.
@@ -61,6 +64,7 @@ x86_64 = "^0.4.0"
 pic8259_simple = "^0.1.1"
 pc-keyboard = "^0.3.1"
 integer-sqrt = "^0.1.2"
+heapless = "0.4.1"
 
 [dependencies.lazy_static]
 version = "^1.0"
