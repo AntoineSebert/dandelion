@@ -30,6 +30,7 @@ extern crate x86_64;
 
 // uses
 use bootloader::{bootinfo::BootInfo, entry_point};
+use core::panic::PanicInfo;
 use dandelion::{memory, println};
 
 /*
@@ -63,7 +64,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
  * This function is called on panic.
  * @param	info	information about the panic error
  */
-use core::panic::PanicInfo;
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
@@ -72,7 +72,7 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 /*
- * Sample job streaming prime numbers up to 2^64
+ * Sample job streaming prime numbers up to a limit less than 2^64
  */
 fn sample_job(limit: u64) {
 	use integer_sqrt::IntegerSquareRoot;

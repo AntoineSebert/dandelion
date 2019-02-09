@@ -19,9 +19,8 @@ use self::{
 /// Creates a RecursivePageTable instance from the level 4 address.
 /// This function is unsafe because it can break memory safety if an invalid address is passed.
 pub unsafe fn init(level_4_table_addr: usize) -> RecursivePageTable<'static> {
-	/// Rust currently treats the whole body of unsafe functions as an unsafe
-	/// block, which makes it difficult to see which operations are unsafe. To
-	/// limit the scope of unsafe we use a safe inner function.
+	/// Rust currently treats the whole body of unsafe functions as an unsafe block, which makes it difficult to see
+	/// which operations are unsafe. To limit the scope of unsafe we use a safe inner function.
 	fn init_inner(level_4_table_addr: usize) -> RecursivePageTable<'static> {
 		let level_4_table_ptr = level_4_table_addr as *mut PageTable;
 		let level_4_table = unsafe { &mut *level_4_table_ptr };
@@ -55,7 +54,7 @@ pub fn translate_addr(addr: u64, recursive_page_table: &RecursivePageTable) -> O
 	frame.map(|frame| frame.start_address() + u64::from(addr.page_offset()))
 }
 
-pub fn create_example_mapping(
+pub fn create_mapping(
 	recursive_page_table: &mut RecursivePageTable,
 	frame_allocator: &mut impl FrameAllocator<Size4KiB>,
 ) {
@@ -78,6 +77,7 @@ where
 	frames: I,
 }
 
+/// impl
 impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
 	fn allocate_frame(&mut self) -> Option<PhysFrame> { None }
 }

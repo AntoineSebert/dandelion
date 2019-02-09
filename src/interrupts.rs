@@ -28,9 +28,8 @@ pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40, 41, 42, 43, 44, 45, 46, 47
 
 // todo : replace by map
 //let mut INTERRUPTS_IDS: LinearMap<&str, isize, U8> = LinearMap::new();
-// map insert
-pub const TIMER_INTERRUPT_ID: u8 = PIC_1_OFFSET; // 32
-pub const KEYBOARD_INTERRUPT_ID: u8 = PIC_1_OFFSET + 1; // 33
+pub const TIMER_INTERRUPT_ID: u8 = PIC_1_OFFSET;					// 32
+pub const KEYBOARD_INTERRUPT_ID: u8 = PIC_1_OFFSET + 1;				// 33
 pub const OTHER_INTERRUPT_ID: u8 = PIC_1_OFFSET + 2;				// 34
 pub const SERIAL_PORT_2_INTERRUPT_ID: u8 = PIC_1_OFFSET + 3;		// 35
 pub const SERIAL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 4;		// 36
