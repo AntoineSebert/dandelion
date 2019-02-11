@@ -26,24 +26,24 @@ use self::heapless::{consts::*, LinearMap};
 pub const PIC_1_OFFSET: u8 = 32; // 32, 33, 34, 35, 36, 37, 38, 39
 pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40, 41, 42, 43, 44, 45, 46, 47
 
-// todo : replace by map
+// replace by map
 //let mut INTERRUPTS_IDS: LinearMap<&str, isize, U8> = LinearMap::new();
-pub const TIMER_INTERRUPT_ID: u8 = PIC_1_OFFSET;					// 32
-pub const KEYBOARD_INTERRUPT_ID: u8 = PIC_1_OFFSET + 1;				// 33
-pub const OTHER_INTERRUPT_ID: u8 = PIC_1_OFFSET + 2;				// 34
-pub const SERIAL_PORT_2_INTERRUPT_ID: u8 = PIC_1_OFFSET + 3;		// 35
-pub const SERIAL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 4;		// 36
-pub const PARALLEL_PORT_2_3_INTERRUPT_ID: u8 = PIC_1_OFFSET + 5;	// 37
-pub const FLOPPY_DISK_INTERRUPT_ID: u8 = PIC_1_OFFSET + 6;			// 38
-pub const PARALLEL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 7;		// 39
-pub const REAL_TIME_CLOCK_INTERRUPT_ID: u8 = PIC_2_OFFSET;			// 40
-pub const ACPI_INTERRUPT_ID: u8 = PIC_2_OFFSET + 1;					// 41
-pub const AVAILABLE_1_INTERRUPT_ID: u8 = PIC_2_OFFSET + 2;			// 42
-pub const AVAILABLE_2_INTERRUPT_ID: u8 = PIC_2_OFFSET + 3;			// 43
-pub const MOUSE_INTERRUPT_ID: u8 = PIC_2_OFFSET + 4;				// 44
-pub const CO_PROCESSOR_INTERRUPT_ID: u8 = PIC_2_OFFSET + 5;			// 45
-pub const PRIMARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 6;			// 46
-pub const SECONDARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 7;		// 47
+pub const TIMER_INTERRUPT_ID: u8 = PIC_1_OFFSET; // 32
+pub const KEYBOARD_INTERRUPT_ID: u8 = PIC_1_OFFSET + 1; // 33
+pub const OTHER_INTERRUPT_ID: u8 = PIC_1_OFFSET + 2; // 34
+pub const SERIAL_PORT_2_INTERRUPT_ID: u8 = PIC_1_OFFSET + 3; // 35
+pub const SERIAL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 4; // 36
+pub const PARALLEL_PORT_2_3_INTERRUPT_ID: u8 = PIC_1_OFFSET + 5; // 37
+pub const FLOPPY_DISK_INTERRUPT_ID: u8 = PIC_1_OFFSET + 6; // 38
+pub const PARALLEL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 7; // 39
+pub const REAL_TIME_CLOCK_INTERRUPT_ID: u8 = PIC_2_OFFSET; // 40
+pub const ACPI_INTERRUPT_ID: u8 = PIC_2_OFFSET + 1; // 41
+pub const AVAILABLE_1_INTERRUPT_ID: u8 = PIC_2_OFFSET + 2; // 42
+pub const AVAILABLE_2_INTERRUPT_ID: u8 = PIC_2_OFFSET + 3; // 43
+pub const MOUSE_INTERRUPT_ID: u8 = PIC_2_OFFSET + 4; // 44
+pub const CO_PROCESSOR_INTERRUPT_ID: u8 = PIC_2_OFFSET + 5; // 45
+pub const PRIMARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 6; // 46
+pub const SECONDARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 7; // 47
 
 pub static PICS: spin::Mutex<ChainedPics> = spin::Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 

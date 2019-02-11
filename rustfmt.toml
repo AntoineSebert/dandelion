@@ -14,6 +14,6 @@ format_doc_comments = true
 wrap_comments = true
 color = "always"
 unstable_features = true
-license_template_path = ""
+#license_template_path = ""
 normalize_doc_attributes = true
 brace_style = "PreferSameLine"
