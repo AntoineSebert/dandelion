@@ -16,8 +16,10 @@ doc = true
 test = true
 doctest = true
 bench = true
+#rustup-channel = ?
+maintenance = { status = "actively-developed" }
 
-[doc]
+#[doc]
 #https://doc.rust-lang.org/rustdoc
 
 # Optional specification of badges to be displayed on crates.io.
@@ -26,34 +28,24 @@ bench = true
 # - There are also maintenance-related badges based on isitmaintained.com which state the issue resolution time, percent of open issues, and future maintenance intentions.
 #
 # If a `repository` key is required, this refers to a repository in `user/repo` format.
+
 [badges]
 
-# Appveyor: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default), `bitbucket`, and `gitlab`; `id` is optional; you can specify the appveyor project id if you want to use that instead. `project_name` is optional; use when the repository name differs from the appveyor project name.
+# Appveyor: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default); `id` is optional; you can specify the appveyor project id if you want to use that instead. `project_name` is optional; use when the repository name differs from the appveyor project name.
 appveyor = { repository = "...", branch = "master", service = "github" }
-
 # Travis CI: `repository` in format "<user>/<project>" is required. `branch` is optional; default is `master`
 travis-ci = { repository = "...", branch = "master" }
-
 # Circle CI: `repository` is required. `branch` is optional; default is `master`
 circle-ci = { repository = "...", branch = "master" }
-
-# GitLab: `repository` is required. `branch` is optional; default is `master`
-gitlab = { repository = "...", branch = "master" }
-
-# Codecov: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default), `bitbucket`, and `gitlab`.
+# Codecov: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default)
 codecov = { repository = "...", branch = "master", service = "github" }
-
-# Coveralls: `repository` is required. `branch` is optional; default is `master`
-# `service` is optional; valid values are `github` (default) and `bitbucket`.
+# Coveralls: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default)
 coveralls = { repository = "...", branch = "master", service = "github" }
 
 # Is it maintained resolution time: `repository` is required.
 is-it-maintained-issue-resolution = { repository = "..." }
-
 # Is it maintained percentage of open issues: `repository` is required.
 is-it-maintained-open-issues = { repository = "..." }
-
-maintenance = { status = "actively-developed" }
 
 [dependencies]
 bootloader = "^0.3.12"
@@ -64,7 +56,8 @@ x86_64 = "^0.4.0"
 pic8259_simple = "^0.1.1"
 pc-keyboard = "^0.3.1"
 integer-sqrt = "^0.1.2"
-heapless = "0.4.1"
+heapless = "^0.4.1"
+enum-map = "^0.5.0"
 
 [dependencies.lazy_static]
 version = "^1.0"
