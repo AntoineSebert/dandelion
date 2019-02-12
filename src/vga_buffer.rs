@@ -99,7 +99,7 @@ impl Writer {
 				let col = self.column_position;
 
 				let color_code = self.color_code;
-				self.buffer.chars[row][col].write(ScreenChar { ascii_character: byte, color_code: color_code });
+				self.buffer.chars[row][col].write(ScreenChar { ascii_character: byte, color_code });
 				self.column_position += 1;
 			}
 		}
@@ -221,6 +221,7 @@ mod test {
 	}
 
 	#[test]
+	#[allow(clippy::write_literal)]
 	fn write_formatted() {
 		use core::fmt::Write;
 

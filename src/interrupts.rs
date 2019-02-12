@@ -20,30 +20,30 @@ extern crate heapless;
 use self::{lazy_static::lazy_static, pic8259_simple::ChainedPics};
 use crate::{gdt, hlt_loop, print, println};
 use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable, PageFaultErrorCode};
-// custom
-use self::heapless::{consts::*, LinearMap};
 
-pub const PIC_1_OFFSET: u8 = 32; // 32, 33, 34, 35, 36, 37, 38, 39
-pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40, 41, 42, 43, 44, 45, 46, 47
+pub const PIC_1_OFFSET: u8 = 32; // 32 to 39
+pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40 to 47
 
-// replace by map
-//let mut INTERRUPTS_IDS: LinearMap<&str, isize, U8> = LinearMap::new();
-pub const TIMER_INTERRUPT_ID: u8 = PIC_1_OFFSET; // 32
-pub const KEYBOARD_INTERRUPT_ID: u8 = PIC_1_OFFSET + 1; // 33
-pub const OTHER_INTERRUPT_ID: u8 = PIC_1_OFFSET + 2; // 34
-pub const SERIAL_PORT_2_INTERRUPT_ID: u8 = PIC_1_OFFSET + 3; // 35
-pub const SERIAL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 4; // 36
-pub const PARALLEL_PORT_2_3_INTERRUPT_ID: u8 = PIC_1_OFFSET + 5; // 37
-pub const FLOPPY_DISK_INTERRUPT_ID: u8 = PIC_1_OFFSET + 6; // 38
-pub const PARALLEL_PORT_1_INTERRUPT_ID: u8 = PIC_1_OFFSET + 7; // 39
-pub const REAL_TIME_CLOCK_INTERRUPT_ID: u8 = PIC_2_OFFSET; // 40
-pub const ACPI_INTERRUPT_ID: u8 = PIC_2_OFFSET + 1; // 41
-pub const AVAILABLE_1_INTERRUPT_ID: u8 = PIC_2_OFFSET + 2; // 42
-pub const AVAILABLE_2_INTERRUPT_ID: u8 = PIC_2_OFFSET + 3; // 43
-pub const MOUSE_INTERRUPT_ID: u8 = PIC_2_OFFSET + 4; // 44
-pub const CO_PROCESSOR_INTERRUPT_ID: u8 = PIC_2_OFFSET + 5; // 45
-pub const PRIMARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 6; // 46
-pub const SECONDARY_ATA_INTERRUPT_ID: u8 = PIC_2_OFFSET + 7; // 47
+#[derive(Debug)]
+#[repr(u8)]
+pub enum HardwareInterrupt {
+	Timer = PIC_1_OFFSET,
+	Keyboard,
+	Other,
+	SerialPort2,
+	SerialPort1,
+	ParallelPort2_3,
+	FloppyDisk,
+	ParallelPort1,
+	RealTimeClock,
+	Acpi,
+	Available1,
+	Available2,
+	Mouse,
+	CoProcessor,
+	PrimaryAta,
+	SecondaryAta,
+}
 
 pub static PICS: spin::Mutex<ChainedPics> = spin::Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
@@ -88,8 +88,8 @@ lazy_static! {
 			*/
 		}
 		/* hardware */ {
-			idt[usize::from(TIMER_INTERRUPT_ID)].set_handler_fn(timer_interrupt_handler);
-			idt[usize::from(KEYBOARD_INTERRUPT_ID)].set_handler_fn(keyboard_interrupt_handler);
+			idt[usize::from(HardwareInterrupt::Timer as u8)].set_handler_fn(timer_interrupt_handler);
+			idt[usize::from(HardwareInterrupt::Keyboard as u8)].set_handler_fn(keyboard_interrupt_handler);
 		}
 
 		idt
@@ -111,7 +111,7 @@ extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut ExceptionStackF
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
 	print!(".");
-	unsafe { PICS.lock().notify_end_of_interrupt(TIMER_INTERRUPT_ID) }
+	unsafe { PICS.lock().notify_end_of_interrupt(HardwareInterrupt::Timer as u8) }
 }
 
 extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
@@ -138,7 +138,7 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Exceptio
 			}
 		}
 	}
-	unsafe { PICS.lock().notify_end_of_interrupt(KEYBOARD_INTERRUPT_ID) }
+	unsafe { PICS.lock().notify_end_of_interrupt(HardwareInterrupt::Keyboard as u8) }
 }
 
 extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
