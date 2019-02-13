@@ -32,7 +32,6 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
-
 	serial_println!("{}", info);
 
 	unsafe {

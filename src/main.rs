@@ -10,12 +10,16 @@ tests
 	cls && bootimage test
 both
 	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
-bootable USB
-	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
+
 format
 	cargo +nightly fmt
 lint
 	cargo clippy
+both
+	cargo +nightly fmt && cargo clippy
+
+bootable USB
+	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
 */
 
 // configuration
@@ -31,36 +35,33 @@ extern crate pic8259_simple;
 extern crate x86_64;
 
 // uses
-use bootloader::{bootinfo::BootInfo, entry_point};
-use core::panic::PanicInfo;
-use dandelion::{memory, println};
+use bootloader::{bootinfo, entry_point};
+use dandelion::{hlt_loop, println};
 
 /*
  * OS entry point override
- * This function is the entry point, since the linker looks for a function named `_start` by default
  */
 entry_point!(kernel_main);
 
 #[cfg(not(test))]
 #[no_mangle]
 #[allow(clippy::print_literal)]
-fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use dandelion::interrupts::PICS;
-
+fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
+	use dandelion::{gdt, interrupts, memory, println};
 	println!("Hello World{}", "!");
 
-	dandelion::gdt::init();
-	dandelion::interrupts::init_idt();
-	unsafe { PICS.lock().initialize() };
+	gdt::init();
+	interrupts::init_idt();
+	unsafe { interrupts::PICS.lock().initialize() };
 	x86_64::instructions::interrupts::enable();
 
 	let mut recursive_page_table = unsafe { memory::init(boot_info.p4_table_addr as usize) };
 	let mut frame_allocator = memory::init_frame_allocator(&boot_info.memory_map);
 
-	//sample_job(4_294_967_296);
+	sample_job(4_294_967_296);
 
 	println!("It did not crash!");
-	dandelion::hlt_loop();
+	hlt_loop();
 }
 
 /*
@@ -69,9 +70,9 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
  */
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
+fn panic(info: &core::panic::PanicInfo) -> ! {
 	println!("{}", info);
-	dandelion::hlt_loop();
+	hlt_loop();
 }
 
 /*

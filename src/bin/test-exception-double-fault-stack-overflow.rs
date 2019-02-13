@@ -16,22 +16,21 @@ extern crate x86_64;
 
 // uses
 use core::panic::PanicInfo;
-use dandelion::{exit_qemu, serial_println};
-use lazy_static::lazy_static;
+use dandelion::{exit_qemu, gdt, serial_println};
+use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
 
 #[cfg(not(test))]
 #[no_mangle]
 #[allow(unconditional_recursion)]
 pub extern "C" fn _start() -> ! {
-	dandelion::gdt::init();
+	gdt::init();
 	init_test_idt();
 
 	fn stack_overflow() {
 		stack_overflow(); // for each recursion, the return address is pushed
 	}
 
-	// trigger a stack overflow
-	stack_overflow();
+	stack_overflow(); // trigger a stack overflow
 
 	serial_println!("failed");
 	serial_println!("No exception occured");
@@ -39,7 +38,6 @@ pub extern "C" fn _start() -> ! {
 	unsafe {
 		exit_qemu();
 	}
-
 	loop {}
 }
 
@@ -53,19 +51,16 @@ fn panic(info: &PanicInfo) -> ! {
 	unsafe {
 		exit_qemu();
 	}
-
 	loop {}
 }
 
-use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
-
-lazy_static! {
+lazy_static::lazy_static! {
 	static ref TEST_IDT: InterruptDescriptorTable = {
 		let mut idt = InterruptDescriptorTable::new();
 		unsafe {
 			idt.double_fault
 				.set_handler_fn(double_fault_handler)
-				.set_stack_index(dandelion::gdt::DOUBLE_FAULT_IST_INDEX);
+				.set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
 		}
 
 		idt

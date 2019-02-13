@@ -10,10 +10,11 @@ extern crate volatile;
 extern crate x86_64;
 
 // uses
-use self::{lazy_static::lazy_static, spin::Mutex, volatile::Volatile};
 use core::fmt;
+use spin::Mutex;
+use volatile::Volatile;
 
-lazy_static! {
+lazy_static::lazy_static! {
 	pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
 		column_position: 0,
 		color_code: ColorCode::new(Color::Yellow, Color::Black),
@@ -163,8 +164,8 @@ macro_rules! println {
 
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
-	use self::x86_64::instructions::interrupts;
-	use core::fmt::Write;
+	use fmt::Write;
+	use x86_64::instructions::interrupts;
 
 	interrupts::without_interrupts(|| {
 		WRITER.lock().write_fmt(args).unwrap();
@@ -190,7 +191,7 @@ mod test {
 	}
 
 	fn construct_buffer() -> Buffer {
-		use self::array_init::array_init;
+		use array_init::array_init;
 		Buffer { chars: array_init(|_| array_init(|_| Volatile::new(empty_char()))) }
 	}
 
@@ -223,7 +224,7 @@ mod test {
 	#[test]
 	#[allow(clippy::write_literal)]
 	fn write_formatted() {
-		use core::fmt::Write;
+		use fmt::Write;
 
 		let mut writer = construct_writer();
 		writeln!(&mut writer, "a").unwrap();

@@ -8,12 +8,10 @@ extern crate bootloader;
 extern crate x86_64;
 
 // uses
-use self::{
-	bootloader::bootinfo::{MemoryMap, MemoryRegionType},
-	x86_64::{
-		structures::paging::{FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB},
-		PhysAddr, VirtAddr,
-	},
+use bootloader::bootinfo::{MemoryMap, MemoryRegionType};
+use x86_64::{
+	structures::paging::{FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB},
+	PhysAddr, VirtAddr,
 };
 
 /// Creates a RecursivePageTable instance from the level 4 address.
@@ -73,7 +71,8 @@ pub struct EmptyFrameAllocator;
 
 pub struct BootInfoFrameAllocator<I>
 where
-	I: Iterator<Item = PhysFrame>, {
+	I: Iterator<Item = PhysFrame>,
+{
 	frames: I,
 }
 
