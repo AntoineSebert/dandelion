@@ -3,11 +3,11 @@
  * @date	05/02/2019
  */
 
-// crates
+// crate
 extern crate bootloader;
 extern crate x86_64;
 
-// uses
+// use
 use bootloader::bootinfo::{MemoryMap, MemoryRegionType};
 use x86_64::{
 	structures::paging::{FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB},

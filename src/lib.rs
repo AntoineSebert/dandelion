@@ -8,10 +8,10 @@
 #![feature(abi_x86_interrupt)]
 #[cfg(not(windows))]
 
-// crates
+// crate
 extern crate x86_64;
 
-// modules
+// module
 pub mod gdt;
 pub mod interrupts;
 pub mod memory;

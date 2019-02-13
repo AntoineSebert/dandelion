@@ -3,11 +3,11 @@
  * @date	03/02/2019
  */
 
-// crates
+// crate
 extern crate lazy_static;
 extern crate x86_64;
 
-// uses
+// use
 use lazy_static::lazy_static;
 use x86_64::structures::{gdt, tss::TaskStateSegment};
 

@@ -27,14 +27,14 @@ bootable USB
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 
-// crates
+// crate
 extern crate bootloader;
 extern crate dandelion;
 extern crate integer_sqrt;
 extern crate pic8259_simple;
 extern crate x86_64;
 
-// uses
+// use
 use bootloader::{bootinfo, entry_point};
 use dandelion::{hlt_loop, println};
 

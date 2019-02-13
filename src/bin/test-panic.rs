@@ -8,11 +8,10 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 
-// crates
+// crate
 extern crate dandelion;
 
-// uses
-use core::panic::PanicInfo;
+// use
 use dandelion::{exit_qemu, serial_println};
 
 #[cfg(not(test))]
@@ -23,7 +22,7 @@ pub extern "C" fn _start() -> ! {
 
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(_info: &core::panic::PanicInfo) -> ! {
 	serial_println!("ok");
 
 	unsafe {

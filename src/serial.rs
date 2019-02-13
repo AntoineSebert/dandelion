@@ -3,13 +3,13 @@
  * @date	20/01/2019
  */
 
-// crates
+// crate
 extern crate lazy_static;
 extern crate spin;
 extern crate uart_16550;
 extern crate x86_64;
 
-// uses
+// use
 use spin::Mutex;
 use uart_16550::SerialPort;
 

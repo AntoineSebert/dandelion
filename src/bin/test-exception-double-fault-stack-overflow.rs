@@ -9,13 +9,12 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
-// crates
+// crate
 extern crate dandelion;
 extern crate lazy_static;
 extern crate x86_64;
 
-// uses
-use core::panic::PanicInfo;
+// use
 use dandelion::{exit_qemu, gdt, serial_println};
 use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
 
@@ -44,7 +43,7 @@ pub extern "C" fn _start() -> ! {
 /// This function is called on panic.
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
+fn panic(info: &core::panic::PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
 
