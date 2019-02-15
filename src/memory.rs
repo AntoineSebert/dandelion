@@ -3,14 +3,14 @@
  * @date	05/02/2019
  */
 
-// crate
 extern crate bootloader;
 extern crate x86_64;
 
-// use
-use bootloader::bootinfo::{MemoryMap, MemoryRegionType};
+use bootloader::bootinfo::{MemoryMap, MemoryRegionType::Usable};
 use x86_64::{
-	structures::paging::{FrameAllocator, Mapper, Page, PageTable, PhysFrame, RecursivePageTable, Size4KiB},
+	structures::paging::{
+		FrameAllocator, Mapper, Page, PageTable, PageTableFlags, PhysFrame, RecursivePageTable, Size4KiB,
+	},
 	PhysAddr, VirtAddr,
 };
 
@@ -31,7 +31,7 @@ pub unsafe fn init(level_4_table_addr: usize) -> RecursivePageTable<'static> {
 /// Create a FrameAllocator from the passed memory map
 pub fn init_frame_allocator(memory_map: &'static MemoryMap) -> BootInfoFrameAllocator<impl Iterator<Item = PhysFrame>> {
 	// get usable regions from memory map
-	let regions = memory_map.iter().filter(|r| r.region_type == MemoryRegionType::Usable);
+	let regions = memory_map.iter().filter(|r| r.region_type == Usable);
 	// map each region to its address range
 	let addr_ranges = regions.map(|r| r.range.start_addr()..r.range.end_addr());
 	// transform to an iterator of frame start addresses
@@ -56,11 +56,9 @@ pub fn create_mapping(
 	recursive_page_table: &mut RecursivePageTable,
 	frame_allocator: &mut impl FrameAllocator<Size4KiB>,
 ) {
-	use self::x86_64::structures::paging::PageTableFlags as Flags;
-
 	let page: Page = Page::containing_address(VirtAddr::new(0x0dea_dbea_f000));
 	let frame = PhysFrame::containing_address(PhysAddr::new(0xb8000));
-	let flags = Flags::PRESENT | Flags::WRITABLE;
+	let flags = PageTableFlags::PRESENT | PageTableFlags::WRITABLE;
 
 	let map_to_result = unsafe { recursive_page_table.map_to(page, frame, flags, frame_allocator) };
 	map_to_result.expect("map_to failed").flush();

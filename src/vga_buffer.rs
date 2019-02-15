@@ -3,21 +3,21 @@
  * @date	20/01/2019
  */
 
-// crate
 extern crate lazy_static;
 extern crate spin;
 extern crate volatile;
 extern crate x86_64;
 
-// use
-use core::fmt;
+use core::fmt::{self, Arguments, Write};
+use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
+use Color::*;
 
-lazy_static::lazy_static! {
+lazy_static! {
 	pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
 		column_position: 0,
-		color_code: ColorCode::new(Color::Yellow, Color::Black),
+		color_code: ColorCode::new(LightGray, Black),
 		buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
 	});
 }
@@ -140,7 +140,7 @@ impl Writer {
  * Formatting macros
  */
 
-impl fmt::Write for Writer {
+impl Write for Writer {
 	fn write_str(&mut self, s: &str) -> fmt::Result {
 		self.write_string(s);
 		Ok(())
@@ -163,11 +163,10 @@ macro_rules! println {
 }
 
 #[doc(hidden)]
-pub fn _print(args: fmt::Arguments) {
-	use fmt::Write;
-	use x86_64::instructions::interrupts;
+pub fn _print(args: Arguments) {
+	use x86_64::instructions::interrupts::without_interrupts;
 
-	interrupts::without_interrupts(|| {
+	without_interrupts(|| {
 		WRITER.lock().write_fmt(args).unwrap();
 	});
 }
@@ -183,11 +182,7 @@ mod test {
 		use std::boxed::Box;
 
 		let buffer = construct_buffer();
-		Writer {
-			column_position: 0,
-			color_code: ColorCode::new(Color::Blue, Color::Magenta),
-			buffer: Box::leak(Box::new(buffer)),
-		}
+		Writer { column_position: 0, color_code: ColorCode::new(Blue, Magenta), buffer: Box::leak(Box::new(buffer)) }
 	}
 
 	fn construct_buffer() -> Buffer {
@@ -195,9 +190,7 @@ mod test {
 		Buffer { chars: array_init(|_| array_init(|_| Volatile::new(empty_char()))) }
 	}
 
-	fn empty_char() -> ScreenChar {
-		ScreenChar { ascii_character: b' ', color_code: ColorCode::new(Color::Green, Color::Brown) }
-	}
+	fn empty_char() -> ScreenChar { ScreenChar { ascii_character: b' ', color_code: ColorCode::new(Green, Brown) } }
 
 	#[test]
 	fn write_byte() {
@@ -224,8 +217,6 @@ mod test {
 	#[test]
 	#[allow(clippy::write_literal)]
 	fn write_formatted() {
-		use fmt::Write;
-
 		let mut writer = construct_writer();
 		writeln!(&mut writer, "a").unwrap();
 		writeln!(&mut writer, "b{}", "c").unwrap();

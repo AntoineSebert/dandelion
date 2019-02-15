@@ -3,19 +3,18 @@
  * @date	03/02/2019
  */
 
-// configuration
-#![cfg(not(windows))]
+//#![cfg(not(windows))] // fix lint errors, but probably important
 
-// crate
 extern crate lazy_static;
 extern crate pc_keyboard;
 extern crate pic8259_simple;
 extern crate spin;
 
-// use
 use crate::{hlt_loop, print, println};
+use interrupt_indexes::Hardware::{Keyboard, Timer};
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
+use spin::Mutex;
 use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable, PageFaultErrorCode};
 
 pub const PIC_1_OFFSET: u8 = 32; // 32 to 39
@@ -69,7 +68,7 @@ pub mod interrupt_indexes {
 	}
 }
 
-pub static PICS: spin::Mutex<ChainedPics> = spin::Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
+pub static PICS: Mutex<ChainedPics> = Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
 pub fn init_idt() { IDT.load(); }
 
@@ -77,7 +76,7 @@ lazy_static! {
 	static ref IDT: InterruptDescriptorTable = {
 		let mut idt = InterruptDescriptorTable::new();
 		/* software */ {
-			use crate::gdt;
+			use crate::gdt::DOUBLE_FAULT_IST_INDEX;
 			/*
 			idt.divide_by_zero.set_handler_fn();
 			idt.debug.set_handler_fn();
@@ -91,7 +90,7 @@ lazy_static! {
 			idt.device_not_available.set_handler_fn();
 			*/
 			unsafe {
-				idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
+				idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(DOUBLE_FAULT_IST_INDEX);
 			}
 			/*
 			idt.invalid_tss.set_handler_fn();
@@ -113,9 +112,8 @@ lazy_static! {
 			*/
 		}
 		/* hardware */ {
-			use interrupt_indexes::Hardware;
-			idt[Hardware::Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
-			idt[Hardware::Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
+			idt[Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
+			idt[Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
 		}
 
 		idt
@@ -137,36 +135,42 @@ extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut ExceptionStackF
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
 	print!(".");
-	unsafe { PICS.lock().notify_end_of_interrupt(interrupt_indexes::Hardware::Timer.as_u8()) }
+	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
 
 extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
-	use pc_keyboard::{layouts, DecodedKey, Keyboard, ScancodeSet1};
-	use spin::Mutex;
+	use pc_keyboard::{
+		layouts::Us104Key,
+		DecodedKey::{RawKey, Unicode},
+		Keyboard, ScancodeSet1,
+	};
+	use x86_64::instructions::port::Port;
 
 	lazy_static! {
-		static ref KEYBOARD: Mutex<Keyboard<layouts::Us104Key, ScancodeSet1>> =
-			Mutex::new(Keyboard::new(layouts::Us104Key, ScancodeSet1));
+		static ref KEYBOARD: Mutex<Keyboard<Us104Key, ScancodeSet1>> =
+			Mutex::new(Keyboard::new(Us104Key, ScancodeSet1));
 	}
 
 	let mut keyboard = KEYBOARD.lock();
-	let port = x86_64::instructions::port::Port::new(0x60);
+	let port = Port::new(0x60);
 
 	let scancode: u8 = unsafe { port.read() };
 	if let Ok(Some(key_event)) = keyboard.add_byte(scancode) {
 		if let Some(key) = keyboard.process_keyevent(key_event) {
 			match key {
-				DecodedKey::Unicode(character) => print!("{}", character),
-				DecodedKey::RawKey(key) => print!("{:?}", key),
+				Unicode(character) => print!("{}", character),
+				RawKey(key) => print!("{:?}", key),
 			}
 		}
 	}
-	unsafe { PICS.lock().notify_end_of_interrupt(interrupt_indexes::Hardware::Keyboard.as_u8()) }
+	unsafe { PICS.lock().notify_end_of_interrupt(Keyboard.as_u8()) }
 }
 
 extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
+	use x86_64::registers::control::Cr2;
+
 	println!("EXCEPTION: PAGE FAULT");
-	println!("Accessed Address: {:?}", x86_64::registers::control::Cr2::read());
+	println!("Accessed Address: {:?}", Cr2::read());
 	println!("{:#?}", stack_frame);
 	hlt_loop();
 }

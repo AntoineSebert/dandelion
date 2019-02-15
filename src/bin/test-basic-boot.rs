@@ -3,14 +3,12 @@
  * @date	27/01/2019
  */
 
-// configuration
 #![cfg_attr(not(test), no_std)]
 #![cfg_attr(not(test), no_main)]
 
-// crate
 extern crate dandelion;
 
-// use
+use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 
 /// This function is the entry point, since the linker looks for a function
@@ -29,7 +27,7 @@ pub extern "C" fn _start() -> ! {
 /// This function is called on panic.
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(info: &core::panic::PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
 

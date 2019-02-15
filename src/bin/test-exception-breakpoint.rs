@@ -3,23 +3,23 @@
  * @date	03/02/2019
  */
 
-// configuration
 #![no_std]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
-// crate
 extern crate dandelion;
 
-// use
+use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	dandelion::interrupts::init_idt();
+	use dandelion::interrupts::init_idt;
+	use x86_64::instructions::int3;
 
-	x86_64::instructions::int3();
+	init_idt();
+	int3();
 
 	serial_println!("ok");
 
@@ -31,7 +31,7 @@ pub extern "C" fn _start() -> ! {
 
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(info: &core::panic::PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
 
