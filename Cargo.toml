@@ -12,12 +12,12 @@ readme = "README.md"
 keywords = ["real-time", "OS", "RTOS", "microkernel"]
 categories = ["embedded", "no-std"]
 license = "CC-BY-NC-SA-4.0"
-doc = true
-test = true
-doctest = true
-bench = true
+#doc = true
+#test = true
+#doctest = true
+#bench = true
 #rustup-channel = ?
-maintenance = { status = "actively-developed" }
+#maintenance = { status = "actively-developed" }
 
 #[doc]
 #https://doc.rust-lang.org/rustdoc
