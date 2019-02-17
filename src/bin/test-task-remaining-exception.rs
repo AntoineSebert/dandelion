@@ -30,9 +30,9 @@ pub extern "C" fn _start() -> ! {
 /// This function is called on panic.
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
-	serial_println!("{}", _info);
+	serial_println!("{}", info);
 
 	unsafe {
 		exit_qemu();
