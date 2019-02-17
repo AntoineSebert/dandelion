@@ -5,7 +5,8 @@
 
 #![cfg_attr(not(test), no_std)]
 #![feature(abi_x86_interrupt)]
-#[cfg(not(windows))]
+#![feature(asm)]
+
 extern crate x86_64;
 
 pub mod gdt;
