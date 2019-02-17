@@ -22,20 +22,19 @@ bootable USB
 	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
 */
 
-// configuration
 #![cfg_attr(not(test), no_std)]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
+#![deny(clippy::all)]
 
-// crate
 extern crate bootloader;
 extern crate dandelion;
 extern crate integer_sqrt;
 extern crate pic8259_simple;
 extern crate x86_64;
 
-// use
-use bootloader::{bootinfo, entry_point};
+use bootloader::{bootinfo::BootInfo, entry_point};
+use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
 
 /*
@@ -46,17 +45,26 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[no_mangle]
 #[allow(clippy::print_literal)]
-fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
-	use dandelion::{gdt, interrupts, memory, println};
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
+	use dandelion::{
+		gdt,
+		interrupts::{init_idt, PICS},
+		memory::{self, create_mapping, init_frame_allocator},
+	};
+	use x86_64::instructions::interrupts::enable;
+
 	println!("Hello World{}", "!");
 
 	gdt::init();
-	interrupts::init_idt();
-	unsafe { interrupts::PICS.lock().initialize() };
-	x86_64::instructions::interrupts::enable();
+	init_idt();
+	unsafe { PICS.lock().initialize() };
+	enable();
 
 	let mut recursive_page_table = unsafe { memory::init(boot_info.p4_table_addr as usize) };
-	let mut frame_allocator = memory::init_frame_allocator(&boot_info.memory_map);
+	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
+
+	create_mapping(&mut recursive_page_table, &mut frame_allocator);
+	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
 	sample_job(4_294_967_296);
 
@@ -70,7 +78,7 @@ fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
  */
 #[cfg(not(test))]
 #[panic_handler]
-fn panic(info: &core::panic::PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
 	hlt_loop();
 }

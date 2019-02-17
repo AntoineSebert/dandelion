@@ -11,7 +11,10 @@ extern crate pic8259_simple;
 extern crate spin;
 
 use crate::{hlt_loop, print, println};
-use interrupt_indexes::Hardware::{Keyboard, Timer};
+use interrupt_indexes::{
+	Hardware::{Keyboard, Timer},
+	RealTime::*,
+};
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
@@ -48,9 +51,7 @@ pub mod interrupt_indexes {
 		FirmDeadline,
 		SoftDeadline,
 		TimeRemaining, // with integer as power of 2 as code
-		WorkRemaining, // with integer as power of 2 as code
-		Periodic,      // with integer time interval as code
-		Aperiodic,
+		TaskRemaining, // with integer as power of 2 as code
 	}
 	impl Hardware {
 		#[inline]
@@ -115,14 +116,28 @@ lazy_static! {
 			idt[Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
 			idt[Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
 		}
+		/* realtime */ {
+			idt[HardDeadline.as_usize()].set_handler_fn(hard_deadline_handler);
+			idt[FirmDeadline.as_usize()].set_handler_fn(firm_deadline_handler);
+			idt[SoftDeadline.as_usize()].set_handler_fn(soft_deadline_handler);
+			//idt[TimeRemaining.as_usize()].set_handler_fn(time_remaining_handler);
+			//idt[TaskRemaining.as_usize()].set_handler_fn(task_remaining_handler);
+		}
 
 		idt
 	};
 }
 
+pub unsafe fn int(index: interrupt_indexes::RealTime) {
+	//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
+	asm!("int 48" :::: "volatile");
+}
+
 /*
  * handlers
  */
+
+// CPU exceptions
 
 extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut ExceptionStackFrame) {
 	println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
@@ -132,6 +147,17 @@ extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut ExceptionStackF
 	println!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 	hlt_loop();
 }
+
+extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
+	use x86_64::registers::control::Cr2;
+
+	println!("EXCEPTION: PAGE FAULT");
+	println!("Accessed Address: {:?}", Cr2::read());
+	println!("{:#?}", stack_frame);
+	hlt_loop();
+}
+
+// hardware
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
 	print!(".");
@@ -166,11 +192,39 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Exceptio
 	unsafe { PICS.lock().notify_end_of_interrupt(Keyboard.as_u8()) }
 }
 
-extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
+// realtime
+
+extern "x86-interrupt" fn hard_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+	println!("EXCEPTION: HARD DEADLINE\n{:#?}", stack_frame);
+}
+
+extern "x86-interrupt" fn firm_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+	println!("EXCEPTION: FIRM DEADLINE\n{:#?}", stack_frame);
+}
+
+extern "x86-interrupt" fn soft_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+	println!("EXCEPTION: SOFT DEADLINE\n{:#?}", stack_frame);
+}
+
+extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
 	use x86_64::registers::control::Cr2;
 
-	println!("EXCEPTION: PAGE FAULT");
-	println!("Accessed Address: {:?}", Cr2::read());
+	println!("EXCEPTION: TIME REMAINING");
+	println!("Accessed Address: {:?}", Cr2::read()); // with integer as power of 2 as code
 	println!("{:#?}", stack_frame);
-	hlt_loop();
 }
+
+extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+	use x86_64::registers::control::Cr2;
+
+	println!("EXCEPTION: TASK REMAINING");
+	println!("Accessed Address: {:?}", Cr2::read()); // with integer as power of 2 as code
+	println!("{:#?}", stack_frame);
+}
+
+// todo : put handlers in array
+/*
+lazy_static! {
+	static ref array: [x86_64::structures::idt::HandlerFunc; 256] = [];
+}
+*/
