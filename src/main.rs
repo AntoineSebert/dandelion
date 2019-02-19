@@ -66,7 +66,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
-	sample_job(4_294_967_296);
+	sample_job(4_096);
 
 	println!("It did not crash!");
 	hlt_loop();

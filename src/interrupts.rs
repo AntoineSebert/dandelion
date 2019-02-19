@@ -50,8 +50,8 @@ pub mod interrupt_indexes {
 		HardDeadline = super::PIC_2_OFFSET + 8,
 		FirmDeadline,
 		SoftDeadline,
-		TimeRemaining, // with integer as power of 2 as code
-		TaskRemaining, // with integer as power of 2 as code
+		TimeRemaining,
+		TaskRemaining,
 	}
 	impl Hardware {
 		#[inline]
@@ -120,17 +120,19 @@ lazy_static! {
 			idt[HardDeadline.as_usize()].set_handler_fn(hard_deadline_handler);
 			idt[FirmDeadline.as_usize()].set_handler_fn(firm_deadline_handler);
 			idt[SoftDeadline.as_usize()].set_handler_fn(soft_deadline_handler);
-			//idt[TimeRemaining.as_usize()].set_handler_fn(time_remaining_handler);
-			//idt[TaskRemaining.as_usize()].set_handler_fn(task_remaining_handler);
+			idt[TimeRemaining.as_usize()].set_handler_fn(time_remaining_handler);
+			idt[TaskRemaining.as_usize()].set_handler_fn(task_remaining_handler);
 		}
 
 		idt
 	};
 }
 
-pub unsafe fn int(index: interrupt_indexes::RealTime) {
-	//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
-	asm!("int 48" :::: "volatile");
+pub fn int(index: interrupt_indexes::RealTime) {
+	unsafe {
+		//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
+		asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
+	}
 }
 
 /*
@@ -206,25 +208,34 @@ extern "x86-interrupt" fn soft_deadline_handler(stack_frame: &mut ExceptionStack
 	println!("EXCEPTION: SOFT DEADLINE\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut ExceptionStackFrame) {
 	use x86_64::registers::control::Cr2;
 
 	println!("EXCEPTION: TIME REMAINING");
-	println!("Accessed Address: {:?}", Cr2::read()); // with integer as power of 2 as code
+	println!("Accessed Address: {:?}", Cr2::read());
 	println!("{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut ExceptionStackFrame) {
 	use x86_64::registers::control::Cr2;
 
 	println!("EXCEPTION: TASK REMAINING");
-	println!("Accessed Address: {:?}", Cr2::read()); // with integer as power of 2 as code
+	println!("Accessed Address: {:?}", Cr2::read());
 	println!("{:#?}", stack_frame);
 }
 
-// todo : put handlers in array
+// todo : put hardware/realtime/other handlers in array
 /*
 lazy_static! {
-	static ref array: [x86_64::structures::idt::HandlerFunc; 256] = [];
+	static ref array: [x86_64::structures::idt::HandlerFunc; 224] = [];
 }
+*/
+
+/*
+uint as error code
+argument as power of 2
+number between 0 and 1 as estimated remaining time
+-> 0 : 2^0 = 1
+-> 1 : 2^0 = 0.5
+-> 2 : 2^0 = 0.25
 */
