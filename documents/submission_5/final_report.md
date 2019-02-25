@@ -36,7 +36,7 @@
 
 ### Qemu
 
-QEMU emulator version 3.1.0 (v3.1.0-11736-g7a30e7adb0-dirty)
+To run the OS, the [QEMU](https://www.qemu.org/) emulator version 3.1.0 (v3.1.0-11736-g7a30e7adb0-dirty) has been chosen.
 
 ### Rust
 
@@ -53,7 +53,7 @@ The chosen toolchain is nightly-2019-02-03-x86_64-pc-windows-msvc. The cargo fea
 |[cargo](https://doc.rust-lang.org/cargo/index.html)|build tool|1.34.0-nightly|245818076 2019-01-27|
 |[rustdoc](https://doc.rust-lang.org/rustdoc/index.html)|documentation generator|1.34.0-nightly|8a57831a4 2019-02-02|
 |[rustfmt](https://github.com/rust-lang/rustfmt)|formatting tool|1.0.1-nightly|be135599 2018-12-10|
-The OS image is build and run with [bootimage](https://crates.io/crates/bootimage) version 0.6.4.
+The OS image is build and run with [bootimage](https://crates.io/crates/bootimage) version 0.6.4, which operates atop of cargo.
 
 ## Results
 
