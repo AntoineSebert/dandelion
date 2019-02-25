@@ -1,0 +1,194 @@
+language: rust
+cache: cargo
+dist: xenial
+os: linux
+
+# Run builds for all the supported trains
+rust: nightly
+sudo: true
+
+before_install:
+  - sudo apt-get update
+
+addons:
+	apt:
+		packages:
+			- libcurl4-openssl-dev
+			- libelf-dev
+			- libdw-dev
+			- cmake
+			- gcc
+			- binutils-dev
+
+# Coverage report
+	- |
+		if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
+			wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+			tar xzf master.tar.gz &&
+			cd kcov-master &&
+			mkdir build &&
+			cd build &&
+			cmake .. &&
+			make &&
+			sudo make install &&
+			cd ../.. &&
+			rm -rf kcov-master &&
+			for file in target/debug/examplerust-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+			bash <(curl -s https://codecov.io/bash) &&
+			echo "Uploaded code coverage"
+		fi
+
+# The main build
+script:
+	- cargo build
+	- cargo test
+
+# Add clippy
+before_script:
+	- |
+		if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
+			( ( cargo install clippy && export CLIPPY=true ) || export CLIPPY=false );
+		fi
+		- export PATH=$PATH:~/.cargo/bin
+script:
+	- |
+		if [[ "$TRAVIS_RUST_VERSION" == "nightly" && $CLIPPY ]]; then
+			cargo clippy
+		fi
+# Upload docs
+after_success:
+	- |
+		if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" && "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" == "master" ]]; then
+			cargo doc &&
+			echo "<meta http-equiv=refresh content=0;url=os_balloon/index.html>" > target/doc/index.html &&
+			git clone https://github.com/davisp/ghp-import.git &&
+			./ghp-import/ghp_import.py -n -p -f -m "Documentation upload" -r https://"$GH_TOKEN"@github.com/"$TRAVIS_REPO_SLUG.git" target/doc &&
+			echo "Uploaded documentation"
+		fi
+
+before_script:
+	- pip install 'travis-cargo<0.2' --user
+	- export PATH=$HOME/.local/bin:$PATH
+	- mysql -e "create database diesel_test; create database diesel_unit_test; grant all on \`diesel_%\`.* to 'travis'@'%';" -uroot
+script:
+- |
+	rustc +$TRAVIS_RUST_VERSION --version &&
+	if [[ "$TRAVIS_RUST_VERSION" == nightly* ]]; then
+		(cd diesel && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "unstable extras $BACKEND")
+	else
+		(cd diesel && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "extras $BACKEND")
+	fi &&
+	(cd diesel && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "extras with-deprecated $BACKEND") &&
+	(cd diesel_derives && cargo +$TRAVIS_RUST_VERSION test --features "diesel/$BACKEND") &&
+	if [[ "$TRAVIS_RUST_VERSION" == nightly* ]]; then
+		(cd diesel_derives && cargo +$TRAVIS_RUST_VERSION test --features "diesel/unstable diesel/$BACKEND")
+	fi &&
+	(cd "examples/$BACKEND" && ./test_all) &&
+	(cd diesel_cli && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "$BACKEND") &&
+	(cd diesel_migrations/migrations_internals && cargo +$TRAVIS_RUST_VERSION test ) &&
+	(cd diesel_migrations/migrations_macros && cargo +$TRAVIS_RUST_VERSION test ) &&
+	(cd diesel_migrations/ && cargo +$TRAVIS_RUST_VERSION test  --features "$BACKEND diesel/$BACKEND" ) &&
+	if [[ "$TRAVIS_RUST_VERSION" == nightly* ]]; then
+		(cd diesel_tests && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "unstable $BACKEND")
+	else
+		(cd diesel_tests && cargo +$TRAVIS_RUST_VERSION test --no-default-features --features "$BACKEND")
+	fi
+matrix:
+	allow_failures:
+		- rust: nightly
+	include:
+	- rust: nightly-2018-11-27
+		name: "Compile tests"
+		script:
+		- (cd diesel_compile_tests && cargo +$TRAVIS_RUST_VERSION test)
+	- rust: 1.31.0
+		name: "Rustfmt && Clippy"
+		script:
+		- rustup component add rustfmt clippy
+		- cargo +$TRAVIS_RUST_VERSION clippy
+		- cargo +$TRAVIS_RUST_VERSION fmt --all -- --check
+	- rust: 1.31.0
+		name: "Minimal supported rust version == 1.31.0"
+		script:
+		- cargo +$TRAVIS_RUST_VERSION check --all
+
+	global:
+		- TRAVIS_CARGO_NIGHTLY_FEATURE=""
+		- secure: NmCM1VNEzid6bROA7tXV1R63n9S9KvY1etXsDzd1608cvjRnG3ZDAWXISbY1BxqrvleElreUJOvz/3TSQCHivpT2ezeyk2sntYtZpw0TWbz1SQMAPNWPTjP3bNQzpmNwfU4p6ui6qIOnQza4JxOu3SZSveNlehDBPkkS+52R7Zw/EPdwi9jTYJArV2+8pnEsQECAdRLttbtA2JBl3hZ4VHfGpHRZyeULn63UzyVbQVzQ3NVhqyQUKTPdpUciQTI3fZEkfaWuLV8QPPa5026/yJEEi2Fsl3r7fyY8ia67k4Zo9THlPVD0YOUlkWuZWwvkxNA8RQSVPv4FidEpwbxG8y6nAra4CjwiEChcpFhZJtrH7ZrXO/tJk7vtc5CFVWUsQtNX92QY1QFdPxwYNBSICLyUN+A+BQURwvQgxdcJsJyQmh5Ed7yuavcAinVq7fPeOyBWcPL5mt17no16aG1rzvXSUnD0aH7F3S3DHkoM9P9iHgJMLk+2YNmJtFescBxCeG8bA7t5bw0kQNH5KUWAD1uYpC9ikB3NVdlc+q17dKTAe4rcYA+sIO+UGudvpmLWT0lXtEMqDfxfCmyICDESs9bNfueCGJEAnfTBNunsJqR7rMUvjNndS2/Ssok6c/0Yfb9X8cM9nI4QLAj/+hClqdYphmpCjuC34bWxFSt/KJI=
+after_success:
+- |
+	if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
+		(cd diesel && cargo +$TRAVIS_RUST_VERSION doc -- --features "postgres sqlite mysql extras")
+		mkdir diesel/target
+		mv target/doc diesel/target/doc
+		echo "docs.diesel.rs" > diesel/target/doc/CNAME
+		(cd diesel && travis-cargo doc-upload)
+	fi
+branches:
+	only:
+		- master
+		- ಠ_ಠ
+notifications:
+	webhooks:
+		urls:
+			- https://webhooks.gitter.im/e/1d32e0ad32841bd56b02
+		on_success: change
+		on_failure: always
+on_start: never
+
+sudo: required
+
+stages: tools-and-build-and-tier1
+
+matrix:
+	include:
+		# TOOLS
+		- name: "Documentation"
+			env: TARGET=x86_64-unknown-linux-gnu
+			script: sh ci/dox.sh
+			install: true
+			stage: tools-and-build-and-tier1
+		- name: "Shellcheck"
+			install: true
+			script:
+				- shellcheck --version
+				- shellcheck ci/*.sh
+			stage: tools-and-build-and-tier1
+		- name: "Style"
+			install: rustup component add rustfmt-preview
+			script:
+				- rustc ci/style.rs && ./style src
+				- cargo fmt --all -- --check
+			stage: tools-and-build-and-tier1
+
+		# BUILD stable, beta, nightly
+		- name: "Build Beta Rust"
+			script: sh ci/build.sh
+			stage: tools-and-build-and-tier1
+			rust: beta
+		- name: "Build Nightly Rust"
+			script: sh ci/build.sh
+			stage: tools-and-build-and-tier1
+			rust: nightly
+
+	allow_failures:
+		# FIXME: https://github.com/rust-lang/libc/issues/1226
+		- env: TARGET=asmjs-unknown-emscripten
+		- env: TARGET=wasm32-unknown-emscripten
+
+install: rustup target add $TARGET || true
+
+script:
+	- cargo generate-lockfile --manifest-path libc-test/Cargo.toml
+	- if [[ $TRAVIS_OS_NAME = "linux" ]] && [[ $BUILD_ONLY != "1" ]]; then
+			sh ci/run-docker.sh $TARGET;
+		else
+			sh ci/run.sh $TARGET;
+		fi
+env:
+	global:
+		secure: "e2/3QjgRN9atOuSHp22TrYG7QVKcYUWY48Hi9b60w+r1+BhPkTseIJLte7WefRhdXtqpjjUJTooKDhnurFOeHaCT+nmBgiv+FPU893sBl4bhesY4m0vgUJVbNZcs6lTImYekWVb+aqjGdgV/XAgCw7c3kPmrZV0MzGDWL64Xaps="
+
+notifications:
+	email:
+on_success: never
