@@ -131,7 +131,7 @@ lazy_static! {
 pub fn int(index: interrupt_indexes::RealTime) {
 	unsafe {
 		//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
-		asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
+		//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
 	}
 }
 
