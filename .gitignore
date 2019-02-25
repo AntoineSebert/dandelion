@@ -6,3 +6,4 @@ target/debug/
 target/sysroot/
 target/x86_64-dandelion/debug/
 target/.rustc_info.json
+*.bib
