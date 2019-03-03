@@ -16,7 +16,7 @@ use dandelion::{exit_qemu, serial_println};
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	use dandelion::interrupts::{interrupt_indexes::RealTime, int};
+	use dandelion::interrupts::{int, interrupt_indexes::RealTime};
 
 	int(RealTime::SoftDeadline);
 	serial_println!("ok");
