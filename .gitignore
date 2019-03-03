@@ -8,4 +8,4 @@ target/sysroot/
 target/x86_64-dandelion/debug/
 target/.rustc_info.json
 # ignore bibliography files
-documents/*.bib
+documents/references.bib
