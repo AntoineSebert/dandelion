@@ -36,12 +36,12 @@
 
 ### Qemu
 
-To run the OS, the [QEMU](https://www.qemu.org/) emulator version 3.1.0 (v3.1.0-11736-g7a30e7adb0-dirty) has been chosen.
+To run the OS, the [QEMU](https://www.qemu.org/) emulator version 3.1.0 has been chosen.
 
 ### Rust
 
-The implementation language choosen is [Rust](https://www.rust-lang.org/), for ... (copypaste stuff written before).
-The toolchains (including the compiler and its most important components) can be installed via [rustup](https://rustup.rs/).
+The implementation language choosen is [Rust](https://www.rust-lang.org/), for it has been guaranteed free from common problems related to memory (overflows, pointers) while remaining almost as fast as C/C++. Rust’s ecosystem is also quickly expanding, part because it supported by the Mozilla Foundation (especially in its product Firefox), and part because of the community that endlessly creates new open source software projects.
+The toolchain (including the compiler and its most important components) can be installed via [rustup](https://rustup.rs/).
 Note that the component **rust-src** is required to build this project, and can be installed with `rustup component add rust-src`.
 
 #### Toolchain
