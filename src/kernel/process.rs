@@ -50,12 +50,12 @@ pub struct Process {
 }
 
 impl Process {
-	pub fn spawn_process(process_id: u64, parent_process_id: u64, group_id: u64) -> Process {
+	pub fn spawn_process(parent_process_id: u64, group_id: u64) -> Process {
 		Process {
 			process_id: /*process_table.generate_new()*/0,
 			group_id,
 			parent_process_id,
-			state: ProcessState::Limbo::Creating,
+			state: ProcessState::Limbo(Limbo::Creating),
 			virtual_time: 0,
 			creation_time: /*::kernel::time::monotonic()*/0,
 			stack_address: /*vmm::get_new_stack_address()*/0,
@@ -65,3 +65,5 @@ impl Process {
 		}
 	}
 }
+
+// process table (set)
