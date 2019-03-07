@@ -53,7 +53,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
 		gdt::init_gdt,
 		interrupts::{init_idt, PICS},
-		kernel::vmm::memory::{init, create_mapping, init_frame_allocator},
+		kernel::vmm::memory::{create_mapping, init, init_frame_allocator},
 	};
 	use x86_64::instructions::interrupts::enable;
 

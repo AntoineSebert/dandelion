@@ -8,5 +8,5 @@ pub mod scheduler;
 pub mod shell;
 pub mod vmm;
 
+pub mod process;
 pub mod time;
-pub mod task;

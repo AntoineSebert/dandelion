@@ -29,3 +29,5 @@ pub fn hlt_loop() -> ! {
 		hlt();
 	}
 }
+
+// environment variables ?

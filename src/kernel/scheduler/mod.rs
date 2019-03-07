@@ -10,6 +10,4 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
-pub fn test() {}
-
-// lazy static job queue ?
+// process queue
