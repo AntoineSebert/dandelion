@@ -6,12 +6,10 @@
 //#![cfg_attr(no_std)]
 //#![cfg_attr(no_main)]
 
-/*
-use dispatcher;
-use swapper;
-use admitter;
-*/
+pub mod admitter;
+pub mod dispatcher;
+pub mod swapper;
 
-pub fn test() {
+pub fn test() {}
 
-}
+// lazy static job queue ?
