@@ -113,6 +113,7 @@ lazy_static! {
 		/* hardware */ {
 			idt[Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
 			idt[Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
+			idt[RealTimeClock.as_usize()].set_handler_fn(real_time_clock_interrupt_handler);
 		}
 		/* realtime */ {
 			idt[HardDeadline.as_usize()].set_handler_fn(hard_deadline_handler);
@@ -124,13 +125,6 @@ lazy_static! {
 
 		idt
 	};
-}
-
-pub fn int(index: interrupt_indexes::RealTime) {
-	unsafe {
-		//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
-		//asm!("int $0" :: "r" (index.as_u8()) :: "volatile");
-	}
 }
 
 /*
@@ -190,6 +184,52 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Exceptio
 		}
 	}
 	unsafe { PICS.lock().notify_end_of_interrupt(Keyboard.as_u8()) }
+}
+
+/// https://wiki.osdev.org/Real_Time_Clock
+extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
+	use instructions::interrupts::{disable, enable, without_interrupts};
+
+	//Setting the Registers
+	/*
+	without_interrupts(|| {
+		outportb(0x70, 0x8A);					// select Status Register A, and disable NMI (by setting the 0x80 bit)
+		outportb(0x71, 0x20);					// write to CMOS/RTC RAM
+	});
+	*/
+
+	//Changing Interrupt Rate
+	/*
+	frequency =  32768 >> (rate-1);
+	rate &= 0x0F;								// rate must be above 2 and not over 15
+	without_interrupts(|| {
+		outportb(0x70, 0x8A);					// set index to register A, disable NMI
+		char prev = inportb(0x71);				// get initial value of register A
+		outportb(0x70, 0x8A);					// reset index to A
+		outportb(0x71, (prev & 0xF0) | rate);	// write only our rate to A. Note, rate is the bottom 4 bits.
+	});
+	*/
+
+	without_interrupts(|| {
+		{
+			//Turning on IRQ 8
+			disable();
+			/*
+			outportb(0x70, 0x8B);				// select register B, and disable NMI
+			char prev = inportb(0x71);			// read the current value of register B
+			outportb(0x70, 0x8B);				// set the index again (a read will reset the index to register D)
+			outportb(0x71, prev | 0x40);		// write the previous value ORed with 0x40. This turns on bit 6 of register B
+			*/
+			enable();
+		}
+		{
+			//Interrupts and Register C
+			/*
+			outportb(0x70, 0x0C);				// select register C
+			inportb(0x71);						// just throw away contents
+			*/
+		}
+	});
 }
 
 // realtime
