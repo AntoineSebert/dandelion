@@ -7,8 +7,6 @@
 #![feature(abi_x86_interrupt)]
 #![feature(asm)]
 
-extern crate x86_64;
-
 pub mod gdt;
 pub mod interrupts;
 pub mod kernel;

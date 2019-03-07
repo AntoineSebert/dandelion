@@ -5,20 +5,18 @@
 
 //#![cfg(not(windows))] // fix lint errors, but probably important
 
-extern crate lazy_static;
-extern crate pc_keyboard;
-extern crate pic8259_simple;
-extern crate spin;
-
 use crate::{hlt_loop, print, println};
 use interrupt_indexes::{
-	Hardware::{Keyboard, Timer},
+	Hardware::{Keyboard, RealTimeClock, Timer},
 	RealTime::*,
 };
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
-use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable, PageFaultErrorCode};
+use x86_64::{
+	instructions,
+	structures::idt::{ExceptionStackFrame, InterruptDescriptorTable, PageFaultErrorCode},
+};
 
 pub const PIC_1_OFFSET: u8 = 32; // 32 to 39
 pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40 to 47
@@ -167,12 +165,12 @@ extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut ExceptionSt
 }
 
 extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
+	use instructions::port::Port;
 	use pc_keyboard::{
 		layouts::Us104Key,
 		DecodedKey::{RawKey, Unicode},
 		Keyboard, ScancodeSet1,
 	};
-	use x86_64::instructions::port::Port;
 
 	lazy_static! {
 		static ref KEYBOARD: Mutex<Keyboard<Us104Key, ScancodeSet1>> =

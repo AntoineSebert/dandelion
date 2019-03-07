@@ -3,11 +3,6 @@
  * @date	20/01/2019
  */
 
-extern crate lazy_static;
-extern crate spin;
-extern crate volatile;
-extern crate x86_64;
-
 use core::fmt::{self, Arguments, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;

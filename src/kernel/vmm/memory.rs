@@ -3,9 +3,6 @@
  * @date	05/02/2019
  */
 
-extern crate bootloader;
-extern crate x86_64;
-
 use bootloader::bootinfo::{MemoryMap, MemoryRegionType::Usable};
 use x86_64::{
 	structures::paging::{

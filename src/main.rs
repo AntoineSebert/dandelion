@@ -30,13 +30,7 @@ misc
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
 #![feature(asm)]
-/*
-extern crate bootloader;
-extern crate dandelion;
-extern crate integer_sqrt;
-extern crate pic8259_simple;
-extern crate x86_64;
-*/
+
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
@@ -70,7 +64,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
-	sample_job(1_000_000, true);
+	println!("{:?}", dandelion::kernel::time::realtime());
+	//sample_job(1_000_000, true);
 
 	println!("It did not crash!");
 	hlt_loop();

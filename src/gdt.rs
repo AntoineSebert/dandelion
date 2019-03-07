@@ -3,9 +3,6 @@
  * @date	03/02/2019
  */
 
-extern crate lazy_static;
-extern crate x86_64;
-
 use lazy_static::lazy_static;
 use x86_64::structures::{
 	gdt::{self, GlobalDescriptorTable, SegmentSelector},
