@@ -29,13 +29,14 @@ misc
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
-
+#![feature(asm)]
+/*
 extern crate bootloader;
 extern crate dandelion;
 extern crate integer_sqrt;
 extern crate pic8259_simple;
 extern crate x86_64;
-
+*/
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
@@ -50,26 +51,26 @@ entry_point!(kernel_main);
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
-		gdt,
+		gdt::init_gdt,
 		interrupts::{init_idt, PICS},
-		memory::{self, create_mapping, init_frame_allocator},
+		kernel::vmm::memory::{init, create_mapping, init_frame_allocator},
 	};
 	use x86_64::instructions::interrupts::enable;
 
 	println!("Hello World{}", "!");
 
-	gdt::init();
+	init_gdt();
 	init_idt();
 	unsafe { PICS.lock().initialize() };
 	enable();
 
-	let mut recursive_page_table = unsafe { memory::init(boot_info.p4_table_addr as usize) };
+	let mut recursive_page_table = unsafe { init(boot_info.p4_table_addr as usize) };
 	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
-	sample_job(1_000, false);
+	sample_job(1_000_000, true);
 
 	println!("It did not crash!");
 	hlt_loop();

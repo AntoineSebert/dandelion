@@ -11,7 +11,7 @@ extern crate x86_64;
 
 pub mod gdt;
 pub mod interrupts;
-pub mod memory;
+pub mod kernel;
 pub mod serial;
 pub mod vga_buffer;
 
