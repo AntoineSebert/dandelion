@@ -20,13 +20,14 @@ use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
 #[no_mangle]
 #[allow(unconditional_recursion)]
 pub extern "C" fn _start() -> ! {
-	gdt::init();
+	use gdt::init_gdt;
+
+	init_gdt();
 	init_test_idt();
 
 	fn stack_overflow() {
 		stack_overflow(); // for each recursion, the return address is pushed
 	}
-
 	stack_overflow(); // trigger a stack overflow
 
 	serial_println!("failed");
