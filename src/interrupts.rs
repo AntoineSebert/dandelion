@@ -15,7 +15,7 @@ use pic8259_simple::ChainedPics;
 use spin::Mutex;
 use x86_64::{
 	instructions,
-	structures::idt::{ExceptionStackFrame, InterruptDescriptorTable, PageFaultErrorCode},
+	structures::idt::{InterruptStackFrame, InterruptDescriptorTable, PageFaultErrorCode},
 };
 
 pub const PIC_1_OFFSET: u8 = 32; // 32 to 39
@@ -133,16 +133,16 @@ lazy_static! {
 
 // CPU exceptions
 
-extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut InterruptStackFrame) {
 	println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut InterruptStackFrame, _error_code: u64) {
 	println!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 	hlt_loop();
 }
 
-extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFrame, _error_code: PageFaultErrorCode) {
+extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFrame, _error_code: PageFaultErrorCode) {
 	use x86_64::registers::control::Cr2;
 
 	println!("EXCEPTION: PAGE FAULT");
@@ -153,12 +153,12 @@ extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut ExceptionStackFra
 
 // hardware
 
-extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	print!(".");
 	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
 
-extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	use instructions::port::Port;
 	use pc_keyboard::{
 		layouts::Us104Key,
@@ -187,7 +187,7 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Exceptio
 }
 
 /// https://wiki.osdev.org/Real_Time_Clock
-extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	use instructions::interrupts::{disable, enable, without_interrupts};
 
 	//Setting the Registers
@@ -234,46 +234,31 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut E
 
 // realtime
 
-extern "x86-interrupt" fn hard_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn hard_deadline_handler(stack_frame: &mut InterruptStackFrame) {
 	println!("EXCEPTION: HARD DEADLINE\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn firm_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn firm_deadline_handler(stack_frame: &mut InterruptStackFrame) {
 	println!("EXCEPTION: FIRM DEADLINE\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn soft_deadline_handler(stack_frame: &mut ExceptionStackFrame) {
+extern "x86-interrupt" fn soft_deadline_handler(stack_frame: &mut InterruptStackFrame) {
 	println!("EXCEPTION: SOFT DEADLINE\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut ExceptionStackFrame) {
-	use x86_64::registers::control::Cr2;
-
-	println!("EXCEPTION: TIME REMAINING");
-	println!("Accessed Address: {:?}", Cr2::read());
-	println!("{:#?}", stack_frame);
+extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut InterruptStackFrame) {
+	println!("EXCEPTION: TIME REMAINING\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut ExceptionStackFrame) {
-	use x86_64::registers::control::Cr2;
-
-	println!("EXCEPTION: TASK REMAINING");
-	println!("Accessed Address: {:?}", Cr2::read());
-	println!("{:#?}", stack_frame);
+extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut InterruptStackFrame) {
+	println!("EXCEPTION: TASK REMAINING\n{:#?}", stack_frame);
 }
-
-// todo : put hardware/realtime/other handlers in array
-/*
-lazy_static! {
-	static ref array: [x86_64::structures::idt::HandlerFunc; 224] = [];
-}
-*/
 
 /*
 uint as error code
 argument as power of 2
 number between 0 and 1 as estimated remaining time
--> 0 : 2^0 = 1
--> 1 : 2^0 = 0.5
--> 2 : 2^0 = 0.25
+	-> 0 : 2^0 = 1
+	-> 1 : 2^0 = 0.5
+	-> 2 : 2^0 = 0.25
 */
