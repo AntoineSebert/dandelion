@@ -34,7 +34,6 @@ pub enum SwapSpace {
 #[derive(Debug, Clone, Copy)]
 pub struct Process {
 	process_id: u64,
-	group_id: u64,
 	parent_process_id: u64,
 	state: ProcessState,
 	virtual_time: u64, // execution time elapsed
@@ -50,10 +49,9 @@ pub struct Process {
 }
 
 impl Process {
-	pub fn spawn_process(parent_process_id: u64, group_id: u64) -> Process {
+	pub fn spawn_process(parent_process_id: u64) -> Process {
 		Process {
 			process_id: /*process_table.generate_new()*/0,
-			group_id,
 			parent_process_id,
 			state: ProcessState::Limbo(Limbo::Creating),
 			virtual_time: 0,
