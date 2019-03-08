@@ -7,8 +7,6 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 
-extern crate dandelion;
-
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 

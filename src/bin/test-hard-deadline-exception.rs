@@ -8,22 +8,17 @@
 #![cfg_attr(test, allow(unused_imports))]
 #![feature(asm)]
 
-extern crate dandelion;
-extern crate x86_64;
-
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	//use x86_64::instructions::interrupts::software_interrupt;
+	use x86_64::software_interrupt;
 	use dandelion::interrupts::{init_idt, interrupt_indexes::RealTime::HardDeadline};
 
 	init_idt();
-	unsafe {
-		dandelion::software_interrupt!(HardDeadline);
-	}
+	unsafe { software_interrupt!(HardDeadline); }
 
 	serial_println!("ok");
 

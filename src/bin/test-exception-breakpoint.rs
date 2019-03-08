@@ -7,8 +7,6 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
-extern crate dandelion;
-
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, serial_println};
 
@@ -16,7 +14,7 @@ use dandelion::{exit_qemu, serial_println};
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
 	use dandelion::interrupts::init_idt;
-	use x86_64::instructions::int3;
+	use x86_64::instructions::interrupts::int3;
 
 	init_idt();
 	int3();
