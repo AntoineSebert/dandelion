@@ -15,7 +15,7 @@ use pic8259_simple::ChainedPics;
 use spin::Mutex;
 use x86_64::{
 	instructions,
-	structures::idt::{InterruptStackFrame, InterruptDescriptorTable, PageFaultErrorCode},
+	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
 
 pub const PIC_1_OFFSET: u8 = 32; // 32 to 39

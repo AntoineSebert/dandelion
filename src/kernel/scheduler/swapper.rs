@@ -23,10 +23,10 @@ Note that this is only a high-level overview and only one way of doing it. For t
 
 //fn push_registers(registers) {}
 
-fn get_next_stack_pointer() {}
+//fn get_next_stack_pointer() {}
 
-fn get_current_task_pointer() {}
+//fn get_current_task_pointer() {}
 
-fn rsp_update() {}
+//fn rsp_update() {}
 
-fn pop_register() {}
+//fn pop_register() {}
