@@ -31,7 +31,7 @@ misc
 #![deny(clippy::all)]
 #![feature(asm)]
 
-use bootloader::{bootinfo::BootInfo, entry_point};
+use bootloader::{bootinfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
 
@@ -43,7 +43,7 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[no_mangle]
 #[allow(clippy::print_literal)]
-fn kernel_main(boot_info: &'static BootInfo) -> ! {
+fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
 	use dandelion::{
 		gdt::init_gdt,
 		interrupts::{init_idt, PICS},
@@ -64,8 +64,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
-	println!("{:?}", dandelion::kernel::time::realtime());
-	//sample_job(1_000_000, true);
+	sample_job(1_000_000, true);
 
 	println!("It did not crash!");
 	hlt_loop();
@@ -83,9 +82,12 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 /*
- * Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
- * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
- */
+* Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
+* On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
+
+* put in dedicated test
+*/
+#[allow(dead_code)]
 fn sample_job(limit: u64, output: bool) {
 	use dandelion::{println, serial_println};
 	use integer_sqrt::IntegerSquareRoot;
@@ -95,30 +97,30 @@ fn sample_job(limit: u64, output: bool) {
 	} else {
 		serial_println!("2");
 	}
-	let mut counter: u64 = 3;
+	let mut candidate: u64 = 3;
 	loop {
-		if limit < counter {
+		if limit < candidate {
 			break;
 		}
-		let mut counter2 = 3;
+		let mut iterator = 3;
 		let mut is_prime = true;
 		loop {
-			if counter.integer_sqrt() < counter2 {
+			if candidate.integer_sqrt() < iterator {
 				break;
 			}
-			if counter % counter2 == 0 {
+			if candidate % iterator == 0 {
 				is_prime = false;
 				break;
 			}
-			counter2 += 2;
+			iterator += 2;
 		}
 		if is_prime {
 			if output {
-				println!("{}", counter);
+				println!("{}", candidate);
 			} else {
-				serial_println!("{}", counter);
+				serial_println!("{}", candidate);
 			}
 		}
-		counter += 2;
+		candidate += 2;
 	}
 }
