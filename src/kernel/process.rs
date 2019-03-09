@@ -3,6 +3,8 @@
  * @date	06/03/2019
  */
 
+use core::option::Option;
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum ProcessState {
 	Limbo(Limbo),
@@ -49,19 +51,26 @@ pub struct Process {
 }
 
 impl Process {
-	pub fn spawn_process(parent_process_id: u64) -> Process {
+	pub fn spawn_process(parent_process_id: Option<u64>) -> Process {
 		Process {
 			process_id: /*process_table.generate_new()*/0,
-			parent_process_id,
+			parent_process_id: match parent_process_id {
+				Some(ref p) => *p,
+				None => 1,
+			},
 			state: ProcessState::Limbo(Limbo::Creating),
 			virtual_time: 0,
 			creation_time: /*::kernel::time::monotonic()*/0,
-			stack_address: /*vmm::get_new_stack_address()*/0,
-			heap_address: /*vmm::get_new_heap_address()*/0,
-			data_address: /*vmm::get_new_data_address()*/0,
-			text_address: /*vmm::get_new_text_address()*/0,
+			stack_address: /*vmm::get_new_stack_address()*/0x0,
+			heap_address: /*vmm::get_new_heap_address()*/0x0,
+			data_address: /*vmm::get_new_data_address()*/0x0,
+			text_address: /*vmm::get_new_text_address()*/0x0,
 		}
 	}
 }
 
-// process table (set)
+impl PartialEq for Process {
+	fn eq(&self, other: &Process) -> bool { self.process_id == other.process_id }
+}
+
+impl Eq for Process {}
