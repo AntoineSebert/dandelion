@@ -15,10 +15,10 @@ use dandelion::{exit_qemu, serial_println};
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
 	use x86_64::software_interrupt;
-	use dandelion::interrupts::{init_idt, interrupt_indexes::RealTime::TimeRemaining};
+	use dandelion::interrupts::init_idt;
 
 	init_idt();
-	unsafe { software_interrupt!(TimeRemaining); }
+	unsafe { software_interrupt!(51); }
 
 	serial_println!("ok");
 

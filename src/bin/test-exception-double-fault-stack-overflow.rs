@@ -8,13 +8,10 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
-extern crate dandelion;
-extern crate lazy_static;
-extern crate x86_64;
-
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, gdt, serial_println};
-use x86_64::structures::idt::{ExceptionStackFrame, InterruptDescriptorTable};
+use x86_64::structures::idt::{InterruptStackFrame, InterruptDescriptorTable};
+use lazy_static::lazy_static;
 
 #[cfg(not(test))]
 #[no_mangle]
@@ -52,7 +49,7 @@ fn panic(info: &PanicInfo) -> ! {
 	loop {}
 }
 
-lazy_static::lazy_static! {
+lazy_static! {
 	static ref TEST_IDT: InterruptDescriptorTable = {
 		use gdt::DOUBLE_FAULT_IST_INDEX;
 
@@ -69,7 +66,7 @@ lazy_static::lazy_static! {
 
 pub fn init_test_idt() { TEST_IDT.load(); }
 
-extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut ExceptionStackFrame, _error_code: u64) {
+extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut InterruptStackFrame, _error_code: u64) {
 	serial_println!("ok");
 
 	unsafe {
