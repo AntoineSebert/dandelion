@@ -14,11 +14,13 @@ use dandelion::{exit_qemu, serial_println};
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	use x86_64::software_interrupt;
 	use dandelion::interrupts::init_idt;
+	use x86_64::software_interrupt;
 
 	init_idt();
-	unsafe { software_interrupt!(50); }
+	unsafe {
+		software_interrupt!(50);
+	}
 
 	serial_println!("ok");
 

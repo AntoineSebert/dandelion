@@ -10,8 +10,8 @@
 
 use core::panic::PanicInfo;
 use dandelion::{exit_qemu, gdt, serial_println};
-use x86_64::structures::idt::{InterruptStackFrame, InterruptDescriptorTable};
 use lazy_static::lazy_static;
+use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[cfg(not(test))]
 #[no_mangle]
@@ -55,9 +55,7 @@ lazy_static! {
 
 		let mut idt = InterruptDescriptorTable::new();
 		unsafe {
-			idt.double_fault
-				.set_handler_fn(double_fault_handler)
-				.set_stack_index(DOUBLE_FAULT_IST_INDEX);
+			idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(DOUBLE_FAULT_IST_INDEX);
 		}
 
 		idt
