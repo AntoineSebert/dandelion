@@ -6,15 +6,12 @@
 //#![cfg(not(windows))] // fix lint errors, but probably important
 
 use crate::{hlt_loop, print, println};
-use interrupt_indexes::{
-	Hardware::{Keyboard, RealTimeClock, Timer},
-	RealTime::*,
-};
+use interrupt_indexes::{Hardware::*, RealTime::*};
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
 use x86_64::{
-	instructions,
+	instructions::{interrupts::without_interrupts, port::Port},
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
 
@@ -27,7 +24,7 @@ pub mod interrupt_indexes {
 	pub enum Hardware {
 		Timer = super::PIC_1_OFFSET,
 		Keyboard,
-		Other,
+		Cascade,
 		SerialPort2,
 		SerialPort1,
 		ParallelPort2_3,
@@ -113,7 +110,24 @@ lazy_static! {
 		/* hardware */ {
 			idt[Timer.as_usize()].set_handler_fn(timer_interrupt_handler);
 			idt[Keyboard.as_usize()].set_handler_fn(keyboard_interrupt_handler);
+			/*
+			idt[Cascade.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[SerialPort2.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[SerialPort1.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[ParallelPort2_3.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[FloppyDisk.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[ParallelPort1.as_usize()].set_handler_fn(_interrupt_handler);
+			*/
 			idt[RealTimeClock.as_usize()].set_handler_fn(real_time_clock_interrupt_handler);
+			/*
+			idt[Acpi.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[Available1.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[Available2.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[Mouse.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[CoProcessor.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[PrimaryAta.as_usize()].set_handler_fn(_interrupt_handler);
+			idt[SecondaryAta.as_usize()].set_handler_fn(_interrupt_handler);
+			*/
 		}
 		/* realtime */ {
 			idt[HardDeadline.as_usize()].set_handler_fn(hard_deadline_handler);
@@ -148,18 +162,19 @@ extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFra
 	println!("EXCEPTION: PAGE FAULT");
 	println!("Accessed Address: {:?}", Cr2::read());
 	println!("{:#?}", stack_frame);
+
 	hlt_loop();
 }
 
 // hardware
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
+	// wake up short-term scheduler
 	print!(".");
 	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
 
 extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	use instructions::port::Port;
 	use pc_keyboard::{
 		layouts::Us104Key,
 		DecodedKey::{RawKey, Unicode},
@@ -183,53 +198,53 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 			}
 		}
 	}
+
 	unsafe { PICS.lock().notify_end_of_interrupt(Keyboard.as_u8()) }
 }
 
-/// https://wiki.osdev.org/Real_Time_Clock
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	use instructions::interrupts::{disable, enable, without_interrupts};
-
-	//Setting the Registers
-	/*
+	println!("+");
 	without_interrupts(|| {
-		outportb(0x70, 0x8A);					// select Status Register A, and disable NMI (by setting the 0x80 bit)
-		outportb(0x71, 0x20);					// write to CMOS/RTC RAM
-	});
-	*/
-
-	//Changing Interrupt Rate
-	/*
-	frequency =  32768 >> (rate-1);
-	rate &= 0x0F;								// rate must be above 2 and not over 15
-	without_interrupts(|| {
-		outportb(0x70, 0x8A);					// set index to register A, disable NMI
-		char prev = inportb(0x71);				// get initial value of register A
-		outportb(0x70, 0x8A);					// reset index to A
-		outportb(0x71, (prev & 0xF0) | rate);	// write only our rate to A. Note, rate is the bottom 4 bits.
-	});
-	*/
-
-	without_interrupts(|| {
-		{
-			//Turning on IRQ 8
-			disable();
-			/*
-			outportb(0x70, 0x8B);				// select register B, and disable NMI
-			char prev = inportb(0x71);			// read the current value of register B
-			outportb(0x70, 0x8B);				// set the index again (a read will reset the index to register D)
-			outportb(0x71, prev | 0x40);		// write the previous value ORed with 0x40. This turns on bit 6 of register B
-			*/
-			enable();
-		}
-		{
-			//Interrupts and Register C
-			/*
-			outportb(0x70, 0x0C);				// select register C
-			inportb(0x71);						// just throw away contents
-			*/
+		// flush register C so interrupt can happen again
+		unsafe {
+			Port::<u8>::new(0x70).write(0x0C);
+			Port::<u8>::new(0x71).read();
 		}
 	});
+
+	unsafe { PICS.lock().notify_end_of_interrupt(RealTimeClock.as_u8()) }
+}
+
+pub fn change_real_time_clock_interrupt_rate(mut rate: u8) {
+	rate &= 0x0F; // rate must be above 2 and not over 15, by default 6
+
+	without_interrupts(|| {
+		let mut address_port = Port::<u8>::new(0x70);
+		let mut data_port = Port::<u8>::new(0x71);
+
+		unsafe {
+			address_port.write(0x8A);
+			let prev: u8 = data_port.read();
+			address_port.write(0x8A);
+			data_port.write((prev & 0xF0) | rate);
+		}
+	});
+
+	println!("New frequency is {}", 32768 >> (rate - 1));
+}
+
+pub fn enable_rtc_interrupt() {
+	without_interrupts(|| {
+		let mut address_port = Port::<u8>::new(0x70);
+		let mut data_port = Port::<u8>::new(0x71);
+
+		unsafe {
+			address_port.write(0x8B);
+			let prev: u8 = data_port.read();
+			address_port.write(0x8B);
+			data_port.write(prev | 0x40);
+		}
+	})
 }
 
 // realtime
@@ -258,7 +273,7 @@ extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut InterruptStac
 uint as error code
 argument as power of 2
 number between 0 and 1 as estimated remaining time
-	-> 0 : 2^0 = 1
-	-> 1 : 2^0 = 0.5
-	-> 2 : 2^0 = 0.25
+	-> 0 : 1/2^0 = 1
+	-> 1 : 1/2^1 = 0.5
+	-> 2 : 1/2^2 = 0.25
 */
