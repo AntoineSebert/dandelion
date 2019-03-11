@@ -9,8 +9,9 @@ pub mod shell;
 pub mod vmm;
 
 pub mod process;
+pub mod time;
 
-use lazy_static::lazy_static;
+//use lazy_static::lazy_static;
 
 // https://japaric.github.io/heapless/heapless/struct.IndexSet.html
 
