@@ -47,6 +47,7 @@ pub mod interrupt_indexes {
 		SoftDeadline,
 		TimeRemaining,
 		TaskRemaining,
+		MissedDeadline,
 	}
 	impl Hardware {
 		#[inline]
@@ -135,6 +136,7 @@ lazy_static! {
 			idt[SoftDeadline.as_usize()].set_handler_fn(soft_deadline_handler);
 			idt[TimeRemaining.as_usize()].set_handler_fn(time_remaining_handler);
 			idt[TaskRemaining.as_usize()].set_handler_fn(task_remaining_handler);
+			idt[MissedDeadline.as_usize()].set_handler_fn(missed_deadline_handler);
 		}
 
 		idt
@@ -267,6 +269,10 @@ extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut InterruptStac
 
 extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut InterruptStackFrame) {
 	println!("EXCEPTION: TASK REMAINING\n{:#?}", stack_frame);
+}
+
+extern "x86-interrupt" fn missed_deadline_handler(stack_frame: &mut InterruptStackFrame) {
+	println!("EXCEPTION: MISSED DEADLINE\n{:#?}", stack_frame);
 }
 
 /*
