@@ -23,6 +23,7 @@ bootable USB
 
 misc
 	https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
+	let mortal_heroes: String = "your fame"
 */
 
 #![cfg_attr(not(test), no_std)]
@@ -31,7 +32,7 @@ misc
 #![deny(clippy::all)]
 #![feature(asm)]
 
-use bootloader::{bootinfo, entry_point};
+use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
 
@@ -43,15 +44,20 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[no_mangle]
 #[allow(clippy::print_literal)]
-fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
 		gdt::init_gdt,
-		interrupts::{init_idt, PICS},
-		kernel::vmm::memory::{create_mapping, init, init_frame_allocator},
+		interrupts::{change_real_time_clock_interrupt_rate, init_idt, PICS, enable_rtc_interrupt},
+		kernel::{
+			time::get_datetime,
+			vmm::memory::{create_mapping, init, init_frame_allocator},
+		},
 	};
 	use x86_64::instructions::interrupts::enable;
 
 	println!("Hello World{}", "!");
+	change_real_time_clock_interrupt_rate(12);
+	enable_rtc_interrupt();
 
 	init_gdt();
 	init_idt();
@@ -64,7 +70,8 @@ fn kernel_main(boot_info: &'static bootinfo::BootInfo) -> ! {
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
 
-	sample_job(1_000_000, true);
+	//sample_job(1_000_000, true);
+	println!("{:?}", get_datetime());
 
 	println!("It did not crash!");
 	hlt_loop();
@@ -82,11 +89,9 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 /*
-* Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
-* On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
-
-* put in dedicated test
-*/
+ * Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
+ * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
+ */
 #[allow(dead_code)]
 fn sample_job(limit: u64, output: bool) {
 	use dandelion::{println, serial_println};
