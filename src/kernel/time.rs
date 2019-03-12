@@ -3,11 +3,31 @@
  * @date	06/03/2019
  */
 
-// https://github.com/noahrinehart/cmos
-// https://docs.rs/cmos/0.1.1/cmos/
+use cmos::CMOSCenturyHandler;
+use crate::kernel::CMOS;
+use x86_64::instructions::{interrupts::without_interrupts, port::Port};
 
-use cmos::{CMOS, CMOSCenturyHandler};
+// replace by function in cmos crate
+pub fn set_register(register: u8, value: u8) {
+	if register == 0x8A || register == 0x8B || register == 0x8C {
+		panic!()
+	}
 
-let mut cmos = unsafe { CMOS::new() };
-let rtc = cmos.read_rtc(CMOSCenturyHandler::CurrentYear(2019));
-println!("{:?}", rtc);
+	without_interrupts(|| {
+		unsafe {
+			Port::<u8>::new(0x70).write(register);
+			Port::<u8>::new(0x71).write(value);
+		}
+	})
+}
+
+pub fn get_datetime() -> u64 {
+	let rtc = CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019));
+/*
+	let mut total: u64 = 0;
+	for value in output.iter() {
+		total += *value as u64;
+	}
+*/
+	rtc.minute as u64
+}

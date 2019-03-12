@@ -11,7 +11,14 @@ pub mod vmm;
 pub mod process;
 pub mod time;
 
-//use lazy_static::lazy_static;
+use lazy_static::lazy_static;
+use spin::Mutex;
+
+lazy_static! {
+	pub static ref CMOS: Mutex<cmos::CMOS> = {
+		Mutex::new(unsafe { cmos::CMOS::new() })
+	};
+}
 
 // https://japaric.github.io/heapless/heapless/struct.IndexSet.html
 
