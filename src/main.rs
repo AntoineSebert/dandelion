@@ -4,18 +4,10 @@
  */
 
 /*
-run
-	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04
-tests
-	cls && bootimage test
-both
+run & tests
 	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
 
-format
-	cargo +nightly fmt
-lint
-	cargo clippy
-both
+format & lint
 	cargo +nightly fmt && cargo clippy
 
 bootable USB
@@ -23,7 +15,7 @@ bootable USB
 
 misc
 	https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
-	let mortal_heroes: String = "your fame"
+	let mortal_heroes: String = "your fame";
 */
 
 #![cfg_attr(not(test), no_std)]
@@ -31,7 +23,6 @@ misc
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
 #![feature(asm)]
-
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
@@ -63,13 +54,13 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	init_idt();
 	unsafe { PICS.lock().initialize() };
 	enable();
-
+/*
 	let mut recursive_page_table = unsafe { init(boot_info.p4_table_addr as usize) };
 	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
 	create_mapping(&mut recursive_page_table, &mut frame_allocator);
 	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
-
+*/
 	//sample_job(1_000_000, true);
 	println!("{:?}", get_datetime());
 
