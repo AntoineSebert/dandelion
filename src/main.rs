@@ -8,7 +8,7 @@ run & tests
 	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
 
 format & lint
-	cargo +nightly fmt && cargo clippy
+	cargo +nightly fmt && cargo +nightly clippy
 
 bootable USB
 	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
@@ -33,18 +33,17 @@ use dandelion::{hlt_loop, println};
 entry_point!(kernel_main);
 
 #[cfg(not(test))]
-#[no_mangle]
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
 		gdt::init_gdt,
-		interrupts::{change_real_time_clock_interrupt_rate, init_idt, PICS, enable_rtc_interrupt},
+		interrupts::{change_real_time_clock_interrupt_rate, enable_rtc_interrupt, init_idt, PICS},
 		kernel::{
 			time::get_datetime,
-			vmm::memory::{create_mapping, init, init_frame_allocator},
+			vmm::memory::{create_example_mapping, init, init_frame_allocator},
 		},
 	};
-	use x86_64::instructions::interrupts::enable;
+	use x86_64::{instructions::interrupts::enable, structures::paging::Page, VirtAddr};
 
 	println!("Hello World{}", "!");
 	change_real_time_clock_interrupt_rate(12);
@@ -54,13 +53,18 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	init_idt();
 	unsafe { PICS.lock().initialize() };
 	enable();
-/*
-	let mut recursive_page_table = unsafe { init(boot_info.p4_table_addr as usize) };
+
+	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
-	create_mapping(&mut recursive_page_table, &mut frame_allocator);
-	unsafe { (0x0dea_dbea_f900 as *mut u64).write_volatile(0xf021_f077_f065_f04e) };
-*/
+	// map a previously unmapped page
+	let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
+	create_example_mapping(page, &mut mapper, &mut frame_allocator);
+
+	// write the string `New!` to the screen through the new mapping
+	let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
+	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
+
 	//sample_job(1_000_000, true);
 	println!("{:?}", get_datetime());
 
