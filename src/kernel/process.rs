@@ -6,7 +6,7 @@
 #![allow(dead_code)]
 
 use crate::kernel::CMOS;
-use cmos::{RTCDateTime, CMOSCenturyHandler};
+use cmos::{CMOSCenturyHandler, RTCDateTime};
 use core::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -45,7 +45,8 @@ pub enum Constraint {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Data {
-	/// Stack contains all the data that is local to a function like variables, pointers etc. Each function has its own stack. Stack memory is dynamic in the sense that it grows with each function being called.
+	/// Stack contains all the data that is local to a function like variables, pointers etc. Each function has its own
+	/// stack. Stack memory is dynamic in the sense that it grows with each function being called.
 	stack_address: usize,
 	/// Heap segment contains memory that is dynamically requested by the programs for their variables
 	heap_address: usize,
@@ -55,14 +56,7 @@ pub struct Data {
 	text_address: usize,
 }
 impl Data {
-	pub fn default() -> Data {
-		Data {
-			data_address: 0,
-			heap_address: 0,
-			stack_address: 0,
-			text_address: 0,
-		}
-	}
+	pub fn default() -> Data { Data { data_address: 0, heap_address: 0, stack_address: 0, text_address: 0 } }
 }
 
 #[derive(Debug)]
@@ -75,27 +69,19 @@ pub struct Metadata {
 	constraint: Constraint,
 }
 impl PartialEq for Metadata {
-	fn eq(&self, other: &Metadata) -> bool {
-		self.process_id == other.process_id
-	}
-}
-impl Ord for Metadata {
-	fn cmp(&self, other: &Metadata) -> core::cmp::Ordering {
-		self.process_id.cmp(&other.process_id)
-	}
-}
-impl PartialOrd for Metadata {
-	fn partial_cmp(&self, other: &Metadata) -> Option<core::cmp::Ordering> {
-		Some(self.cmp(other))
-	}
+	fn eq(&self, other: &Metadata) -> bool { self.process_id == other.process_id }
 }
 impl Eq for Metadata {}
+impl Ord for Metadata {
+	fn cmp(&self, other: &Metadata) -> core::cmp::Ordering { self.process_id.cmp(&other.process_id) }
+}
+impl PartialOrd for Metadata {
+	fn partial_cmp(&self, other: &Metadata) -> Option<core::cmp::Ordering> { Some(self.cmp(other)) }
+}
 impl Copy for Metadata {} // TODO
-// TODO
+						  // TODO
 impl Clone for Metadata {
-	fn clone(&self) -> Self {
-		*self
-	}
+	fn clone(&self) -> Self { *self }
 }
 impl Metadata {
 	pub fn default() -> Metadata {
@@ -114,30 +100,21 @@ pub struct Runnable {
 	data: Data,
 }
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug)]
 pub struct Task {
 	data: Data,
 	metadata: Metadata,
 }
 impl Hash for Task {
-	fn hash<H: Hasher>(&self, state: &mut H) {
-		self.metadata.process_id.hash(state);
-	}
+	fn hash<H: Hasher>(&self, state: &mut H) { self.metadata.process_id.hash(state); }
 }
 impl Copy for Task {} // TODO
-// TODO
+					  // TODO
 impl Clone for Task {
-	fn clone(&self) -> Self {
-		*self
-	}
+	fn clone(&self) -> Self { *self }
 }
 impl Task {
-	pub fn default() -> Task {
-		Task {
-			data: Data::default(),
-			metadata: Metadata::default()
-		}
-	}
+	pub fn default() -> Task { Task { data: Data::default(), metadata: Metadata::default() } }
 }
 
 pub struct Job {

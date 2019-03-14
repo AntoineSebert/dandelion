@@ -16,14 +16,10 @@ use lazy_static::lazy_static;
 use spin::Mutex;
 
 lazy_static! {
-	pub static ref CMOS: Mutex<cmos::CMOS> = {
-		Mutex::new(unsafe { cmos::CMOS::new() })
-	};
+	pub static ref CMOS: Mutex<cmos::CMOS> = { Mutex::new(unsafe { cmos::CMOS::new() }) };
 }
 
 // should be replaced by a set
 lazy_static! {
-	pub static ref PROCESS_TABLE: Mutex<[Task; 256]> = {
-		Mutex::new([Task::default(); 256])
-	};
+	pub static ref PROCESS_TABLE: Mutex<[Task; 256]> = { Mutex::new([Task::default(); 256]) };
 }
