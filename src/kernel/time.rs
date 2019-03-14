@@ -3,8 +3,8 @@
  * @date	06/03/2019
  */
 
-use cmos::CMOSCenturyHandler;
 use crate::kernel::CMOS;
+use cmos::CMOSCenturyHandler;
 use x86_64::instructions::{interrupts::without_interrupts, port::Port};
 
 // replace by function in cmos crate
@@ -23,11 +23,11 @@ pub fn set_register(register: u8, value: u8) {
 
 pub fn get_datetime() -> u64 {
 	let rtc = CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019));
-/*
-	let mut total: u64 = 0;
-	for value in output.iter() {
-		total += *value as u64;
-	}
-*/
-	rtc.minute as u64
+	/*
+		let mut total: u64 = 0;
+		for value in output.iter() {
+			total += *value as u64;
+		}
+	*/
+	u64::from(rtc.minute)
 }
