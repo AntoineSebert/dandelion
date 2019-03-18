@@ -26,7 +26,7 @@ pub fn request<F>(function: F, args: Arguments) -> bool where F: MainFn {
 /// If no empty slot exists, an empty Option is returned
 fn get_slot() -> Option<u8> {
 	for index in 0..256 {
-		if PROCESS_TABLE[index].lock().is_none() {
+		if PROCESS_TABLE[index].read().is_none() {
 			return Some(index as u8);
 		}
 	}
