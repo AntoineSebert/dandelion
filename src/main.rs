@@ -38,16 +38,11 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
 		gdt::init_gdt,
 		interrupts::{change_real_time_clock_interrupt_rate, enable_rtc_interrupt, init_idt, PICS},
-		kernel::{
-			time::get_datetime,
-			vmm::memory::{create_example_mapping, init, init_frame_allocator},
-		},
+		kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator},
 	};
 	use x86_64::{instructions::interrupts::enable, structures::paging::Page, VirtAddr};
 
 	println!("Hello World{}", "!");
-	change_real_time_clock_interrupt_rate(12);
-	enable_rtc_interrupt();
 
 	init_gdt();
 	init_idt();
@@ -66,7 +61,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 
 	//sample_job(1_000_000, true);
-	println!("{:?}", get_datetime());
+	enable_rtc_interrupt();
+	change_real_time_clock_interrupt_rate(12);
 
 	println!("It did not crash!");
 	hlt_loop();

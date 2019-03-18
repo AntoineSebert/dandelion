@@ -15,6 +15,7 @@ use crate::kernel::process::*;
 use lazy_static::lazy_static;
 use spin::Mutex;
 
+// CMOS
 lazy_static! {
 	pub static ref CMOS: Mutex<cmos::CMOS> = { Mutex::new(unsafe { cmos::CMOS::new() }) };
 }

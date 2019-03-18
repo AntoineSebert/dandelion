@@ -207,6 +207,10 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	println!("+");
 	without_interrupts(|| {
+		/*
+		CMOS.lock().write(0x70, 0x0C);
+		CMOS.lock().read(0x71);
+		*/
 		// flush register C so interrupt can happen again
 		unsafe {
 			Port::<u8>::new(0x70).write(0x0C);
@@ -219,8 +223,13 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 
 pub fn change_real_time_clock_interrupt_rate(mut rate: u8) {
 	rate &= 0x0F; // rate must be above 2 and not over 15, by default 6
-
 	without_interrupts(|| {
+		/*
+		CMOS.lock().write(0x70, 0x8A);
+		let prev: u8 = CMOS.lock().read(0x71);
+		CMOS.lock().write(0x70, 0x8A);
+		CMOS.lock().write(0x71, (prev & 0xF0) | rate);
+		*/
 		let mut address_port = Port::<u8>::new(0x70);
 		let mut data_port = Port::<u8>::new(0x71);
 
@@ -237,6 +246,12 @@ pub fn change_real_time_clock_interrupt_rate(mut rate: u8) {
 
 pub fn enable_rtc_interrupt() {
 	without_interrupts(|| {
+		/*
+		CMOS.lock().write(0x70, 0x8B);
+		let prev: u8 = CMOS.lock().read(0x71);
+		CMOS.lock().write(0x70, 0x8B);
+		CMOS.lock().write(0x71, prev | 0x40);
+		*/
 		let mut address_port = Port::<u8>::new(0x70);
 		let mut data_port = Port::<u8>::new(0x71);
 
@@ -246,7 +261,7 @@ pub fn enable_rtc_interrupt() {
 			address_port.write(0x8B);
 			data_port.write(prev | 0x40);
 		}
-	})
+	});
 }
 
 // realtime
