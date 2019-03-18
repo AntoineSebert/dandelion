@@ -7,7 +7,7 @@
 
 use crate::kernel::CMOS;
 use cmos::{CMOSCenturyHandler, RTCDateTime};
-use core::hash::{Hash, Hasher};
+use core::{hash::{Hash, Hasher}, time::Duration};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {
@@ -64,7 +64,7 @@ pub struct Metadata {
 	process_id: u64,
 	parent_process_id: u64,
 	state: State,
-	virtual_time: u64, // execution time elapsed
+	virtual_time: Duration,
 	creation_time: RTCDateTime,
 	constraint: Constraint,
 }
@@ -78,9 +78,9 @@ impl Ord for Metadata {
 impl PartialOrd for Metadata {
 	fn partial_cmp(&self, other: &Metadata) -> Option<core::cmp::Ordering> { Some(self.cmp(other)) }
 }
-impl Copy for Metadata {} // TODO
-						  // TODO
+impl Copy for Metadata {}
 impl Clone for Metadata {
+	// TODO
 	fn clone(&self) -> Self { *self }
 }
 impl Metadata {
@@ -89,8 +89,8 @@ impl Metadata {
 			process_id: 1,
 			parent_process_id: 1,
 			state: State::Limbo(Limbo::Creating),
-			virtual_time: 0,
-			creation_time: CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2018)),
+			virtual_time: Duration::from_secs(0),
+			creation_time: CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019)),
 			constraint: Constraint::None,
 		}
 	}
@@ -108,9 +108,9 @@ pub struct Task {
 impl Hash for Task {
 	fn hash<H: Hasher>(&self, state: &mut H) { self.metadata.process_id.hash(state); }
 }
-impl Copy for Task {} // TODO
-					  // TODO
+impl Copy for Task {}
 impl Clone for Task {
+	// TODO
 	fn clone(&self) -> Self { *self }
 }
 impl Task {
