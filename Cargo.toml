@@ -57,6 +57,7 @@ pc-keyboard = "^0.3.1"
 integer-sqrt = "^0.1.2"
 cmos = "^0.1.1"
 heapless = "0.4.2"
+uluru = "^0.3.0"
 
 [dependencies.lazy_static]
 version = "^1.0"
