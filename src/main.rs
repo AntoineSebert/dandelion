@@ -23,6 +23,7 @@ misc
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
 #![feature(asm)]
+#![feature(trait_alias)]
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
