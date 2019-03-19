@@ -11,9 +11,12 @@ pub mod vmm;
 pub mod process;
 pub mod time;
 
+use array_init::array_init;
+use spin::RwLock;
 use crate::kernel::process::*;
 use lazy_static::lazy_static;
 use spin::Mutex;
+use core::option::Option;
 
 // CMOS
 lazy_static! {
@@ -22,5 +25,5 @@ lazy_static! {
 
 // should be replaced by a set
 lazy_static! {
-	pub static ref PROCESS_TABLE: Mutex<[Task; 256]> = { Mutex::new([Task::default(); 256]) };
+	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
 }
