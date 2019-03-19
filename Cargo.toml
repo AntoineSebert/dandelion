@@ -58,13 +58,14 @@ integer-sqrt = "^0.1.2"
 cmos = "^0.1.1"
 heapless = "0.4.2"
 uluru = "^0.3.0"
+array-init = "^0.0.4"
 
 [dependencies.lazy_static]
 version = "^1.0"
 features = ["spin_no_std"]
 
 [dev-dependencies]
-array-init = "^0.0.3"
+array-init = "^0.0.4"
 
 [package.metadata.bootimage]
 default-target = "x86_64-dandelion.json"
