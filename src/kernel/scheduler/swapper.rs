@@ -3,6 +3,8 @@
  * @date	03/03/2019
  */
 
+// https://wiki.osdev.org/Context_Switching
+
 /*
 Yes, you typically want to save all general purpose registers. The reason is that you have to save all registers that the interrupted job uses, so that it can continue later. Note that you need to also save the SSE registers if you enable SSE at some point.
 

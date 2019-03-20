@@ -3,8 +3,9 @@
  * @date	03/03/2019
  */
 
-//#![cfg_attr(no_std)]
-//#![cfg_attr(no_main)]
+// https://wiki.osdev.org/Loading_a_Process
+// https://wiki.osdev.org/Multiprocessor_Scheduling
+// https://wiki.osdev.org/Scheduling_Algorithms
 
 pub mod admitter;
 pub mod dispatcher;

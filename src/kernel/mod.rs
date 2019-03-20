@@ -3,6 +3,10 @@
  * @date	06/03/2019
  */
 
+// https://wiki.osdev.org/ACPI
+// https://wiki.osdev.org/Detecting_CPU_Speed
+// https://wiki.osdev.org/Creating_an_Operating_System#Multithreaded_Kernel
+
 pub mod ipc;
 pub mod scheduler;
 pub mod shell;

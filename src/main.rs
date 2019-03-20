@@ -63,7 +63,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 	//sample_job(1_000_000, true);
 	enable_rtc_interrupt();
-	change_real_time_clock_interrupt_rate(12);
 
 	println!("It did not crash!");
 	hlt_loop();
