@@ -24,9 +24,11 @@ misc
 #![deny(clippy::all)]
 #![feature(asm)]
 #![feature(trait_alias)]
+
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
+use x86_64::instructions::interrupts;
 
 /*
  * OS entry point override
@@ -37,18 +39,20 @@ entry_point!(kernel_main);
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
-		gdt::init_gdt,
-		interrupts::{change_real_time_clock_interrupt_rate, enable_rtc_interrupt, init_idt, PICS},
-		kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator},
+		gdt,
+		interrupts::{enable_rtc_interrupt, PICS},
+		kernel::{acpi, vmm::memory::{create_example_mapping, init, init_frame_allocator}},
 	};
-	use x86_64::{instructions::interrupts::enable, structures::paging::Page, VirtAddr};
+	use x86_64::{structures::paging::Page, VirtAddr};
 
 	println!("Hello World{}", "!");
 
-	init_gdt();
-	init_idt();
+	unsafe { acpi::init() };
+
+	gdt::init();
+	dandelion::interrupts::init();
 	unsafe { PICS.lock().initialize() };
-	enable();
+	interrupts::enable();
 
 	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);

@@ -43,7 +43,7 @@ struct Selectors {
 	tss_selector: SegmentSelector,
 }
 
-pub fn init_gdt() {
+pub fn init() {
 	use x86_64::instructions::{segmentation::set_cs, tables::load_tss};
 
 	GDT.0.load();

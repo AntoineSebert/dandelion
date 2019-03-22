@@ -67,7 +67,7 @@ pub mod interrupt_indexes {
 
 pub static PICS: Mutex<ChainedPics> = Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
-pub fn init_idt() { IDT.load(); }
+pub fn init() { IDT.load(); }
 
 lazy_static! {
 	static ref IDT: InterruptDescriptorTable = {

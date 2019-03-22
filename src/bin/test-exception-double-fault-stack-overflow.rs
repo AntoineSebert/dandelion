@@ -17,9 +17,8 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 #[no_mangle]
 #[allow(unconditional_recursion)]
 pub extern "C" fn _start() -> ! {
-	use gdt::init_gdt;
 
-	init_gdt();
+	gdt::init();
 	init_test_idt();
 
 	fn stack_overflow() {
