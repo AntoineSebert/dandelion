@@ -7,7 +7,10 @@
 
 use crate::kernel::CMOS;
 use cmos::{CMOSCenturyHandler, RTCDateTime};
-use core::{hash::{Hash, Hasher}, time::Duration};
+use core::{
+	hash::{Hash, Hasher},
+	time::Duration,
+};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {

@@ -21,7 +21,6 @@ pub fn get_datetime() -> RTCDateTime {
 }
 
 pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration {
-
 	let _result: RTCDateTime = RTCDateTime {
 		second: first.second - second.second,
 		minute: first.minute - second.minute,
@@ -30,7 +29,6 @@ pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration {
 		month: first.month - second.month,
 		year: first.year - second.year,
 	};
-
 
 	Duration::new(0, 0)
 }

@@ -89,7 +89,7 @@ fn panic(info: &PanicInfo) -> ! {
  */
 #[allow(dead_code)]
 fn sample_job(limit: u64, output: bool) {
-	use dandelion::{println, serial_println};
+	use dandelion::serial_println;
 	use integer_sqrt::IntegerSquareRoot;
 
 	if output {

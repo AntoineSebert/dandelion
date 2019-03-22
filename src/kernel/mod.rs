@@ -14,13 +14,13 @@ pub mod vmm;
 
 pub mod process;
 pub mod time;
+pub mod acpi;
 
-use array_init::array_init;
-use spin::RwLock;
 use crate::kernel::process::*;
-use lazy_static::lazy_static;
-use spin::Mutex;
+use array_init::array_init;
 use core::option::Option;
+use lazy_static::lazy_static;
+use spin::{Mutex, RwLock};
 
 // CMOS
 lazy_static! {
