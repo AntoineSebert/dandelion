@@ -59,6 +59,7 @@ cmos = "^0.1.1"
 heapless = "0.4.2"
 uluru = "^0.3.0"
 array-init = "^0.0.4"
+acpica-sys = "^0.0.4"
 
 [dependencies.lazy_static]
 version = "^1.0"
