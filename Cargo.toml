@@ -60,6 +60,7 @@ heapless = "0.4.2"
 uluru = "^0.3.0"
 array-init = "^0.0.4"
 acpica-sys = "^0.0.4"
+arraydeque = { version = "^0.4", default-features = false }
 
 [dependencies.lazy_static]
 version = "^1.0"
