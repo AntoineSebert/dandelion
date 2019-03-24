@@ -9,7 +9,7 @@
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
 use core::panic::PanicInfo;
-use dandelion::{exit_qemu, gdt, serial_println};
+use dandelion::{exit_qemu, kernel::vmm::gdt, serial_println};
 use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
@@ -17,7 +17,6 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 #[no_mangle]
 #[allow(unconditional_recursion)]
 pub extern "C" fn _start() -> ! {
-
 	gdt::init();
 	init_test_idt();
 
@@ -29,9 +28,7 @@ pub extern "C" fn _start() -> ! {
 	serial_println!("failed");
 	serial_println!("No exception occured");
 
-	unsafe {
-		exit_qemu();
-	}
+	unsafe { exit_qemu(); }
 	loop {}
 }
 
@@ -41,10 +38,7 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
-
-	unsafe {
-		exit_qemu();
-	}
+	unsafe { exit_qemu(); }
 	loop {}
 }
 
@@ -65,9 +59,6 @@ pub fn init_test_idt() { TEST_IDT.load(); }
 
 extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut InterruptStackFrame, _error_code: u64) {
 	serial_println!("ok");
-
-	unsafe {
-		exit_qemu();
-	}
+	unsafe { exit_qemu(); }
 	loop {}
 }
