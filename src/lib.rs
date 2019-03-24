@@ -8,7 +8,6 @@
 #![feature(asm)]
 #![feature(trait_alias)]
 
-pub mod gdt;
 pub mod interrupts;
 pub mod kernel;
 pub mod serial;

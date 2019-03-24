@@ -73,7 +73,7 @@ lazy_static! {
 	static ref IDT: InterruptDescriptorTable = {
 		let mut idt = InterruptDescriptorTable::new();
 		/* software */ {
-			use crate::gdt::DOUBLE_FAULT_IST_INDEX;
+			use crate::kernel::vmm::gdt::DOUBLE_FAULT_IST_INDEX;
 			/*
 			idt.divide_by_zero.set_handler_fn();
 			idt.debug.set_handler_fn();

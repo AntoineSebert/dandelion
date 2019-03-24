@@ -39,7 +39,7 @@ entry_point!(kernel_main);
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
-		gdt,
+		kernel::vmm::gdt,
 		interrupts::{enable_rtc_interrupt, PICS},
 		kernel::{acpi, vmm::memory::{create_example_mapping, init, init_frame_allocator}},
 	};
