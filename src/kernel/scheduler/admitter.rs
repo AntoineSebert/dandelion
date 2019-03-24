@@ -3,7 +3,7 @@
  * @date	03/03/2019
  */
 
-use crate::kernel::PROCESS_TABLE;
+use super::super::PROCESS_TABLE;
 
 pub type Arguments = [[char; 256]; 256];
 pub trait MainFn = Fn(Arguments) -> i64;
