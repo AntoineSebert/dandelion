@@ -20,7 +20,9 @@ pub extern "C" fn _start() -> ! {
 	int3();
 
 	serial_println!("ok");
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }
 
@@ -30,6 +32,8 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }

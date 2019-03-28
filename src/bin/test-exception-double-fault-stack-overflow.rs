@@ -28,7 +28,9 @@ pub extern "C" fn _start() -> ! {
 	serial_println!("failed");
 	serial_println!("No exception occured");
 
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }
 
@@ -38,7 +40,9 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }
 
@@ -59,6 +63,8 @@ pub fn init_test_idt() { TEST_IDT.load(); }
 
 extern "x86-interrupt" fn double_fault_handler(_stack_frame: &mut InterruptStackFrame, _error_code: u64) {
 	serial_println!("ok");
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }

@@ -12,10 +12,10 @@ pub mod scheduler;
 pub mod shell;
 pub mod vmm;
 
-pub mod process;
-pub mod time;
 pub mod acpi;
 pub mod interrupts;
+pub mod process;
+pub mod time;
 
 use crate::kernel::process::*;
 use array_init::array_init;

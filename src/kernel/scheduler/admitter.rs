@@ -3,7 +3,7 @@
  * @date	03/03/2019
  */
 
-use super::super::{PROCESS_TABLE, process::Main};
+use super::super::{process::Main, PROCESS_TABLE};
 
 /// Check whether the task can be accepted or not
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned
@@ -42,6 +42,4 @@ fn is_schedulable(candidate: Main) -> bool {
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
-fn admit<F>(candidate: Main) {
-
-}
+fn admit<F>(candidate: Main) {}

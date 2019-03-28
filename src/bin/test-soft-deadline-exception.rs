@@ -18,9 +18,13 @@ pub extern "C" fn _start() -> ! {
 	use x86_64::software_interrupt;
 
 	interrupts::init();
-	unsafe { software_interrupt!(50); }
+	unsafe {
+		software_interrupt!(50);
+	}
 	serial_println!("ok");
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }
 
@@ -30,6 +34,8 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &PanicInfo) -> ! {
 	serial_println!("failed");
 	serial_println!("{}", info);
-	unsafe { exit_qemu(); }
+	unsafe {
+		exit_qemu();
+	}
 	loop {}
 }

@@ -5,9 +5,9 @@
 
 #![allow(dead_code)]
 
+use cmos::RTCDateTime;
 use core::{sync::atomic::AtomicPtr, time::Duration};
 use either::Either;
-use cmos::RTCDateTime;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {
@@ -39,8 +39,8 @@ pub enum SwapSpace {
 pub type Arguments = [[char; 256]; 256];
 pub type Main = AtomicPtr<fn(Arguments) -> i64>;
 
-pub type Periodic = (Duration, Duration, Option<RTCDateTime>);		// estimated completion time, interval, delay
-pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>);	// estimated completion time, deadline, delay
+pub type Periodic = (Duration, Duration, Option<RTCDateTime>); // estimated completion time, interval, delay
+pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, delay
 
 pub type Constraint = Option<Either<Periodic, Aperiodic>>;
 pub type Info = (State, Duration, RTCDateTime);
@@ -58,7 +58,7 @@ pub type Group = [Task; 256];
  * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
  */
 #[allow(dead_code)]
-fn sample_job(limit: u64, output: bool/*args: Arguments*/) {
+fn sample_job(limit: u64, output: bool /* args: Arguments */) {
 	use crate::{println, serial_println};
 	use integer_sqrt::IntegerSquareRoot;
 

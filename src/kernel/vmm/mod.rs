@@ -3,5 +3,5 @@
  * @date	06/03/2019
  */
 
-pub mod memory;
 pub mod gdt;
+pub mod memory;
