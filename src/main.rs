@@ -31,6 +31,26 @@ use dandelion::{hlt_loop, println};
 use x86_64::instructions::interrupts;
 
 /*
+use core::alloc::{GlobalAlloc, Layout, alloc};
+use core::ptr::null_mut;
+
+struct MyAllocator;
+
+unsafe impl GlobalAlloc for MyAllocator {
+	unsafe fn alloc(&self, _layout: Layout) -> *mut u8 { null_mut() }
+	unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
+}
+
+#[global_allocator]
+static A: MyAllocator = MyAllocator;
+
+// in main
+unsafe {
+	assert!(alloc(Layout::new::<u32>()).is_null())
+}
+*/
+
+/*
  * OS entry point override
  */
 entry_point!(kernel_main);
@@ -39,7 +59,7 @@ entry_point!(kernel_main);
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
-		kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::{gdt, memory::{create_example_mapping, init, init_frame_allocator}}},
+		kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::{gdt, memory::{create_example_mapping, init, init_frame_allocator}}, self},
 	};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
@@ -48,7 +68,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	unsafe { acpi::init() };
 
 	gdt::init();
-	dandelion::kernel::interrupts::init();
+	kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
 
@@ -79,46 +99,4 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
 	hlt_loop();
-}
-
-/*
- * Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
- * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
- */
-#[allow(dead_code)]
-fn sample_job(limit: u64, output: bool) {
-	use dandelion::serial_println;
-	use integer_sqrt::IntegerSquareRoot;
-
-	if output {
-		println!("2");
-	} else {
-		serial_println!("2");
-	}
-	let mut candidate: u64 = 3;
-	loop {
-		if limit < candidate {
-			break;
-		}
-		let mut iterator = 3;
-		let mut is_prime = true;
-		loop {
-			if candidate.integer_sqrt() < iterator {
-				break;
-			}
-			if candidate % iterator == 0 {
-				is_prime = false;
-				break;
-			}
-			iterator += 2;
-		}
-		if is_prime {
-			if output {
-				println!("{}", candidate);
-			} else {
-				serial_println!("{}", candidate);
-			}
-		}
-		candidate += 2;
-	}
 }

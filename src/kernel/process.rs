@@ -5,12 +5,9 @@
 
 #![allow(dead_code)]
 
-use crate::kernel::CMOS;
-use cmos::{CMOSCenturyHandler, RTCDateTime};
-use core::{
-	hash::{Hash, Hasher},
-	time::Duration,
-};
+use core::{sync::atomic::AtomicPtr, time::Duration};
+use either::Either;
+use cmos::RTCDateTime;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {
@@ -39,112 +36,65 @@ pub enum SwapSpace {
 	Delayed,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Constraint {
-	Periodic,
-	Aperiodic,
-	None,
-}
+pub type Arguments = [[char; 256]; 256];
+pub type Main = AtomicPtr<fn(Arguments) -> i64>;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Data {
-	/// Stack contains all the data that is local to a function like variables, pointers etc. Each function has its own
-	/// stack. Stack memory is dynamic in the sense that it grows with each function being called.
-	stack_address: usize,
-	/// Heap segment contains memory that is dynamically requested by the programs for their variables
-	heap_address: usize,
-	/// All the global and static members become part of this segment
-	data_address: usize,
-	/// All the program instructions, hard-coded strings, constant values are a part of this memory area
-	text_address: usize,
-}
-impl Data {
-	pub fn default() -> Data { Data { data_address: 0, heap_address: 0, stack_address: 0, text_address: 0 } }
-}
+pub type Periodic = (Duration, Duration, Option<RTCDateTime>);		// estimated completion time, interval, delay
+pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>);	// estimated completion time, deadline, delay
 
-#[derive(Debug)]
-pub struct Metadata {
-	process_id: u64,
-	parent_process_id: u64,
-	state: State,
-	virtual_time: Duration,
-	creation_time: RTCDateTime,
-	constraint: Constraint,
-}
-impl PartialEq for Metadata {
-	fn eq(&self, other: &Metadata) -> bool { self.process_id == other.process_id }
-}
-impl Eq for Metadata {}
-impl Ord for Metadata {
-	fn cmp(&self, other: &Metadata) -> core::cmp::Ordering { self.process_id.cmp(&other.process_id) }
-}
-impl PartialOrd for Metadata {
-	fn partial_cmp(&self, other: &Metadata) -> Option<core::cmp::Ordering> { Some(self.cmp(other)) }
-}
-impl Copy for Metadata {}
-impl Clone for Metadata {
-	// TODO
-	fn clone(&self) -> Self { *self }
-}
-impl Metadata {
-	pub fn default() -> Metadata {
-		Metadata {
-			process_id: 1,
-			parent_process_id: 1,
-			state: State::Limbo(Limbo::Creating),
-			virtual_time: Duration::from_secs(0),
-			creation_time: CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019)),
-			constraint: Constraint::None,
-		}
-	}
-}
+pub type Constraint = Option<Either<Periodic, Aperiodic>>;
+pub type Info = (State, Duration, RTCDateTime);
 
-pub struct Runnable {
-	data: Data,
-}
+pub type Metadata = (Constraint, Info);
 
-#[derive(Debug)]
-pub struct Task {
-	data: Data,
-	metadata: Metadata,
-}
-impl Hash for Task {
-	fn hash<H: Hasher>(&self, state: &mut H) { self.metadata.process_id.hash(state); }
-}
-impl Copy for Task {}
-impl Clone for Task {
-	// TODO
-	fn clone(&self) -> Self { *self }
-}
-impl Task {
-	pub fn default() -> Task { Task { data: Data::default(), metadata: Metadata::default() } }
-}
+pub type Runnable = Main;
+pub type Task = (Metadata, Runnable);
 
-pub struct Job {
-	metadata: Metadata,
-	workers: [Runnable; 256],
-}
-
-pub struct Group {
-	tasks: [Task; 256],
-}
+pub type Job = (Metadata, [Runnable; 256]);
+pub type Group = [Task; 256];
 
 /*
-not good enough to imlement this
+ * Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
+ * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
+ */
+#[allow(dead_code)]
+fn sample_job(limit: u64, output: bool/*args: Arguments*/) {
+	use crate::{println, serial_println};
+	use integer_sqrt::IntegerSquareRoot;
 
-process<
-	either<
-		collection,
-		metadata
-	>
-> (opt<
-	meta + either<
-		Periodic,
-		datetime,
-		none
-	>
->)
+	// arg 0 is name
+	// arg 1 is --limit=number
+	// arg 2 is output=true/false
 
-if array + meta : job
-if data + meta : task
-*/
+	if output {
+		println!("2");
+	} else {
+		serial_println!("2");
+	}
+	let mut candidate: u64 = 3;
+	loop {
+		if limit < candidate {
+			break;
+		}
+		let mut iterator = 3;
+		let mut is_prime = true;
+		loop {
+			if candidate.integer_sqrt() < iterator {
+				break;
+			}
+			if candidate % iterator == 0 {
+				is_prime = false;
+				break;
+			}
+			iterator += 2;
+		}
+		if is_prime {
+			if output {
+				println!("{}", candidate);
+			} else {
+				serial_println!("{}", candidate);
+			}
+		}
+		candidate += 2;
+	}
+}

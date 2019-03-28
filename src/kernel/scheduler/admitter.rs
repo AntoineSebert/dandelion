@@ -3,18 +3,12 @@
  * @date	03/03/2019
  */
 
-use super::super::PROCESS_TABLE;
-
-pub type Arguments = [[char; 256]; 256];
-pub trait MainFn = Fn(Arguments) -> i64;
+use super::super::{PROCESS_TABLE, process::Main};
 
 /// Check whether the task can be accepted or not
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned
 /// Otherwise, returns false.
-pub fn request<F>(candidate: F, args: Arguments) -> bool
-where
-	F: MainFn,
-{
+pub fn request(candidate: Main) -> bool {
 	let slot = get_slot();
 	if slot.is_err() {
 		return false;
@@ -31,21 +25,23 @@ where
 /// Browse PROCESS_TABLE. The outcome of the operation is returned as a Result.
 fn get_slot() -> Result<u8, &'static str> {
 	for index in 0..256 {
+		/*
 		if PROCESS_TABLE[index].read().is_none() {
 			return Ok(index as u8);
 		}
+		*/
 	}
 	Err("No slot available for a new process")
 }
 
 /// Figure out if the candidate is schedulable in the current context.
-fn is_schedulable<F>(candidate: F) -> bool where F: MainFn {
+fn is_schedulable(candidate: Main) -> bool {
 	//
 
 	false
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
-fn admit<F>(candidate: F, args: Arguments) where F: MainFn {
+fn admit<F>(candidate: Main) {
 
 }
