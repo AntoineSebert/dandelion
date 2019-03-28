@@ -13,7 +13,7 @@ use dandelion::{exit_qemu, serial_println};
 #[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	use dandelion::interrupts;
+	use dandelion::kernel::interrupts;
 	use x86_64::instructions::interrupts::int3;
 
 	interrupts::init();
