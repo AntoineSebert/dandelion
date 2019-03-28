@@ -39,9 +39,7 @@ entry_point!(kernel_main);
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use dandelion::{
-		kernel::vmm::gdt,
-		interrupts::{enable_rtc_interrupt, PICS},
-		kernel::{acpi, vmm::memory::{create_example_mapping, init, init_frame_allocator}},
+		kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::{gdt, memory::{create_example_mapping, init, init_frame_allocator}}},
 	};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
@@ -50,7 +48,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	unsafe { acpi::init() };
 
 	gdt::init();
-	dandelion::interrupts::init();
+	dandelion::kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
 

@@ -15,6 +15,7 @@ pub mod vmm;
 pub mod process;
 pub mod time;
 pub mod acpi;
+pub mod interrupts;
 
 use crate::kernel::process::*;
 use array_init::array_init;
