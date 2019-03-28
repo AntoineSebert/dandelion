@@ -59,6 +59,7 @@ cmos = "^0.1.1"
 array-init = "^0.0.4"
 arraydeque = { version = "^0.4", default-features = false }
 uluru = "^0.3.0"
+either = { version = "^1.5.1", default-features = false }
 
 [dependencies.lazy_static]
 version = "^1.0"
