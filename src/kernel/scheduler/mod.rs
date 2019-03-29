@@ -11,11 +11,18 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
+use spin::RwLock;
+use array_init::array_init;
 use super::process::Task;
 use arraydeque::ArrayDeque;
 use core::{ptr::null_mut, sync::atomic::AtomicPtr};
 use lazy_static::lazy_static;
 use spin::Mutex;
+
+// should be replaced by a set
+lazy_static! {
+	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
+}
 
 lazy_static! {
 	pub static ref READY_QUEUE: Mutex<ArrayDeque<[Task; 256]>> = Mutex::new(ArrayDeque::new());

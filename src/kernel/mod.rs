@@ -17,18 +17,9 @@ pub mod interrupts;
 pub mod process;
 pub mod time;
 
-use crate::kernel::process::*;
-use array_init::array_init;
-use core::option::Option;
 use lazy_static::lazy_static;
-use spin::{Mutex, RwLock};
+use spin::Mutex;
 
-// CMOS
 lazy_static! {
 	pub static ref CMOS: Mutex<cmos::CMOS> = { Mutex::new(unsafe { cmos::CMOS::new() }) };
-}
-
-// should be replaced by a set
-lazy_static! {
-	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
 }

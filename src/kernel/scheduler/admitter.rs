@@ -3,7 +3,7 @@
  * @date	03/03/2019
  */
 
-use super::super::{process::*, PROCESS_TABLE};
+use super::{PROCESS_TABLE, super::process::*};
 
 /// Check whether the task can be accepted or not
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned
@@ -44,6 +44,7 @@ fn is_schedulable(_constraint: Constraint) -> bool {
 fn admit(constraint: Constraint, code: Main, slot: usize) {
 	use super::super::time;
 	use core::time::Duration;
+	use crate::println;
 
 	let create_task = | constraint: Constraint, code: Main | -> Task {
 		let create_metadata = | constraint: Constraint | -> Metadata {
