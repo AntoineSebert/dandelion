@@ -17,7 +17,8 @@ pub fn get_datetime() -> RTCDateTime {
 	use crate::kernel::CMOS;
 	use cmos::CMOSCenturyHandler;
 
-	CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019))
+	let datetime = CMOS.lock().read_rtc(CMOSCenturyHandler::CurrentYear(2019));
+	datetime
 }
 
 pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration {
