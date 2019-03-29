@@ -53,12 +53,10 @@ pub type Task = (Metadata, Runnable);
 pub type Job = (Metadata, [Runnable; 256]);
 pub type Group = [Task; 256];
 
-/*
- * Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
- * On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
- */
+/// Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
+/// On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
 #[allow(dead_code)]
-fn sample_job(limit: u64, output: bool /* args: Arguments */) {
+fn sample_runnable(limit: u64, output: bool /* args: Arguments */) {
 	use crate::{println, serial_println};
 	use integer_sqrt::IntegerSquareRoot;
 

@@ -68,7 +68,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 		unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 	}
 
-	//sample_job(1_000_000, true);
+	//kernel::scheduler::request();
 
 	println!("It did not crash!");
 	hlt_loop();
