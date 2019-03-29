@@ -24,14 +24,14 @@ misc
 #![deny(clippy::all)]
 #![feature(asm)]
 #![feature(trait_alias)]
+#![feature(allocator_api)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, println};
 use x86_64::instructions::interrupts;
 
-/*
-use core::alloc::{GlobalAlloc, Layout, alloc};
+use core::alloc::{GlobalAlloc, Layout, Alloc};
 use core::ptr::null_mut;
 
 struct MyAllocator;
@@ -43,12 +43,6 @@ unsafe impl GlobalAlloc for MyAllocator {
 
 #[global_allocator]
 static A: MyAllocator = MyAllocator;
-
-// in main
-unsafe {
-	assert!(alloc(Layout::new::<u32>()).is_null())
-}
-*/
 
 /*
  * OS entry point override
@@ -76,6 +70,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
+
+	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) }
 
 	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
