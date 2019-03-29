@@ -27,12 +27,9 @@ misc
 #![feature(allocator_api)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
-use core::panic::PanicInfo;
-use dandelion::{hlt_loop, println};
+use core::{alloc::{GlobalAlloc, Layout}, panic::PanicInfo, ptr::null_mut};
+use dandelion::{hlt_loop, println, kernel};
 use x86_64::instructions::interrupts;
-
-use core::alloc::{GlobalAlloc, Layout, Alloc};
-use core::ptr::null_mut;
 
 struct MyAllocator;
 
@@ -44,51 +41,54 @@ unsafe impl GlobalAlloc for MyAllocator {
 #[global_allocator]
 static A: MyAllocator = MyAllocator;
 
-/*
- * OS entry point override
- */
+// OS entry point override
 entry_point!(kernel_main);
 
 #[cfg(not(test))]
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use dandelion::kernel::{
-		self, acpi,
-		interrupts::{enable_rtc_interrupt, PICS},
-		vmm::{
-			gdt,
-			memory::{create_example_mapping, init, init_frame_allocator},
-		},
-	};
+	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
 	println!("Hello World{}", "!");
+	initialize_components();
 
-	unsafe { acpi::init() };
+	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
+
+	{
+		let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
+		let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
+
+		// map a previously unmapped page
+		let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
+		create_example_mapping(page, &mut mapper, &mut frame_allocator);
+
+		// write the string `New!` to the screen through the new mapping
+		let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
+		unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
+	}
+
+	//sample_job(1_000_000, true);
+
+	println!("It did not crash!");
+	hlt_loop();
+}
+
+fn initialize_components() {
+	use kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::gdt};
+
+	unsafe {
+		match acpi::init() {
+			Ok(..) => println!("ACPI initialized"),
+			Err(..) => println!("Could not initialize ACPI"),
+		}
+	};
 
 	gdt::init();
 	kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
-
-	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) }
-
-	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
-	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
-
-	// map a previously unmapped page
-	let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
-	create_example_mapping(page, &mut mapper, &mut frame_allocator);
-
-	// write the string `New!` to the screen through the new mapping
-	let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
-	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
-
-	//sample_job(1_000_000, true);
 	enable_rtc_interrupt();
-
-	println!("It did not crash!");
-	hlt_loop();
 }
 
 /*

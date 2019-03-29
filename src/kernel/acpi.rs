@@ -3,4 +3,4 @@
  * @date	22/03/2019
  */
 
-pub unsafe fn init() -> Result<(), &'static str> { Ok(()) }
+pub unsafe fn init() -> Result<(), ()> { Ok(()) }
