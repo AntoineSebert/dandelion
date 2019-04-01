@@ -36,8 +36,8 @@ pub enum SwapSpace {
 	Delayed,
 }
 
-pub type Arguments = [[char; 256]; 256];
-pub type Main = AtomicPtr<fn(Arguments) -> i64>;
+pub type Arguments<'a> = [Option<(&'a str, &'a str)>; 256]; // replace by str
+pub type Main = AtomicPtr<fn(Option<Arguments>) -> i64>;
 
 pub type Periodic = (Duration, Duration, Option<RTCDateTime>); // estimated completion time, interval, delay
 pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, delay
@@ -52,6 +52,18 @@ pub type Task = (Metadata, Runnable);
 
 pub type Job = (Metadata, [Runnable; 256]);
 pub type Group = [Task; 256];
+
+pub fn sample_runnable_2(args_wrapper: Option<Arguments>) -> u64 {
+	use crate::println;
+	if args_wrapper.is_some() {
+		let arguments = args_wrapper.unwrap();
+		for index in 0..256 {
+			println!("argument {} is : {}", index, arguments[index].is_some());
+		}
+	}
+
+	0
+}
 
 /// Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
 /// On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
