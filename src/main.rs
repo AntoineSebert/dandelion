@@ -49,13 +49,14 @@ entry_point!(kernel_main);
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
+	use core::sync::atomic::AtomicPtr;
 
 	println!("Hello World{}", "!");
 	initialize_components();
 
 	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
 
-	{
+	/* mapping */{
 		let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 		let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
@@ -68,12 +69,20 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 		unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 	}
 
-	//kernel::scheduler::request();
+	/* scheduler */ {
+		use kernel::{process::sample_runnable_2, scheduler::{admitter::request, terminate, process_exists}};
+		println!("process 0 exists ? {}", process_exists(0));
+		request(None, AtomicPtr::new(sample_runnable_2 as *mut _));
+		println!("process 0 exists ? {}", process_exists(0));
+		println!("removing process 0...{}", terminate(0));
+		println!("process 0 exists ? {}", process_exists(0));
+	}
 
 	println!("It did not crash!");
 	hlt_loop();
 }
 
+#[allow(dead_code)]
 fn initialize_components() {
 	use kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::gdt};
 
@@ -88,7 +97,7 @@ fn initialize_components() {
 	kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
-	enable_rtc_interrupt();
+	//enable_rtc_interrupt(); // print '+'
 }
 
 /*

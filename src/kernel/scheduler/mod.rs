@@ -35,3 +35,26 @@ lazy_static! {
 lazy_static! {
 	pub static ref BLOCKED_QUEUE: Mutex<ArrayDeque<[Task; 256]>> = Mutex::new(ArrayDeque::new());
 }
+
+pub fn process_exists(pid: u8) -> bool {
+	let result = PROCESS_TABLE[pid as usize].read().is_some();
+	result
+}
+
+// terminate a job
+pub fn terminate(pid: u8) -> bool {
+	if !process_exists(pid) {
+		return false;
+	}
+	let reset_pt_index = | pid: usize | {
+		let mut guard = PROCESS_TABLE[pid].write();
+		*guard = None;
+	};
+	// match process state
+		// remove from running
+		// remove from ready queue
+		// remove from blocked queue
+	reset_pt_index(pid as usize);
+
+	true
+}
