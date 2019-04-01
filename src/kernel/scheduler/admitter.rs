@@ -8,29 +8,28 @@ use super::{PROCESS_TABLE, super::process::*};
 /// Check whether the task can be accepted or not
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned
 /// Otherwise, returns false.
-pub fn request(constraint: Constraint, code: Main) -> bool {
+pub fn request(constraint: Constraint, code: Main) -> Option<usize> {
 	let slot = get_slot();
-	if slot.is_err() {
-		return false;
-	}
-	if !is_schedulable(constraint) {
-		return false;
+
+	if slot.is_none() {
+		return None;
+	} else if !is_schedulable(constraint) {
+		return None;
 	}
 
-	// create a process and add it to process table & process queue
-	admit(constraint, code, slot.unwrap());
-
-	return true;
+	let index = slot.unwrap();
+	admit(constraint, code, index);
+	return Some(index);
 }
 
 /// Browse PROCESS_TABLE. The outcome of the operation is returned as a Result.
-fn get_slot() -> Result<usize, &'static str> {
+fn get_slot() -> Option<usize> {
 	for index in 0..256 {
 		if PROCESS_TABLE[index].read().is_none() {
-			return Ok(index as usize);
+			return Some(index as usize);
 		}
 	}
-	Err("No slot available for a new process")
+	None
 }
 
 /// Figure out if the candidate is schedulable in the current context.
@@ -41,7 +40,7 @@ fn is_schedulable(_constraint: Constraint) -> bool {
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
-fn admit(constraint: Constraint, code: Main, slot: usize) {
+fn admit(constraint: Constraint, code: Main, index: usize) {
 	use super::super::time;
 	use core::time::Duration;
 	use crate::println;
@@ -54,7 +53,7 @@ fn admit(constraint: Constraint, code: Main, slot: usize) {
 		(create_metadata(constraint), code)
 	};
 
-	let mut guard = PROCESS_TABLE[slot].write();
+	let mut guard = PROCESS_TABLE[index].write();
 	*guard = Some(create_task(constraint, code));
-	println!("New process admitted");
+	println!("New process admitted at index {}", index);
 }
