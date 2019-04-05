@@ -55,6 +55,7 @@ pub type Group = [Task; 256];
 
 pub fn sample_runnable_2(args_wrapper: Option<Arguments>) -> u64 {
 	use crate::println;
+
 	if args_wrapper.is_some() {
 		let arguments = args_wrapper.unwrap();
 		for index in 0..256 {

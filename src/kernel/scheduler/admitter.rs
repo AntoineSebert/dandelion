@@ -25,9 +25,11 @@ pub fn request(constraint: Constraint, code: Main) -> Option<usize> {
 /// Browse PROCESS_TABLE. The outcome of the operation is returned as a Result.
 fn get_slot() -> Option<usize> {
 	for index in 0..256 {
-		if PROCESS_TABLE[index].read().is_none() {
+		let guard = PROCESS_TABLE[index].read();
+		if (*guard).is_none() {
 			return Some(index as usize);
 		}
+		drop(guard);
 	}
 	None
 }
@@ -55,5 +57,6 @@ fn admit(constraint: Constraint, code: Main, index: usize) {
 
 	let mut guard = PROCESS_TABLE[index].write();
 	*guard = Some(create_task(constraint, code));
+	drop(guard);
 	println!("New process admitted at index {}", index);
 }

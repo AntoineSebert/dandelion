@@ -56,7 +56,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
 
-	/* mapping */{
+	/* mapping */ {
 		let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 		let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
@@ -84,7 +84,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 #[allow(dead_code)]
 fn initialize_components() {
-	use kernel::{acpi, interrupts::{enable_rtc_interrupt, PICS}, vmm::gdt};
+	use kernel::{acpi, interrupts::{enable_rtc_interrupt, change_rtc_interrupt_rate, PICS}, vmm::gdt};
 
 	unsafe {
 		match acpi::init() {
@@ -97,7 +97,8 @@ fn initialize_components() {
 	kernel::interrupts::init();
 	unsafe { PICS.lock().initialize() };
 	interrupts::enable();
-	//enable_rtc_interrupt(); // print '+'
+	change_rtc_interrupt_rate(15);
+	enable_rtc_interrupt();
 }
 
 /*

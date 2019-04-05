@@ -205,13 +205,13 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 }
 
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	println!("+");
+	use super::scheduler::dispatcher;
+
+	let x = dispatcher::update();
+	//println!("scheduling update returned {}, {}, {}, {}", x.0, x.1, x.2, x.3.is_some());
+
+	// flush register C so interrupt can happen again
 	without_interrupts(|| {
-		/*
-		CMOS.lock().write(0x70, 0x0C);
-		CMOS.lock().read(0x71);
-		*/
-		// flush register C so interrupt can happen again
 		unsafe {
 			Port::<u8>::new(0x70).write(0x0C);
 			Port::<u8>::new(0x71).read();
