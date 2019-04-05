@@ -94,11 +94,9 @@ pub fn terminate(pid: u8) -> bool {
 	// set process state to terminated
 	let state = ((&(*pt_guard).as_ref().unwrap().0).1).0;
 	match state {
-		/*
-		State::MainMemory(MainMemory::Running) => { RUNNING.compare_exchange(pid as *mut _, null_mut(), Relaxed, Relaxed); },
+		State::MainMemory(MainMemory::Running) => { RUNNING.compare_exchange(pid as *mut _, null_mut(), Relaxed, Relaxed).ok(); },
 		State::MainMemory(MainMemory::Ready) => { remove_pid_from_queue(READY_QUEUE.lock(), pid); },
 		State::SwapSpace(_) => { remove_pid_from_queue(BLOCKED_QUEUE.lock(), pid); },
-	*/
 		_ => {}
 	};
 	*pt_guard = None;
