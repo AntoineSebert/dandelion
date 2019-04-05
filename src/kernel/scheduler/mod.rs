@@ -11,13 +11,15 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
-use spin::RwLock;
-use array_init::array_init;
 use super::process::*;
+use array_init::array_init;
 use arraydeque::ArrayDeque;
-use core::{ptr::null_mut, sync::atomic::{AtomicPtr, self}};
+use core::{
+	ptr::null_mut,
+	sync::atomic::{self, AtomicPtr},
+};
 use lazy_static::lazy_static;
-use spin::Mutex;
+use spin::{Mutex, RwLock};
 
 // should be replaced by a set
 lazy_static! {
@@ -89,12 +91,18 @@ pub fn terminate(pid: u8) -> bool {
 	}
 
 	let mut pt_guard = PROCESS_TABLE[pid as usize].write(); // lock process in process table
-	// set process state to terminated
+														// set process state to terminated
 	let state = ((&(*pt_guard).as_ref().unwrap().0).1).0;
 	match state {
-		State::MainMemory(MainMemory::Running) => { RUNNING.compare_exchange(pid as *mut _, null_mut(), Relaxed, Relaxed).ok(); },
-		State::MainMemory(MainMemory::Ready) => { remove_pid_from_queue(READY_QUEUE.lock(), pid); },
-		State::SwapSpace(_) => { remove_pid_from_queue(BLOCKED_QUEUE.lock(), pid); },
+		State::MainMemory(MainMemory::Running) => {
+			RUNNING.compare_exchange(pid as *mut _, null_mut(), Relaxed, Relaxed).ok();
+		}
+		State::MainMemory(MainMemory::Ready) => {
+			remove_pid_from_queue(READY_QUEUE.lock(), pid);
+		}
+		State::SwapSpace(_) => {
+			remove_pid_from_queue(BLOCKED_QUEUE.lock(), pid);
+		}
 		_ => {}
 	};
 	*pt_guard = None;

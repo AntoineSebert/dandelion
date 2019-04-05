@@ -27,14 +27,19 @@ misc
 #![feature(allocator_api)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
-use core::{alloc::{GlobalAlloc, Layout}, panic::PanicInfo, ptr::null_mut};
-use dandelion::{hlt_loop, println, kernel};
+use core::{
+	alloc::{GlobalAlloc, Layout},
+	panic::PanicInfo,
+	ptr::null_mut,
+};
+use dandelion::{hlt_loop, kernel, println};
 use x86_64::instructions::interrupts;
 
 struct MyAllocator;
 
 unsafe impl GlobalAlloc for MyAllocator {
 	unsafe fn alloc(&self, _layout: Layout) -> *mut u8 { null_mut() }
+
 	unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
 }
 
@@ -47,16 +52,17 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
+	use core::sync::atomic::AtomicPtr;
 	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
-	use core::sync::atomic::AtomicPtr;
 
 	println!("Hello World{}", "!");
 	initialize_components();
 
 	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
 
-	/* mapping */ {
+	/* mapping */
+	{
 		let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
 		let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
 
@@ -69,8 +75,12 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 		unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 	}
 
-	/* scheduler */ {
-		use kernel::{process::sample_runnable_2, scheduler::{admitter::request, terminate, process_exists}};
+	/* scheduler */
+	{
+		use kernel::{
+			process::sample_runnable_2,
+			scheduler::{admitter::request, process_exists, terminate},
+		};
 		println!("process 0 exists ? {}", process_exists(0));
 		request(None, AtomicPtr::new(sample_runnable_2 as *mut _));
 		println!("process 0 exists ? {}", process_exists(0));
@@ -84,7 +94,11 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 #[allow(dead_code)]
 fn initialize_components() {
-	use kernel::{acpi, interrupts::{enable_rtc_interrupt, change_rtc_interrupt_rate, PICS}, vmm::gdt};
+	use kernel::{
+		acpi,
+		interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt, PICS},
+		vmm::gdt,
+	};
 
 	unsafe {
 		match acpi::init() {

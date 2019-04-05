@@ -3,7 +3,7 @@
  * @date	03/03/2019
  */
 
-use super::{PROCESS_TABLE, super::process::*};
+use super::{super::process::*, PROCESS_TABLE};
 
 /// Check whether the task can be accepted or not
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned
@@ -44,11 +44,11 @@ fn is_schedulable(_constraint: Constraint) -> bool {
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
 fn admit(constraint: Constraint, code: Main, index: usize) {
 	use super::super::time;
-	use core::time::Duration;
 	use crate::println;
+	use core::time::Duration;
 
-	let create_task = | constraint: Constraint, code: Main | -> Task {
-		let create_metadata = | constraint: Constraint | -> Metadata {
+	let create_task = |constraint: Constraint, code: Main| -> Task {
+		let create_metadata = |constraint: Constraint| -> Metadata {
 			(constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), time::get_datetime()))
 		};
 

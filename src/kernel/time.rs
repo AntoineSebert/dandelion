@@ -14,7 +14,7 @@ use cmos::RTCDateTime;
 use core::time::Duration;
 
 pub fn get_datetime() -> RTCDateTime {
-	use cmos::{CMOS, CMOSCenturyHandler};
+	use cmos::{CMOSCenturyHandler, CMOS};
 
 	let mut cmos = unsafe { CMOS::new() };
 	cmos.read_rtc(CMOSCenturyHandler::CurrentYear(2019))
