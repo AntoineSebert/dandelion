@@ -221,15 +221,9 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 	unsafe { PICS.lock().notify_end_of_interrupt(RealTimeClock.as_u8()) }
 }
 
-pub fn change_real_time_clock_interrupt_rate(mut rate: u8) {
+pub fn change_rtc_interrupt_rate(mut rate: u8) {
 	rate &= 0x0F; // rate must be above 2 and not over 15, by default 6
 	without_interrupts(|| {
-		/*
-		CMOS.lock().write(0x70, 0x8A);
-		let prev: u8 = CMOS.lock().read(0x71);
-		CMOS.lock().write(0x70, 0x8A);
-		CMOS.lock().write(0x71, (prev & 0xF0) | rate);
-		*/
 		let mut address_port = Port::<u8>::new(0x70);
 		let mut data_port = Port::<u8>::new(0x71);
 
@@ -246,12 +240,6 @@ pub fn change_real_time_clock_interrupt_rate(mut rate: u8) {
 
 pub fn enable_rtc_interrupt() {
 	without_interrupts(|| {
-		/*
-		CMOS.lock().write(0x70, 0x8B);
-		let prev: u8 = CMOS.lock().read(0x71);
-		CMOS.lock().write(0x70, 0x8B);
-		CMOS.lock().write(0x71, prev | 0x40);
-		*/
 		let mut address_port = Port::<u8>::new(0x70);
 		let mut data_port = Port::<u8>::new(0x71);
 
