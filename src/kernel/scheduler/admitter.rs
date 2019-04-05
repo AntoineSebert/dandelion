@@ -58,5 +58,6 @@ fn admit(constraint: Constraint, code: Main, index: usize) {
 	let mut guard = PROCESS_TABLE[index].write();
 	*guard = Some(create_task(constraint, code));
 	drop(guard);
+
 	println!("New process admitted at index {}", index);
 }

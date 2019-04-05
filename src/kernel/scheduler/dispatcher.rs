@@ -10,5 +10,6 @@
 /// - the number of processes in READY_QUEUE
 /// - the PID of eventual running process
 pub fn update() -> (u8, u8, u8, Option<u8>) {
+	// do the scheduling
 	(0, 0, 0, None)
 }

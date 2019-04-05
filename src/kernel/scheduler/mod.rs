@@ -49,12 +49,10 @@ pub fn process_exists(pid: u8) -> bool {
 /// Processes may be added or removed during the counting process.
 pub fn count_processes() -> u8 {
 	let mut counter = 0;
-	for element in PROCESS_TABLE.iter() {
-		let guard = element.read();
-		if (*guard).is_some() {
+	for i in 0..255 {
+		if process_exists(i) {
 			counter += 1;
 		}
-		drop(guard);
 	}
 	counter
 }
