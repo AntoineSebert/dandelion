@@ -3,10 +3,7 @@ resources/publications/
 resources/POSIX/
 resources/VxWorks/
 resources/osal-2.10
-target/debug/
-target/sysroot/
-target/x86_64-dandelion/debug/
-target/.rustc_info.json
+target
 
 # ignore bibliography files
 documents/references.bib
