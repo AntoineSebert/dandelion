@@ -8,6 +8,8 @@
 
 **Dandelion**. Make your mistakes more reliable.
 
+(or “Meet your constraints.”)
+
 > Ainsi, toujours poussés vers de nouveaux rivages,
 >
 > Dans la nuit éternelle emportés sans retour,
