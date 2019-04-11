@@ -54,7 +54,6 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use core::sync::atomic::AtomicPtr;
 	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
@@ -110,8 +109,8 @@ fn initialize_components() {
 
 	unsafe {
 		match acpi::init() {
-			Ok(..) => println!("ACPI initialized"),
-			Err(..) => println!("Could not initialize ACPI"),
+			Ok(_) => println!("ACPI initialized"),
+			Err(_) => println!("Could not initialize ACPI"),
 		}
 	};
 

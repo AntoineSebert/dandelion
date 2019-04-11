@@ -172,7 +172,7 @@ extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFra
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	// wake up short-term scheduler
-	print!(".");
+	//print!(".");
 	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
 
@@ -208,7 +208,7 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 	use super::scheduler::dispatcher;
 
 	let x = dispatcher::update();
-	//println!("scheduling update returned {}, {}, {}, {}", x.0, x.1, x.2, x.3.is_some());
+	println!("scheduling update returned {}, {}, {}, {}", x.0, x.1, x.2, x.3.is_some());
 
 	// flush register C so interrupt can happen again
 	without_interrupts(|| {
