@@ -16,7 +16,7 @@ use array_init::array_init;
 use arraydeque::ArrayDeque;
 use core::{
 	ptr::null_mut,
-	sync::atomic::{self, AtomicPtr},
+	sync::atomic::{self, AtomicPtr, Ordering::*},
 };
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
@@ -38,6 +38,25 @@ lazy_static! {
 	pub static ref RUNNING: AtomicPtr<u8> = AtomicPtr::new(null_mut());
 }
 
+/// Run the current running process
+pub fn run() -> u64 {
+	let guard = PROCESS_TABLE[RUNNING.load(SeqCst) as usize].read();
+	let mut result = 0;
+	if (*guard).is_none() {
+		crate::println!("No process to run");
+	}
+	else {
+		crate::println!("Running...");
+		let mut args = [None; 256];
+		args[0] = Some("sample_runnable_2");
+		args[1] = Some("Hearth");
+		result = (guard.as_ref().unwrap().1)(args);
+	}
+	drop(guard);
+	result
+}
+
+/// Check if a process exists
 pub fn process_exists(pid: u8) -> bool {
 	let guard = PROCESS_TABLE[pid as usize].read();
 	let result = (*guard).is_some();

@@ -59,5 +59,7 @@ fn admit(constraint: Constraint, code: Runnable, index: usize) {
 	*guard = Some(create_task(constraint, code));
 	drop(guard);
 
+	RUNNING.store(index as *mut _, SeqCst);
+
 	println!("New process admitted at index {}", index);
 }
