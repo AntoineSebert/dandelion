@@ -12,9 +12,7 @@ use super::{super::process::*, PROCESS_TABLE};
 pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
 	let slot = get_slot();
 
-	if slot.is_none() {
-		return None;
-	} else if !is_schedulable(constraint) {
+	if slot.is_none() || !is_schedulable(constraint) {
 		return None;
 	}
 
@@ -22,7 +20,7 @@ pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
 	return slot;
 }
 
-/// Browse PROCESS_TABLE. The outcome of the operation is returned as a Result.
+/// Browse PROCESS_TABLE. The outcome of the operation is returned as an Option.
 fn get_slot() -> Option<usize> {
 	for index in 0..256 {
 		let guard = PROCESS_TABLE[index].read();
@@ -35,8 +33,12 @@ fn get_slot() -> Option<usize> {
 }
 
 /// Figure out if the candidate is schedulable in the current context.
-fn is_schedulable(_constraint: Constraint) -> bool {
-	// todo
+fn is_schedulable(constraint: Constraint) -> bool {
+	if constraint.0.is_none() {
+
+	} else {
+
+	}
 
 	true
 }

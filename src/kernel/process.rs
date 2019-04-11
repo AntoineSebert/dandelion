@@ -43,7 +43,7 @@ pub enum PRIORITY {
 	LOW
 }
 
-pub type Arguments<'a> = [Option<&'a str>; 256];
+pub type Arguments<'a> = &'a [&'a str];
 
 pub type Periodic = (Duration, Duration, Option<RTCDateTime>); // estimated completion time, interval, delay
 pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, delay
@@ -56,8 +56,8 @@ pub type Metadata = (Constraint, Info);
 pub type Runnable = fn(Arguments) -> u64;
 pub type Task = (Metadata, Runnable);
 
-pub type Job = (Metadata, [Runnable; 256]);
-pub type Group = [Task; 256];
+pub type Job<'a> = (Metadata, &'a [&'a Runnable]);
+pub type Group<'a> = &'a [&'a Task];
 
 /// Accessors
 
@@ -104,11 +104,7 @@ pub fn sample_runnable_2(args: Arguments) -> u64 {
 
 	println!("Running sample_runnable_2");
 	for element in args.iter() {
-		if element.is_some() {
-			println!("argument: {}", element.unwrap());
-		} else {
-			break;
-		}
+		println!("argument: {}", element);
 	}
 
 	1

@@ -40,17 +40,15 @@ lazy_static! {
 
 /// Run the current running process
 pub fn run() -> u64 {
+	use crate::println;
 	let guard = PROCESS_TABLE[RUNNING.load(SeqCst) as usize].read();
 	let mut result = 0;
 	if (*guard).is_none() {
-		crate::println!("No process to run");
+		println!("No process to run");
 	}
 	else {
-		crate::println!("Running...");
-		let mut args = [None; 256];
-		args[0] = Some("sample_runnable_2");
-		args[1] = Some("Hearth");
-		result = (guard.as_ref().unwrap().1)(args);
+		println!("Running...");
+		result = guard.as_ref().unwrap().1(&["sample_runnable_2"]);
 	}
 	drop(guard);
 	result
