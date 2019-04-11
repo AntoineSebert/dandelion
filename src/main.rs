@@ -22,9 +22,11 @@ misc
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
+
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
+#![feature(core_intrinsics)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::{

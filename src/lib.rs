@@ -7,6 +7,7 @@
 #![feature(abi_x86_interrupt)]
 #![feature(asm)]
 #![feature(trait_alias)]
+#![feature(core_intrinsics)]
 
 pub mod kernel;
 pub mod serial;
