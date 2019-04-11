@@ -59,14 +59,6 @@ pub fn count_processes() -> u8 {
 	counter
 }
 
-/// Get the process State, assuming the process exists
-pub fn get_state(pid: usize) -> State {
-	let guard = PROCESS_TABLE[pid].read();
-	let state = ((&(*guard).as_ref().unwrap().0).1).0; // create a macro to hide this shit
-	drop(guard);
-	state
-}
-
 pub fn remove_pid_from_queue(mut queue: spin::MutexGuard<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	let mut index = None;
 	for element in queue.iter() {

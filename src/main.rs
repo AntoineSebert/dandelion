@@ -80,12 +80,18 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	/* scheduler */
 	{
 		use kernel::{
-			process::sample_runnable_2,
-			scheduler::{admitter::request, process_exists, terminate},
+			process::{sample_runnable_2, PRIORITY::*},
+			scheduler::{admitter::request, process_exists, terminate, run},
 		};
+
 		println!("process 0 exists ? {}", process_exists(0));
-		request(None, AtomicPtr::new(sample_runnable_2 as *mut _));
+		request((None, MEDIUM), sample_runnable_2);
 		println!("process 0 exists ? {}", process_exists(0));
+
+		let result = run();
+		println!("Processed finished with code : {}", result);
+
+
 		println!("removing process 0...{}", terminate(0));
 		println!("process 0 exists ? {}", process_exists(0));
 	}

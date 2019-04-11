@@ -6,7 +6,7 @@
 #![allow(dead_code)]
 
 use cmos::RTCDateTime;
-use core::{sync::atomic::AtomicPtr, time::Duration};
+use core::time::Duration;
 use either::Either;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -36,34 +36,82 @@ pub enum SwapSpace {
 	Delayed,
 }
 
-pub type Arguments<'a> = [Option<(&'a str, &'a str)>; 256]; // replace by str
-pub type Main = AtomicPtr<fn(Option<Arguments>) -> i64>;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PRIORITY {
+	HIGH,
+	MEDIUM,
+	LOW
+}
+
+pub type Arguments<'a> = [Option<&'a str>; 256];
 
 pub type Periodic = (Duration, Duration, Option<RTCDateTime>); // estimated completion time, interval, delay
 pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, delay
 
-pub type Constraint = Option<Either<Periodic, Aperiodic>>;
 pub type Info = (State, Duration, RTCDateTime);
+pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY);
 
 pub type Metadata = (Constraint, Info);
 
-pub type Runnable = Main;
+pub type Runnable = fn(Arguments) -> u64;
 pub type Task = (Metadata, Runnable);
 
 pub type Job = (Metadata, [Runnable; 256]);
 pub type Group = [Task; 256];
 
-pub fn sample_runnable_2(args_wrapper: Option<Arguments>) -> u64 {
+/// Accessors
+
+pub fn get_metadata(task: &Task) -> &Metadata {
+	&task.0
+}
+
+pub fn get_constraint(task: &Task) -> &Constraint {
+	&(task.0).0
+}
+
+pub fn get_realtime(task: &Task) -> Option<Either<Periodic, Aperiodic>> {
+	((task.0).0).0
+}
+
+pub fn get_runnable(task: &Task) -> &Runnable {
+	&task.1
+}
+
+pub fn get_priority(task: &Task) -> PRIORITY {
+	((task.0).0).1
+}
+
+pub fn get_info(task: &Task) -> &Info {
+	&(task.0).1
+}
+
+pub fn get_state(task: &Task) -> State {
+	((task.0).1).0
+}
+
+pub fn get_running_time(task: &Task) -> Duration {
+	((task.0).1).1
+}
+
+pub fn get_creation_time(task: &Task) -> RTCDateTime {
+	((task.0).1).2
+}
+
+/// Sample processes
+
+pub fn sample_runnable_2(args: Arguments) -> u64 {
 	use crate::println;
 
-	if args_wrapper.is_some() {
-		let arguments = args_wrapper.unwrap();
-		for index in 0..256 {
-			println!("argument {} is : {}", index, arguments[index].is_some());
+	println!("Running sample_runnable_2");
+	for element in args.iter() {
+		if element.is_some() {
+			println!("argument: {}", element.unwrap());
+		} else {
+			break;
 		}
 	}
 
-	0
+	1
 }
 
 /// Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
