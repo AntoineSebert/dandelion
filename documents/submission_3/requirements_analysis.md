@@ -22,8 +22,8 @@ by order of priority
 
 - bring to jobs a framework to communicate with each other
 - using signals, POSIX sockets
-- provide "confidentiality, integrity, and availability of information"1
-- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"2
+- provide "confidentiality, integrity, and availability of information"[^1]
+- allow processes to exchange data free from "unauthorized access, use, disclosure, disruption, modification, or destruction"[^2]
 - two weeks estimation
 
 ## Should
@@ -80,5 +80,5 @@ by order of priority
 - use the GPU to render objects on the screen, and create a window manager
 - not necessary
 
-[1]: ISO/IEC 27000:2009
-[2]: CNSS, 2010
+[^1]: ISO/IEC 27000:2009
+[^2]: CNSS, 2010
