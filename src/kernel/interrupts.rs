@@ -208,7 +208,10 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 	use super::scheduler::dispatcher;
 
 	let x = dispatcher::update();
-	println!("scheduling update returned {}, {}, {}, {}", x.0, x.1, x.2, x.3.is_some());
+	println!("{{");
+	println!("    processes : {}, running : {}", x.0, x.3.is_some());
+	println!("    blocked queue : {}, ready queue : {}", x.1, x.2);
+	println!("}}");
 
 	// flush register C so interrupt can happen again
 	without_interrupts(|| {
