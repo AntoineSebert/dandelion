@@ -54,35 +54,18 @@ entry_point!(kernel_main);
 #[cfg(not(test))]
 #[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
-	use x86_64::{structures::paging::Page, VirtAddr};
+	use kernel::{
+		process::{sample_runnable_2, PRIORITY::*},
+		scheduler::{admitter::request, process_exists, terminate, run},
+	};
 
 	println!("Hello World{}", "!");
 	initialize_components();
-
 	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
-
-	/* mapping */
-	{
-		let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
-		let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
-
-		// map a previously unmapped page
-		let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
-		create_example_mapping(page, &mut mapper, &mut frame_allocator);
-
-		// write the string `New!` to the screen through the new mapping
-		let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
-		unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
-	}
+	map_memory(boot_info);
 
 	/* scheduler */
 	{
-		use kernel::{
-			process::{sample_runnable_2, PRIORITY::*},
-			scheduler::{admitter::request, process_exists, terminate, run},
-		};
-
 		println!("process 0 exists ? {}", process_exists(0));
 		request((None, MEDIUM), sample_runnable_2);
 		println!("process 0 exists ? {}", process_exists(0));
@@ -90,13 +73,29 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 		let result = run();
 		println!("Processed finished with code : {}", result);
 
-
 		println!("removing process 0...{}", terminate(0));
 		println!("process 0 exists ? {}", process_exists(0));
 	}
 
 	println!("It did not crash!");
 	hlt_loop();
+}
+
+#[allow(dead_code)]
+fn map_memory(boot_info: &'static BootInfo) {
+	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
+	use x86_64::{structures::paging::Page, VirtAddr};
+
+	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
+	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
+
+	// map a previously unmapped page
+	let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
+	create_example_mapping(page, &mut mapper, &mut frame_allocator);
+
+	// write the string `New!` to the screen through the new mapping
+	let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
+	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 }
 
 #[allow(dead_code)]

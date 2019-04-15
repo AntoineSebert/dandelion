@@ -21,7 +21,7 @@ pub unsafe fn exit_qemu() {
 	port.write(0);
 }
 
-///
+/// brøther may I have some lööps
 pub fn hlt_loop() -> ! {
 	loop {
 		hlt();
