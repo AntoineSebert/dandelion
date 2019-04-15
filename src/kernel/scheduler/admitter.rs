@@ -3,7 +3,6 @@
  * @date	03/03/2019
  */
 
-use crate::kernel::scheduler::RUNNING;
 use super::{super::process::*, PROCESS_TABLE};
 
 /// Check whether the task can be accepted or not
@@ -20,7 +19,7 @@ pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
 	return slot;
 }
 
-/// Browse PROCESS_TABLE. The outcome of the operation is returned as an Option.
+/// Browse PROCESS_TABLE and return the first available slot if it exists.
 fn get_slot() -> Option<usize> {
 	for index in 0..256 {
 		let guard = PROCESS_TABLE[index].read();
@@ -47,7 +46,7 @@ fn is_schedulable(constraint: Constraint) -> bool {
 fn admit(constraint: Constraint, code: Runnable, index: usize) {
 	use super::super::time;
 	use crate::println;
-	use core::{sync::atomic::Ordering::SeqCst, time::Duration};
+	use core::time::Duration;
 
 	let create_task = |constraint: Constraint, code: Runnable| -> Task {
 		let create_metadata = |constraint: Constraint| -> Metadata {
@@ -61,7 +60,7 @@ fn admit(constraint: Constraint, code: Runnable, index: usize) {
 	*guard = Some(create_task(constraint, code));
 	drop(guard);
 
-	RUNNING.store(index as *mut _, SeqCst);
+	super::increment();
 
 	println!("New process admitted at index {}", index);
 }

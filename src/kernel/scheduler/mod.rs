@@ -14,10 +14,6 @@ pub mod swapper;
 use super::process::*;
 use array_init::array_init;
 use arraydeque::ArrayDeque;
-use core::{
-	ptr::null_mut,
-	sync::atomic::{self, AtomicPtr, Ordering::*},
-};
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
 
@@ -35,22 +31,35 @@ lazy_static! {
 }
 
 lazy_static! {
-	pub static ref RUNNING: AtomicPtr<u8> = AtomicPtr::new(null_mut());
+	pub static ref RUNNING: RwLock<Option<u8>> = RwLock::new(None);
+}
+
+lazy_static! {
+	pub static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
 }
 
 /// Run the current running process
 pub fn run() -> u64 {
 	use crate::println;
-	let guard = PROCESS_TABLE[RUNNING.load(SeqCst) as usize].read();
-	let mut result = 0;
+
+	let guard = RUNNING.read();
 	if (*guard).is_none() {
 		println!("No process to run");
+		drop(guard);
+		return 0;
 	}
-	else {
-		println!("Running...");
-		result = guard.as_ref().unwrap().1(&["sample_runnable_2"]);
-	}
+	let index = usize::from((*guard).unwrap());
 	drop(guard);
+	let guard = PROCESS_TABLE[index].read();
+	let result = if (*guard).is_none() {
+		println!("No process to run");
+		0
+	} else {
+		println!("Running...");
+		guard.as_ref().unwrap().1(&["sample_runnable_2"])
+	};
+	drop(guard);
+
 	result
 }
 
@@ -62,60 +71,121 @@ pub fn process_exists(pid: u8) -> bool {
 	result
 }
 
-/// Return the number of processes in PROCESS_TABLE
-/// Does not guaranty accuracy :
-/// For performance and concurrency reasons, PROCESS_TABLE cannot be locked as a whole
-/// Processes may be added or removed during the counting process.
-pub fn count_processes() -> u8 {
-	let mut counter = 0;
-	for i in 0..255 {
-		if process_exists(i) {
-			counter += 1;
-		}
-	}
-	counter
-}
-
-pub fn remove_pid_from_queue(mut queue: spin::MutexGuard<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
-	let mut index = None;
-	for element in queue.iter() {
-		if *element == pid {
-			index = Some(*element);
-			break;
-		}
-	}
-	if index.is_some() {
-		queue.remove(index.unwrap() as usize);
-	}
-	index.is_some()
-}
-
 /// Terminate a job
 /// Returns true if the process exists and has been successfully terminated, false otherwise.
 pub fn terminate(pid: u8) -> bool {
-	use atomic::Ordering::Relaxed;
+	use super::process::get_state;
 
 	if !process_exists(pid) {
 		return false;
 	}
 
 	let mut pt_guard = PROCESS_TABLE[pid as usize].write(); // lock process in process table
-														// set process state to terminated
-	let state = ((&(*pt_guard).as_ref().unwrap().0).1).0;
+	let state = get_state(pt_guard.as_ref().unwrap());
+	//((pt_guard.as_ref().unwrap().0).1).0 = State::Limbo(Limbo::Terminated); // set process state to terminated
 	match state {
 		State::MainMemory(MainMemory::Running) => {
-			RUNNING.compare_exchange(pid as *mut _, null_mut(), Relaxed, Relaxed).ok();
+			let guard = RUNNING.read();
+			if (*guard).is_some() {
+				if (*guard).unwrap() == pid {
+					let mut wguard = RUNNING.write();
+					(*wguard).take();
+					drop(wguard);
+				}
+			}
+			drop(guard);
 		}
 		State::MainMemory(MainMemory::Ready) => {
-			remove_pid_from_queue(READY_QUEUE.lock(), pid);
+			queue_remove(&READY_QUEUE, pid);
 		}
 		State::SwapSpace(_) => {
-			remove_pid_from_queue(BLOCKED_QUEUE.lock(), pid);
+			queue_remove(&BLOCKED_QUEUE, pid);
 		}
 		_ => {}
 	};
 	*pt_guard = None;
 	drop(pt_guard);
 
+	decrement();
+
 	true
+}
+
+/*
+	PROCESSES_COUNT
+*/
+
+pub fn get_process_count() -> u8 {
+	let guard = PROCESS_COUNT.read();
+	let value = (*guard).clone();
+	drop(guard);
+	value
+}
+
+fn increment() -> u8 {
+	let mut guard = PROCESS_COUNT.write();
+	if (*guard) < 255 {
+		(*guard) += 1;
+	}
+	let new_val = *guard;
+	drop(guard);
+	new_val
+}
+
+fn decrement() -> u8 {
+	let mut guard = PROCESS_COUNT.write();
+	if 0 < (*guard) {
+		(*guard) -= 1;
+	}
+	let new_val = *guard;
+	drop(guard);
+	new_val
+}
+
+/*
+	RUNNING
+*/
+
+pub fn get_running() -> Option<u8> {
+	let guard = RUNNING.read();
+	let value = if (*guard).is_some() {
+		(*guard).clone()
+	} else {
+		None
+	};
+	drop(guard);
+	value
+}
+
+pub fn set_running(value: Option<u8>) {
+	let mut guard = RUNNING.write();
+	*guard = value;
+	drop(guard);
+}
+
+/*
+	QUEUES
+*/
+
+pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
+	let mut guard = queue.lock();
+
+	if !(*guard).contains(&pid) {
+		return false;
+	}
+
+	for index in 0..(*guard).len() {
+		if (*guard)[index] == pid {
+			(*guard).remove(index);
+			break;
+		}
+	}
+	true
+}
+
+pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {
+	let guard = queue.lock();
+	let value = (*guard).len();
+	drop(guard);
+	value
 }
