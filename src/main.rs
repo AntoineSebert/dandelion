@@ -22,7 +22,6 @@ misc
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
 #![deny(clippy::all)]
-
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
@@ -56,7 +55,7 @@ entry_point!(kernel_main);
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use kernel::{
 		process::{sample_runnable_2, PRIORITY::*},
-		scheduler::{admitter::request, process_exists, terminate, run},
+		scheduler::{admitter::request, process_exists, run, terminate},
 	};
 
 	println!("Hello World{}", "!");

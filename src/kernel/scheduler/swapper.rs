@@ -29,14 +29,14 @@ Note that this is only a high-level overview and only one way of doing it. For t
 //fn pop_register() {}
 
 use crate::kernel::{
+	process::{self, MainMemory, State},
 	scheduler::{self, RUNNING},
-	process::{self, State, MainMemory}
 };
 
 /// Set the value of RUNNING and update the state of the related process if it exists.
 fn set_running(value: Option<u8>) {
-	use scheduler::PROCESS_TABLE;
 	use process::set_state;
+	use scheduler::PROCESS_TABLE;
 
 	let mut r_guard = RUNNING.write();
 	*r_guard = value;
@@ -63,8 +63,8 @@ pub fn get_running() -> Option<u8> {
 /// Move the element in RUNNING at the end of READY_QUEUE if it exists.
 /// Return a tuple containing the old and the new running PIDs if they exist.
 pub fn next() -> (Option<u8>, Option<u8>) {
-	use scheduler::{queue_push_back, BLOCKED_QUEUE, READY_QUEUE, terminate};
 	use process::SwapSpace;
+	use scheduler::{queue_push_back, terminate, BLOCKED_QUEUE, READY_QUEUE};
 
 	let old = get_running();
 

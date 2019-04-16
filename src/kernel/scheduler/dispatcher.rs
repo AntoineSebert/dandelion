@@ -3,7 +3,7 @@
  * @date	03/03/2019
  */
 
-use crate::kernel::scheduler::{queue_size, get_process_count, BLOCKED_QUEUE, READY_QUEUE, swapper::get_running};
+use crate::kernel::scheduler::{get_process_count, queue_size, swapper::get_running, BLOCKED_QUEUE, READY_QUEUE};
 
 /// Update the scheduling process.
 pub fn update() -> (u8, usize, usize, Option<u8>) {
@@ -14,7 +14,6 @@ pub fn update() -> (u8, usize, usize, Option<u8>) {
 		let mut guard = READY_QUEUE.lock();
 		(*guard).push_back(value.unwrap());
 		drop(guard);
-
 	}
 
 	global_info()
@@ -43,12 +42,7 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 	(get_process_count(), queue_size(&BLOCKED_QUEUE), queue_size(&READY_QUEUE), get_running())
 }
 
-
-fn earliest_deadline_first() {
-
-}
+fn earliest_deadline_first() {}
 
 /// Reorder READY_QUEUE following with the EDF algorithm and return its size.
-pub fn order_ready_queue() -> usize {
-	0
-}
+pub fn order_ready_queue() -> usize { 0 }

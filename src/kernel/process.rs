@@ -40,7 +40,7 @@ pub enum SwapSpace {
 pub enum PRIORITY {
 	HIGH,
 	MEDIUM,
-	LOW
+	LOW,
 }
 
 pub type Arguments<'a> = &'a [&'a str];
@@ -61,47 +61,27 @@ pub type Group<'a> = &'a [&'a Task];
 
 /// Accessors
 
-pub fn get_metadata(task: &Task) -> &Metadata {
-	&task.0
-}
+pub fn get_metadata(task: &Task) -> &Metadata { &task.0 }
 
-pub fn get_constraint(task: &Task) -> &Constraint {
-	&(task.0).0
-}
+pub fn get_constraint(task: &Task) -> &Constraint { &(task.0).0 }
 
-pub fn get_realtime(task: &Task) -> Option<Either<Periodic, Aperiodic>> {
-	((task.0).0).0
-}
+pub fn get_realtime(task: &Task) -> Option<Either<Periodic, Aperiodic>> { ((task.0).0).0 }
 
-pub fn get_runnable(task: &Task) -> &Runnable {
-	&task.1
-}
+pub fn get_runnable(task: &Task) -> &Runnable { &task.1 }
 
-pub fn get_priority(task: &Task) -> PRIORITY {
-	((task.0).0).1
-}
+pub fn get_priority(task: &Task) -> PRIORITY { ((task.0).0).1 }
 
-pub fn get_info(task: &Task) -> &Info {
-	&(task.0).1
-}
+pub fn get_info(task: &Task) -> &Info { &(task.0).1 }
 
-pub fn get_state(task: &Task) -> State {
-	((task.0).1).0
-}
+pub fn get_state(task: &Task) -> State { ((task.0).1).0 }
 
-pub fn get_running_time(task: &Task) -> Duration {
-	((task.0).1).1
-}
+pub fn get_running_time(task: &Task) -> Duration { ((task.0).1).1 }
 
-pub fn get_creation_time(task: &Task) -> RTCDateTime {
-	((task.0).1).2
-}
+pub fn get_creation_time(task: &Task) -> RTCDateTime { ((task.0).1).2 }
 
 /// Mutators
 
-pub fn set_state(task: &mut Task, state: State) {
-	((task.0).1).0 = state;
-}
+pub fn set_state(task: &mut Task, state: State) { ((task.0).1).0 = state; }
 
 /// Sample processes
 
