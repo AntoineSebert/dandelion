@@ -22,13 +22,65 @@ Note that this is only a high-level overview and only one way of doing it. For t
 */
 
 //pub fn context_switch(job) {}
-
 //fn push_registers(registers) {}
-
 //fn get_next_stack_pointer() {}
-
 //fn get_current_task_pointer() {}
-
 //fn rsp_update() {}
-
 //fn pop_register() {}
+
+use crate::kernel::{
+	scheduler::{self, RUNNING},
+	process::{self, State, MainMemory}
+};
+
+/// Set the value of RUNNING and update the state of the related process if it exists.
+fn set_running(value: Option<u8>) {
+	use scheduler::PROCESS_TABLE;
+	use process::set_state;
+
+	let mut r_guard = RUNNING.write();
+	*r_guard = value;
+
+	if (*r_guard).is_some() {
+		let mut pt_guard = PROCESS_TABLE[(*r_guard).unwrap() as usize].write();
+		set_state(&mut (*pt_guard).unwrap(), State::MainMemory(MainMemory::Running));
+		drop(pt_guard);
+	}
+
+	drop(r_guard);
+}
+
+/// Return the value of RUNNING.
+pub fn get_running() -> Option<u8> {
+	let guard = RUNNING.read();
+	let value = (*guard).clone();
+	drop(guard);
+
+	value
+}
+
+/// Move the first element in READY_QUEUE to RUNNING (if there is no element, RUNNING is `None`).
+/// Move the element in RUNNING at the end of READY_QUEUE if it exists.
+/// Return a tuple containing the old and the new running PIDs if they exist.
+pub fn next() -> (Option<u8>, Option<u8>) {
+	use scheduler::{queue_push_back, BLOCKED_QUEUE, READY_QUEUE, terminate};
+	use process::SwapSpace;
+
+	let old = get_running();
+
+	let mut guard = READY_QUEUE.lock();
+	let new = (*guard).pop_front();
+	set_running(new);
+	drop(guard);
+
+	if old.is_some() {
+		let pid = old.unwrap();
+		if queue_push_back(&READY_QUEUE, pid, State::MainMemory(MainMemory::Ready)).is_err() {
+			if queue_push_back(&BLOCKED_QUEUE, pid, State::SwapSpace(SwapSpace::Suspended)).is_err() {
+				terminate(pid);
+			}
+		}
+	}
+
+	(old, new)
+}

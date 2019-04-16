@@ -13,7 +13,7 @@ pub mod swapper;
 
 use super::process::*;
 use array_init::array_init;
-use arraydeque::ArrayDeque;
+use arraydeque::{ArrayDeque, CapacityError};
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
 
@@ -143,29 +143,26 @@ fn decrement() -> u8 {
 }
 
 /*
-	RUNNING
-*/
-
-pub fn get_running() -> Option<u8> {
-	let guard = RUNNING.read();
-	let value = if (*guard).is_some() {
-		(*guard).clone()
-	} else {
-		None
-	};
-	drop(guard);
-	value
-}
-
-pub fn set_running(value: Option<u8>) {
-	let mut guard = RUNNING.write();
-	*guard = value;
-	drop(guard);
-}
-
-/*
 	QUEUES
 */
+
+pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: State) -> Result<(), CapacityError<u8>> {
+	let mut q_guard = queue.lock();
+
+	if !process_exists(pid) || (*q_guard).contains(&pid) {
+		return Ok(());
+	}
+
+	let result = (*q_guard).push_back(pid);
+	if result.is_ok() {
+		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
+		set_state(&mut (*pt_guard).unwrap(), state);
+		drop(pt_guard);
+	}
+	drop(q_guard);
+
+	result
+}
 
 pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	let mut guard = queue.lock();
@@ -177,10 +174,13 @@ pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	for index in 0..(*guard).len() {
 		if (*guard)[index] == pid {
 			(*guard).remove(index);
-			break;
+			drop(guard);
+			return true;
 		}
 	}
-	true
+	drop(guard);
+
+	false
 }
 
 pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {

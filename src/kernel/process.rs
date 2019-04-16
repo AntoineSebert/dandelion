@@ -97,6 +97,12 @@ pub fn get_creation_time(task: &Task) -> RTCDateTime {
 	((task.0).1).2
 }
 
+/// Mutators
+
+pub fn set_state(task: &mut Task, state: State) {
+	((task.0).1).0 = state;
+}
+
 /// Sample processes
 
 pub fn sample_runnable_2(args: Arguments) -> u64 {
