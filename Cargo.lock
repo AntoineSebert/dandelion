@@ -64,7 +64,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "dandelion"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "array-init 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "arraydeque 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
