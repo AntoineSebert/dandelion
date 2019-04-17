@@ -36,7 +36,7 @@ pub enum SwapSpace {
 	Delayed,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Ord, PartialOrd)]
 pub enum PRIORITY {
 	HIGH,
 	MEDIUM,
