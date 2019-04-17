@@ -3,46 +3,98 @@
  * @date	03/03/2019
  */
 
-use crate::kernel::scheduler::{get_process_count, queue_size, swapper::get_running, BLOCKED_QUEUE, READY_QUEUE};
+use spin::Mutex;
+use arraydeque::ArrayDeque;
+use super::{BLOCKED_QUEUE, queue_size, READY_QUEUE};
 
-/// Update the scheduling process.
-pub fn update() -> (u8, usize, usize, Option<u8>) {
-	let strategy = first_encountered;
-
-	let value = strategy();
-	if value.is_some() {
-		let mut guard = READY_QUEUE.lock();
-		(*guard).push_back(value.unwrap());
-		drop(guard);
+/// Reorder READY_QUEUE with the provided strategy if READY_QUEUE is not empty.
+/// Return the data collected by `global_info()`.
+pub fn update(strategy: &Fn(&Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8>) -> (u8, usize, usize, Option<u8>) {
+	if 0 < queue_size(&READY_QUEUE) {
+		strategy(&READY_QUEUE);
 	}
 
 	global_info()
 }
 
-fn first_encountered() -> Option<u8> {
-	/*
-	for index in 0..256 {
-		let guard = PROCESS_TABLE[index].read();
-		if (*guard).is_some() {
-			return Some(index as u8);
-		}
-		drop(guard);
-	}
-	*/
-	None
-}
-
-/// Get scheduler's components info
+/// Get scheduler's components info.
 /// Return a tuple containing :
 /// - the total number of processes
 /// - the number of processes in BLOCKED_QUEUE
 /// - the number of processes in READY_QUEUE
 /// - the PID of eventual running process
 pub fn global_info() -> (u8, usize, usize, Option<u8>) {
+	use super::{get_process_count, queue_size, swapper::get_running};
+
 	(get_process_count(), queue_size(&BLOCKED_QUEUE), queue_size(&READY_QUEUE), get_running())
 }
 
-fn earliest_deadline_first() {}
+pub mod strategy {
+	use crate::kernel::{process::get_priority, scheduler::PROCESS_TABLE};
+	use spin::Mutex;
+	use arraydeque::ArrayDeque;
 
-/// Reorder READY_QUEUE following with the EDF algorithm and return its size.
-pub fn order_ready_queue() -> usize { 0 }
+	/// Put the processes in READY_QUEUE by order of PID.
+	/// Return the PID of the first process in the ready queue if it exists.
+	pub fn process_id(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+		let mut guard = queue.lock();
+
+		((*guard).as_mut_slices().0).sort_unstable();
+		let first_value = Some(*(*guard).front().unwrap());
+
+		drop(guard);
+		first_value
+	}
+
+	/// Put the processes in READY_QUEUE by order of priority.
+	/// Return the PID of the first process in the ready queue if it exists.
+	pub fn priority(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+		let mut guard = queue.lock();
+
+		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
+			let guard = PROCESS_TABLE[*a as usize].read();
+			let priority_a = get_priority(&(*guard).unwrap());
+			drop(guard);
+			let guard = PROCESS_TABLE[*b as usize].read();
+			let priority_b = get_priority(&(*guard).unwrap());
+			drop(guard);
+
+			priority_a.partial_cmp(&priority_b).unwrap()
+		});
+		let first_value = Some(*(*guard).front().unwrap());
+
+		drop(guard);
+		first_value
+	}
+
+	/// Put the processes in READY_QUEUE by order of deadline and priority.
+	/// LOW can preempt MEDIUM, MEDIUM can preempt HIGH.
+	/// Return the PID of the first process in the ready queue if it exists.
+	pub fn modified_earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+		let mut guard = queue.lock();
+
+		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
+			// todo
+			core::cmp::Ordering::Equal
+		});
+		let first_value = Some(*(*guard).front().unwrap());
+
+		drop(guard);
+		first_value
+	}
+
+	/// Put the processes in READY_QUEUE by order of deadline and priority.
+	/// Return the PID of the first process in the ready queue if it exists.
+	pub fn earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+		let mut guard = queue.lock();
+
+		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
+			// todo
+			core::cmp::Ordering::Equal
+		});
+		let first_value = Some(*(*guard).front().unwrap());
+
+		drop(guard);
+		first_value
+	}
+}

@@ -167,10 +167,6 @@ pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: Sta
 pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	let mut guard = queue.lock();
 
-	if !(*guard).contains(&pid) {
-		return false;
-	}
-
 	for index in 0..(*guard).len() {
 		if (*guard)[index] == pid {
 			(*guard).remove(index);
@@ -183,6 +179,7 @@ pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	false
 }
 
+/// Return the size of the queue given as parameter.
 pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {
 	let guard = queue.lock();
 	let value = (*guard).len();
