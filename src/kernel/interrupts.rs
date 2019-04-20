@@ -180,12 +180,12 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 	use pc_keyboard::{
 		layouts::Us104Key,
 		DecodedKey::{RawKey, Unicode},
-		Keyboard, ScancodeSet1,
+		Keyboard, ScancodeSet1, HandleControl
 	};
 
 	lazy_static! {
 		static ref KEYBOARD: Mutex<Keyboard<Us104Key, ScancodeSet1>> =
-			Mutex::new(Keyboard::new(Us104Key, ScancodeSet1));
+			Mutex::new(Keyboard::new(Us104Key, ScancodeSet1, HandleControl::MapLettersToUnicode));
 	}
 
 	let mut keyboard = KEYBOARD.lock();

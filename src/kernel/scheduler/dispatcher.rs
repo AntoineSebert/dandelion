@@ -81,6 +81,7 @@ pub mod strategy {
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
 			use core::cmp::Ordering::*;
 			use either::{Right, Left};
+			use crate::kernel::process::PRIORITY::*;
 
 			let pt_guard = PROCESS_TABLE[*a as usize].read();
 			let process = (*pt_guard).unwrap();
@@ -99,30 +100,53 @@ pub mod strategy {
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
 				(Some(periodicity_a), Some(periodicity_b)) => match (periodicity_a, periodicity_b) {
-					// work in progress !
 					(Right(aperiodic_a), Right(aperiodic_b)) => match aperiodic_a.1.partial_cmp(&aperiodic_b.1) {
-						Some(ord) => ord, // match
+						Some(ord) => match (constraint_a.1, constraint_b.1) {
+							(HIGH, MEDIUM) => Greater,
+							(MEDIUM, LOW) => Greater,
+							(LOW, MEDIUM) => Less,
+							(MEDIUM, HIGH) => Less,
+							_ => ord,
+						},
 						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
 							Some(ord) => ord,
 							None => Equal,
 						},
 					},
 					(Right(aperiodic_a), Left(periodic_b)) => match aperiodic_a.0.partial_cmp(&periodic_b.1) {
-						Some(ord) => ord, // match
+						Some(ord) => match (constraint_a.1, constraint_b.1) {
+							(HIGH, MEDIUM) => Greater,
+							(MEDIUM, LOW) => Greater,
+							(LOW, MEDIUM) => Less,
+							(MEDIUM, HIGH) => Less,
+							_ => ord,
+						},
 						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
 							Some(ord) => ord,
 							None => Equal,
 						},
 					},
 					(Left(periodic_a), Right(aperiodic_b)) => match periodic_a.1.partial_cmp(&aperiodic_b.0) {
-						Some(ord) => ord, // match
+						Some(ord) => match (constraint_a.1, constraint_b.1) {
+							(HIGH, MEDIUM) => Greater,
+							(MEDIUM, LOW) => Greater,
+							(LOW, MEDIUM) => Less,
+							(MEDIUM, HIGH) => Less,
+							_ => ord,
+						},
 						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
 							Some(ord) => ord,
 							None => Equal,
 						},
 					},
 					(Left(periodic_a), Left(periodic_b)) => match periodic_a.2.partial_cmp(&periodic_b.2) {
-						Some(ord) => ord, // match
+						Some(ord) => match (constraint_a.1, constraint_b.1) {
+							(HIGH, MEDIUM) => Greater,
+							(MEDIUM, LOW) => Greater,
+							(LOW, MEDIUM) => Less,
+							(MEDIUM, HIGH) => Less,
+							_ => ord,
+						},
 						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
 							Some(ord) => ord,
 							None => Equal,

@@ -55,8 +55,8 @@ pic8259_simple = "^0.1"
 integer-sqrt = "^0.1"
 cmos = { version = "^0.1", git = " https://github.com/AntoineSebert/cmos" }
 array-init = "^0.0"
-pc-keyboard = "^0.5.0"
-spin = "^0.5.0"
+pc-keyboard = "^0.5"
+spin = "^0.5"
 arraydeque = { version = "^0.4", default-features = false }
 uluru = "^0.3"
 either = { version = "^1.5", default-features = false }
