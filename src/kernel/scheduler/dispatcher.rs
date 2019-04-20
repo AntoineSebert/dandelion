@@ -11,6 +11,8 @@ use super::{BLOCKED_QUEUE, queue_size, READY_QUEUE};
 /// Return the data collected by `global_info()`.
 pub fn update(strategy: &Fn(&Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8>) -> (u8, usize, usize, Option<u8>) {
 	if 0 < queue_size(&READY_QUEUE) {
+		terminator(&READY_QUEUE);
+		terminator(&BLOCKED_QUEUE);
 		strategy(&READY_QUEUE);
 	}
 
@@ -27,6 +29,31 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 	use super::{get_process_count, queue_size, swapper::get_running};
 
 	(get_process_count(), queue_size(&BLOCKED_QUEUE), queue_size(&READY_QUEUE), get_running())
+}
+
+/// Remove the processes those deadlines have been missed in the given queue.
+fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
+	use crate::kernel::{process::get_realtime, time::get_datetime, scheduler::PROCESS_TABLE};
+	use core::cmp::Ordering::Less;
+
+	let mut guard = queue.lock();
+	let mut counter = 0;
+	for index in 0..(*guard).len() {
+		let pt_guard = PROCESS_TABLE[index as usize].read();
+		let realtime = get_realtime(&(*pt_guard).unwrap());
+		if realtime.is_some() {
+			if realtime.unwrap().is_right() {
+				let deadline = realtime.unwrap().right().unwrap().1;
+				if deadline.cmp(&get_datetime()) == Less {
+					(*guard).remove(index);
+					counter += 1;
+				}
+			}
+		}
+		drop(pt_guard);
+	}
+	drop(guard);
+	counter
 }
 
 pub mod strategy {
