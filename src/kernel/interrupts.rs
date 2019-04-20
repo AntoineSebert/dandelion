@@ -207,7 +207,7 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
 	use super::scheduler::dispatcher::{update, strategy::*};
 
-	let x = update(&first_encountered);
+	let x = update(&process_id);
 	println!("{{");
 	println!("    processes : {}, running : {}", x.0, x.3.is_some());
 	println!("    blocked queue : {}, ready queue : {}", x.1, x.2);

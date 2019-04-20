@@ -45,8 +45,8 @@ pub enum PRIORITY {
 
 pub type Arguments<'a> = &'a [&'a str];
 
-pub type Periodic = (Duration, Duration, Option<RTCDateTime>); // estimated completion time, interval, delay
-pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, delay
+pub type Periodic = (Duration, Duration, RTCDateTime); // estimated completion time, interval, last execution (can be in future for delayed tasks)
+pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, start delay
 
 pub type Info = (State, Duration, RTCDateTime);
 pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY);
@@ -78,6 +78,15 @@ pub fn get_state(task: &Task) -> State { ((task.0).1).0 }
 pub fn get_running_time(task: &Task) -> Duration { ((task.0).1).1 }
 
 pub fn get_creation_time(task: &Task) -> RTCDateTime { ((task.0).1).2 }
+
+pub fn get_estimated_remaining_time(task: &Task) -> Duration {
+	if get_realtime(task).is_none() {
+		Duration::new(0, 0)
+	} else {
+		// do stuff
+		Duration::new(0, 0)
+	}
+}
 
 /// Mutators
 

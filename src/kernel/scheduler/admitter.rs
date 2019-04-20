@@ -33,6 +33,7 @@ fn get_slot() -> Option<usize> {
 
 /// Figure out if the candidate is schedulable in the current context.
 fn is_schedulable(constraint: Constraint) -> bool {
+	// https://fr.wikipedia.org/wiki/Rate-monotonic_scheduling
 	if constraint.0.is_none() {
 
 	} else {

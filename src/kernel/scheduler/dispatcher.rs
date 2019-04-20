@@ -30,7 +30,7 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 }
 
 pub mod strategy {
-	use crate::kernel::{process::get_priority, scheduler::PROCESS_TABLE};
+	use crate::kernel::{process::{get_priority, get_realtime, get_constraint}, scheduler::PROCESS_TABLE};
 	use spin::Mutex;
 	use arraydeque::ArrayDeque;
 
@@ -52,14 +52,19 @@ pub mod strategy {
 		let mut guard = queue.lock();
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
-			let guard = PROCESS_TABLE[*a as usize].read();
-			let priority_a = get_priority(&(*guard).unwrap());
-			drop(guard);
-			let guard = PROCESS_TABLE[*b as usize].read();
-			let priority_b = get_priority(&(*guard).unwrap());
-			drop(guard);
+			use core::cmp::Ordering::Equal;
 
-			priority_a.partial_cmp(&priority_b).unwrap()
+			let pt_guard = PROCESS_TABLE[*a as usize].read();
+			let priority_a = get_priority(&(*pt_guard).unwrap());
+			drop(pt_guard);
+			let pt_guard = PROCESS_TABLE[*b as usize].read();
+			let priority_b = get_priority(&(*pt_guard).unwrap());
+			drop(pt_guard);
+
+			match priority_a.partial_cmp(&priority_b) {
+				Some(ord) => ord,
+				None => Equal,
+			}
 		});
 		let first_value = Some(*(*guard).front().unwrap());
 
@@ -74,8 +79,57 @@ pub mod strategy {
 		let mut guard = queue.lock();
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
-			// todo
-			core::cmp::Ordering::Equal
+			use core::cmp::Ordering::*;
+			use either::{Right, Left};
+
+			let pt_guard = PROCESS_TABLE[*a as usize].read();
+			let process = (*pt_guard).unwrap();
+			let constraint_a = get_constraint(&process);
+			drop(pt_guard);
+			let pt_guard = PROCESS_TABLE[*b as usize].read();
+			let process = (*pt_guard).unwrap();
+			let constraint_b = get_constraint(&process);
+			drop(pt_guard);
+
+			match (constraint_a.0, constraint_b.0) {
+				(None, None) => match constraint_a.1.partial_cmp(&constraint_b.1) {
+					Some(ord) => ord,
+					None => Equal,
+				},
+				(None, Some(_)) => Less,
+				(Some(_), None) => Greater,
+				(Some(periodicity_a), Some(periodicity_b)) => match (periodicity_a, periodicity_b) {
+					// work in progress !
+					(Right(aperiodic_a), Right(aperiodic_b)) => match aperiodic_a.1.partial_cmp(&aperiodic_b.1) {
+						Some(ord) => ord, // match
+						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
+							Some(ord) => ord,
+							None => Equal,
+						},
+					},
+					(Right(aperiodic_a), Left(periodic_b)) => match aperiodic_a.0.partial_cmp(&periodic_b.1) {
+						Some(ord) => ord, // match
+						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
+							Some(ord) => ord,
+							None => Equal,
+						},
+					},
+					(Left(periodic_a), Right(aperiodic_b)) => match periodic_a.1.partial_cmp(&aperiodic_b.0) {
+						Some(ord) => ord, // match
+						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
+							Some(ord) => ord,
+							None => Equal,
+						},
+					},
+					(Left(periodic_a), Left(periodic_b)) => match periodic_a.2.partial_cmp(&periodic_b.2) {
+						Some(ord) => ord, // match
+						None => match constraint_a.1.partial_cmp(&constraint_b.1) {
+							Some(ord) => ord,
+							None => Equal,
+						},
+					},
+				},
+			}
 		});
 		let first_value = Some(*(*guard).front().unwrap());
 
@@ -89,8 +143,39 @@ pub mod strategy {
 		let mut guard = queue.lock();
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
-			// todo
-			core::cmp::Ordering::Equal
+			use core::cmp::Ordering::*;
+			use either::{Right, Left};
+
+			let pt_guard = PROCESS_TABLE[*a as usize].read();
+			let realtime_a = get_realtime(&(*pt_guard).unwrap());
+			drop(pt_guard);
+			let pt_guard = PROCESS_TABLE[*b as usize].read();
+			let realtime_b = get_realtime(&(*pt_guard).unwrap());
+			drop(pt_guard);
+
+			match (realtime_a, realtime_b) {
+				(None, None) => Equal,
+				(None, Some(_)) => Less,
+				(Some(_), None) => Greater,
+				(Some(periodicity_a), Some(periodicity_b)) => match (periodicity_a, periodicity_b) {
+					(Right(aperiodic_a), Right(aperiodic_b)) => match aperiodic_a.1.partial_cmp(&aperiodic_b.1) {
+						Some(ord) => ord,
+						None => Equal,
+					},
+					(Right(aperiodic_a), Left(periodic_b)) => match aperiodic_a.0.partial_cmp(&periodic_b.1) {
+						Some(ord) => ord,
+						None => Equal,
+					},
+					(Left(periodic_a), Right(aperiodic_b)) => match periodic_a.1.partial_cmp(&aperiodic_b.0) {
+						Some(ord) => ord,
+						None => Equal,
+					},
+					(Left(periodic_a), Left(periodic_b)) => match periodic_a.2.partial_cmp(&periodic_b.2) {
+						Some(ord) => ord,
+						None => Equal,
+					},
+				},
+			}
 		});
 		let first_value = Some(*(*guard).front().unwrap());
 
