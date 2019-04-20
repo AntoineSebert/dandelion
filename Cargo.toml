@@ -47,26 +47,26 @@ is-it-maintained-issue-resolution = { repository = "..." }
 is-it-maintained-open-issues = { repository = "..." }
 
 [dependencies]
-bootloader = { version = "^0.5.1", features = ["map_physical_memory"] }
-volatile = "^0.2.3"
-spin = "^0.4.9"
-uart_16550 = "^0.1.0"
-x86_64 = "^0.5.0"
-pic8259_simple = "^0.1.1"
-pc-keyboard = "^0.3.1"
-integer-sqrt = "^0.1.2"
-cmos = "^0.1.1"
-array-init = "^0.0.4"
+bootloader = { version = "^0.5", features = ["map_physical_memory"] }
+volatile = "^0.2"
+spin = "^0.4"
+uart_16550 = "^0.1"
+x86_64 = "^0.5"
+pic8259_simple = "^0.1"
+pc-keyboard = "^0.3"
+integer-sqrt = "^0.1"
+cmos = { version = "^0.1", git = " https://github.com/AntoineSebert/cmos" }
+array-init = "^0.0"
 arraydeque = { version = "^0.4", default-features = false }
-uluru = "^0.3.0"
-either = { version = "^1.5.1", default-features = false }
+uluru = "^0.3"
+either = { version = "^1.5", default-features = false }
 
 [dependencies.lazy_static]
 version = "^1.0"
 features = ["spin_no_std"]
 
 [dev-dependencies]
-array-init = "^0.0.4"
+array-init = "^0.0"
 
 [package.metadata.bootimage]
 default-target = "x86_64-dandelion.json"
