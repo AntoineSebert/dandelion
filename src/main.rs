@@ -16,6 +16,7 @@ bootable USB
 misc
 	https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
 	let mortal_heroes: String = "your fame";
+	tokei ./src --files
 */
 
 #![cfg_attr(not(test), no_std)]

@@ -35,12 +35,12 @@ fn get_slot() -> Option<usize> {
 fn is_schedulable(constraint: Constraint) -> bool {
 	// https://fr.wikipedia.org/wiki/Rate-monotonic_scheduling
 	if constraint.0.is_none() {
-
+		true
 	} else {
+		use strategy::*;
 
+		rate_monotonic()
 	}
-
-	true
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
@@ -64,4 +64,14 @@ fn admit(constraint: Constraint, code: Runnable, index: usize) {
 	super::increment();
 
 	println!("New process admitted at index {}", index);
+}
+
+pub mod strategy {
+	pub fn rate_monotonic() -> bool {
+		// lock the whole process_table
+		// periodic : eta, interval = interval * eta
+		// aperiodic : eta, deadline = (deadline - eta)
+
+		false
+	}
 }
