@@ -49,7 +49,7 @@ is-it-maintained-open-issues = { repository = "..." }
 [dependencies]
 bootloader = { version = "^0.5", features = ["map_physical_memory"] }
 volatile = "^0.2"
-uart_16550 = "^0.1"
+uart_16550 = "^0.2"
 x86_64 = "^0.5"
 pic8259_simple = "^0.1"
 integer-sqrt = "^0.1"
