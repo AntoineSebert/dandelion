@@ -39,7 +39,7 @@ fn is_schedulable(constraint: Constraint) -> bool {
 	} else {
 		use strategy::*;
 
-		rate_monotonic()
+		rate_monotonic(constraint)
 	}
 }
 
@@ -67,11 +67,56 @@ fn admit(constraint: Constraint, code: Runnable, index: usize) {
 }
 
 pub mod strategy {
-	pub fn rate_monotonic() -> bool {
-		// lock the whole process_table
-		// periodic : eta, interval = interval * eta
-		// aperiodic : eta, deadline = (deadline - eta)
+	use crate::kernel::process::get_estimated_remaining_time;
+use either::Either::{Left, Right};
+	use crate::kernel::process::{Constraint, get_realtime, Task};
+	use spin::RwLockWriteGuard;
+	use crate::kernel::scheduler::PROCESS_TABLE;
+	use arraydeque::ArrayDeque;
+	use num_traits::pow::pow;
 
-		false
+	pub fn rate_monotonic(constraint: Constraint) -> bool {
+		let realtime_tasks: ArrayDeque<[RwLockWriteGuard<Option<Task>>; 256]> = {
+			let mut temp: ArrayDeque<_> = ArrayDeque::new();
+			for element in PROCESS_TABLE.iter() {
+				let guard = element.read();
+				match *guard {
+					Some(v) => if get_realtime(&v).is_some() {
+						match temp.push_back(element.write()) {
+							Ok(()) => {},
+							Err(_) => {}, // capacity error should never happen if PROCESS_TABLE and constraints have the same size
+						}
+					},
+					None => {},
+				}
+				drop(guard);
+			}
+			temp
+		};
+
+		let rate: f64 = {
+			let mut temp = 0.0;
+			for task in realtime_tasks.iter() {
+				temp += match get_realtime(&(task).unwrap()).unwrap() {
+					Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
+					Right(_) => get_estimated_remaining_time(&(task).unwrap()).as_secs() as f64 / 256 as f64,
+				}
+			}
+
+			temp += match constraint.0.unwrap() {
+				Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
+				Right(aperiodic) => aperiodic.0.as_secs() as f64 / 256 as f64,
+			};
+
+			temp
+		};
+
+		let n = realtime_tasks.len();
+
+		for guard in realtime_tasks {
+			drop(guard);
+		}
+
+		rate < (n as f64) * (pow(2.0, 1 / n) - 1.0)
 	}
 }

@@ -17,6 +17,7 @@ misc
 	https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
 	let mortal_heroes: String = "your fame";
 	tokei ./src --files
+	cargo deps --all-deps | dot -Tpng > graph.png
 */
 
 #![cfg_attr(not(test), no_std)]

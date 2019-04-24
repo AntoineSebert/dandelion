@@ -49,7 +49,7 @@ pub type Periodic = (Duration, Duration, RTCDateTime); // estimated completion t
 pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // estimated completion time, deadline, start delay
 
 pub type Info = (State, Duration, RTCDateTime);
-pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY);
+pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY); // put either<_> in periodicity alias
 
 pub type Metadata = (Constraint, Info);
 
@@ -80,11 +80,14 @@ pub fn get_running_time(task: &Task) -> Duration { ((task.0).1).1 }
 pub fn get_creation_time(task: &Task) -> RTCDateTime { ((task.0).1).2 }
 
 pub fn get_estimated_remaining_time(task: &Task) -> Duration {
-	if get_realtime(task).is_none() {
-		Duration::new(0, 0)
-	} else {
-		// do stuff
-		Duration::new(0, 0)
+	use Either::{Left, Right};
+
+	match get_realtime(task) {
+		Some(periodicity) => match periodicity {
+			Left(periodic) => periodic.0 - ((task.0).1).1,
+			Right(aperiodic) => aperiodic.0 - ((task.0).1).1,
+		},
+		None => Duration::new(0, 0)
 	}
 }
 
