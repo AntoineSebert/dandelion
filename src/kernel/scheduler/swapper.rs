@@ -28,13 +28,13 @@ Note that this is only a high-level overview and only one way of doing it. For t
 //fn rsp_update() {}
 //fn pop_register() {}
 
-use crate::kernel::process::{self, MainMemory, State};
 use super::RUNNING;
+use crate::kernel::process::{self, MainMemory, State};
 
 /// Set the value of RUNNING and update the state of the related process if it exists.
 fn set_running(value: Option<u8>) {
-	use process::set_state;
 	use super::PROCESS_TABLE;
+	use process::set_state;
 
 	let mut r_guard = RUNNING.write();
 	*r_guard = value;
@@ -51,7 +51,7 @@ fn set_running(value: Option<u8>) {
 /// Return the value of RUNNING.
 pub fn get_running() -> Option<u8> {
 	let guard = RUNNING.read();
-	let value = (*guard).clone();
+	let value = *guard;
 	drop(guard);
 
 	value
@@ -63,8 +63,8 @@ pub fn get_running() -> Option<u8> {
 /// If the element cannot be placed in BLOCKED_QUEUE, terminated.
 /// Return a tuple containing the old and the new running PIDs if they exist.
 pub fn next() -> (Option<u8>, Option<u8>) {
-	use process::SwapSpace;
 	use super::{queue_push_back, terminate, BLOCKED_QUEUE, READY_QUEUE};
+	use process::SwapSpace;
 
 	let old = get_running();
 
@@ -75,10 +75,10 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 
 	if old.is_some() {
 		let pid = old.unwrap();
-		if queue_push_back(&READY_QUEUE, pid, State::MainMemory(MainMemory::Ready)).is_err() {
-			if queue_push_back(&BLOCKED_QUEUE, pid, State::SwapSpace(SwapSpace::Suspended)).is_err() {
-				terminate(pid);
-			}
+		if queue_push_back(&READY_QUEUE, pid, State::MainMemory(MainMemory::Ready)).is_err()
+			&& queue_push_back(&BLOCKED_QUEUE, pid, State::SwapSpace(SwapSpace::Suspended)).is_err()
+		{
+			terminate(pid);
 		}
 	}
 

@@ -66,9 +66,9 @@ pub fn to_duration(datetime: RTCDateTime) -> Duration {
 	let mut result = Duration::new(datetime.second.into(), 0);
 
 	result += Duration::from_secs((datetime.minute * 60).into());
-	result += Duration::from_secs((datetime.hour as u64 * 3_600).into());
-	result += Duration::from_secs((datetime.day as u64 * 86_400).into());
-	result += Duration::from_secs((datetime.month as u64 * 2_628_000).into());
+	result += Duration::from_secs(u64::from(datetime.hour) * 3_600);
+	result += Duration::from_secs(u64::from(datetime.day) * 86_400);
+	result += Duration::from_secs(u64::from(datetime.month) * 2_628_000);
 	result += Duration::from_secs(datetime.year as u64 * 31_536_000);
 
 	result
@@ -82,14 +82,7 @@ pub fn to_rtcdatetime(duration: Duration) -> RTCDateTime {
 		left as u8
 	};
 	let mut time: u64 = duration.as_secs();
-	let mut result = RTCDateTime {
-		second: 0,
-		minute: 0,
-		hour: 0,
-		day: 0,
-		month: 0,
-		year: 0,
-	};
+	let mut result = RTCDateTime { second: 0, minute: 0, hour: 0, day: 0, month: 0, year: 0 };
 	result.year = apply_divisor(&mut time, 31_536_000) as usize;
 	result.month = apply_divisor(&mut time, 2_628_000);
 	result.day = apply_divisor(&mut time, 86_400);
@@ -105,4 +98,4 @@ pub fn intersect(a: (RTCDateTime, RTCDateTime), b: (RTCDateTime, RTCDateTime)) -
 }
 pub type Datetimespan = (RTCDateTime, RTCDateTime);
 
-pub type TimeboundConstraint = (Datetimespan, Datetimespan, Duration);// (min, max), (current start, current end), duration
+pub type TimeboundConstraint = (Datetimespan, Datetimespan, Duration); // (min, max), (current start, current end), duration

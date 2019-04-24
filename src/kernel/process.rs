@@ -83,11 +83,13 @@ pub fn get_estimated_remaining_time(task: &Task) -> Duration {
 	use Either::{Left, Right};
 
 	match get_realtime(task) {
-		Some(periodicity) => match periodicity {
-			Left(periodic) => periodic.0 - ((task.0).1).1,
-			Right(aperiodic) => aperiodic.0 - ((task.0).1).1,
-		},
-		None => Duration::new(0, 0)
+		Some(periodicity) => {
+			match periodicity {
+				Left(periodic) => periodic.0 - ((task.0).1).1,
+				Right(aperiodic) => aperiodic.0 - ((task.0).1).1,
+			}
+		}
+		None => Duration::new(0, 0),
 	}
 }
 

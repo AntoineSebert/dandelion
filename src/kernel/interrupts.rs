@@ -180,7 +180,7 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 	use pc_keyboard::{
 		layouts::Us104Key,
 		DecodedKey::{RawKey, Unicode},
-		Keyboard, ScancodeSet1, HandleControl
+		HandleControl, Keyboard, ScancodeSet1,
 	};
 
 	lazy_static! {
@@ -205,7 +205,7 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 }
 
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	use super::scheduler::dispatcher::{update, strategy::*};
+	use super::scheduler::dispatcher::{strategy::*, update};
 
 	let x = update(&process_id);
 	println!("{{");

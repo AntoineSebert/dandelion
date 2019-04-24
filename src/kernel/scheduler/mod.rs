@@ -86,12 +86,10 @@ pub fn terminate(pid: u8) -> bool {
 	match state {
 		State::MainMemory(MainMemory::Running) => {
 			let guard = RUNNING.read();
-			if (*guard).is_some() {
-				if (*guard).unwrap() == pid {
-					let mut wguard = RUNNING.write();
-					(*wguard).take();
-					drop(wguard);
-				}
+			if (*guard).is_some() && (*guard).unwrap() == pid {
+				let mut wguard = RUNNING.write();
+				(*wguard).take();
+				drop(wguard);
 			}
 			drop(guard);
 		}
@@ -117,7 +115,7 @@ pub fn terminate(pid: u8) -> bool {
 
 pub fn get_process_count() -> u8 {
 	let guard = PROCESS_COUNT.read();
-	let value = (*guard).clone();
+	let value = *guard;
 	drop(guard);
 	value
 }

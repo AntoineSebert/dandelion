@@ -16,7 +16,7 @@ pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
 	}
 
 	admit(constraint, code, slot.unwrap());
-	return slot;
+	slot
 }
 
 /// Browse PROCESS_TABLE and return the first available slot if it exists.
@@ -67,27 +67,25 @@ fn admit(constraint: Constraint, code: Runnable, index: usize) {
 }
 
 pub mod strategy {
-	use crate::kernel::process::get_estimated_remaining_time;
-use either::Either::{Left, Right};
-	use crate::kernel::process::{Constraint, get_realtime, Task};
-	use spin::RwLockWriteGuard;
-	use crate::kernel::scheduler::PROCESS_TABLE;
+	use crate::kernel::{
+		process::{get_estimated_remaining_time, get_realtime, Constraint, Task},
+		scheduler::PROCESS_TABLE,
+	};
 	use arraydeque::ArrayDeque;
+	use either::Either::{Left, Right};
 	use num_traits::pow::pow;
+	use spin::RwLockWriteGuard;
 
 	pub fn rate_monotonic(constraint: Constraint) -> bool {
 		let realtime_tasks: ArrayDeque<[RwLockWriteGuard<Option<Task>>; 256]> = {
 			let mut temp: ArrayDeque<_> = ArrayDeque::new();
 			for element in PROCESS_TABLE.iter() {
 				let guard = element.read();
-				match *guard {
-					Some(v) => if get_realtime(&v).is_some() {
-						match temp.push_back(element.write()) {
-							Ok(()) => {},
-							Err(_) => {}, // capacity error should never happen if PROCESS_TABLE and constraints have the same size
-						}
-					},
-					None => {},
+				if let Some(v) = *guard {
+					if get_realtime(&v).is_some() {
+						// capacity error should never happen if PROCESS_TABLE and realtime_tasks have the same size
+						if let Ok(()) = temp.push_back(element.write()) {}
+					}
 				}
 				drop(guard);
 			}
@@ -99,13 +97,13 @@ use either::Either::{Left, Right};
 			for task in realtime_tasks.iter() {
 				temp += match get_realtime(&(task).unwrap()).unwrap() {
 					Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
-					Right(_) => get_estimated_remaining_time(&(task).unwrap()).as_secs() as f64 / 256 as f64,
+					Right(_) => get_estimated_remaining_time(&(task).unwrap()).as_secs() as f64 / 256_f64,
 				}
 			}
 
 			temp += match constraint.0.unwrap() {
 				Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
-				Right(aperiodic) => aperiodic.0.as_secs() as f64 / 256 as f64,
+				Right(aperiodic) => aperiodic.0.as_secs() as f64 / 256_f64,
 			};
 
 			temp
