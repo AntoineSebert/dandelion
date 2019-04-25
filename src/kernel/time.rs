@@ -66,16 +66,17 @@ pub fn to_duration(datetime: RTCDateTime) -> Duration {
 	let mut result = Duration::new(datetime.second.into(), 0);
 
 	result += Duration::from_secs((datetime.minute * 60).into());
-	result += Duration::from_secs(u64::from(datetime.hour) * 3_600);
-	result += Duration::from_secs(u64::from(datetime.day) * 86_400);
-	result += Duration::from_secs(u64::from(datetime.month) * 2_628_000);
-	result += Duration::from_secs(datetime.year as u64 * 31_536_000);
+	result += Duration::from_secs(
+		(u64::from(datetime.hour) * 3_600)
+			+ (u64::from(datetime.day) * 86_400)
+			+ (u64::from(datetime.month) * 2_628_000)
+			+ (datetime.year as u64 * 31_536_000),
+	);
 
 	result
 }
 
 pub fn to_rtcdatetime(duration: Duration) -> RTCDateTime {
-	// change &u64 to &Duration
 	let apply_divisor = |time: &mut u64, divisor: u64| -> u8 {
 		let left = *time / divisor;
 		*time %= divisor;
@@ -93,9 +94,6 @@ pub fn to_rtcdatetime(duration: Duration) -> RTCDateTime {
 	result
 }
 
-pub fn intersect(a: (RTCDateTime, RTCDateTime), b: (RTCDateTime, RTCDateTime)) -> bool {
-	(a.0 < b.0 && a.1 <= b.0) || (b.1 <= a.0 && b.1 < a.1)
-}
 pub type Datetimespan = (RTCDateTime, RTCDateTime);
 
-pub type TimeboundConstraint = (Datetimespan, Datetimespan, Duration); // (min, max), (current start, current end), duration
+pub fn intersect(a: Datetimespan, b: Datetimespan) -> bool { (a.0 < b.0 && a.1 <= b.0) || (b.1 <= a.0 && b.1 < a.1) }

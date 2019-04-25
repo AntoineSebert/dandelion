@@ -94,6 +94,7 @@ pub mod strategy {
 
 		let rate: f64 = {
 			let mut temp = 0.0;
+
 			for task in realtime_tasks.iter() {
 				temp += match get_realtime(&(task).unwrap()).unwrap() {
 					Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
