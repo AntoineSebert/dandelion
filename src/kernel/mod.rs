@@ -16,3 +16,5 @@ pub mod acpi;
 pub mod interrupts;
 pub mod process;
 pub mod time;
+pub mod serial;
+pub mod vga_buffer;

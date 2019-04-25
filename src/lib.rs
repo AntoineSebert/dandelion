@@ -10,8 +10,6 @@
 #![feature(core_intrinsics)]
 
 pub mod kernel;
-pub mod serial;
-pub mod vga_buffer;
 
 use x86_64::instructions::{hlt, port::Port};
 
