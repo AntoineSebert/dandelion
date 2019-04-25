@@ -28,24 +28,6 @@ maintenance = { status = "experimental" }
 #
 # If a `repository` key is required, this refers to a repository in `user/repo` format.
 
-[badges]
-
-# Appveyor: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default); `id` is optional; you can specify the appveyor project id if you want to use that instead. `project_name` is optional; use when the repository name differs from the appveyor project name.
-appveyor = { repository = "...", branch = "master", service = "github" }
-# Travis CI: `repository` in format "<user>/<project>" is required. `branch` is optional; default is `master`
-travis-ci = { repository = "...", branch = "master" }
-# Circle CI: `repository` is required. `branch` is optional; default is `master`
-circle-ci = { repository = "...", branch = "master" }
-# Codecov: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default)
-codecov = { repository = "...", branch = "master", service = "github" }
-# Coveralls: `repository` is required. `branch` is optional; default is `master` `service` is optional; valid values are `github` (default)
-coveralls = { repository = "...", branch = "master", service = "github" }
-
-# Is it maintained resolution time: `repository` is required.
-is-it-maintained-issue-resolution = { repository = "..." }
-# Is it maintained percentage of open issues: `repository` is required.
-is-it-maintained-open-issues = { repository = "..." }
-
 [dependencies]
 bootloader = { version = "^0.5", features = ["map_physical_memory"] }
 volatile = "^0.2"
@@ -59,14 +41,13 @@ pc-keyboard = "^0.5"
 spin = "^0.5"
 arraydeque = { version = "^0.4", default-features = false }
 either = { version = "^1.5", default-features = false }
-menu = "0.2"
 
 [dependencies.num-traits]
 version = "0.2"
 default-features = false
 
 [dependencies.lazy_static]
-version = "^1.0"
+version = "^1.3"
 features = ["spin_no_std"]
 
 [dev-dependencies]
