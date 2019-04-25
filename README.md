@@ -1,7 +1,7 @@
 <p align=center><img src=resources/dandelion_logo.svg alt=Dandelion width=200></p>
 
 
-[![License: CC BY-NC-SA 
+[![License: CC BY-NC-SA
 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 # 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
@@ -143,103 +143,42 @@ The documentation for this repository can be found at https://github.com/Antoine
 
 ## File hierarchy
 
---{root}								- dandelion root directory.
-  +--.gitignore							- elements ignored by *git*
-  +--CODEOWNERS.txt					- responsible devs
-  +--.CODE_OF_CONDUCT.md			- code of conduct for the project
-  +--CONTRIBUTING.md				- contribution guidelines
-  +--LICENSE.md						- license CC BY-NC-SA 4.0
-  +--PULL_REQUEST_TEMPLATE.md		- pull request template
-  +--README.md						- this file
-  +--.github/							- Github specific files
-  |  +--ISSUE_TEMPLATE/					- templates
-  |    +--bug_report.md						- bug report template
-  |    +--feature_request.md				- feature request
-  +--documentation/						- documentation files
-  |  +--html/							- HTML documentation files
-  |  +--markdown/						- Markdown documentation files
-  +--documents/							- miscellaneous documents
-  |  +--references.bib						- bibliography
-  |  +--palette.md						- project's visual identity
-  |  +--diagrams/						- project UML diagrams
-  |  +--palette.assets/
-  |  +--submission_1/
-  |  |  +--ethics_form.pdf
-  |  |  +--project_proposal.pdf
-  |  |  +--project_specification.md
-  |  |  +--project_specification.pdf
-  |  +--submission_2/
-  |  |  +--literature_review.md
-  |  |  +--literature_review.pdf
-  |  |  +--literature_review_draft_core.md
-  |  |  +--literature_review_draft_optional.md
-  |  +--submission_3/
-  |  |  +--requirements_analysis.md
-  |  |  +--requirements_analysis.pdf
-  |  +--submission_4/
-  |  |  +--poster.heif
-  |  |  +--poster.png
-  |  |  +--poster.tiff
-  |  |  +--presentation
-  |  +--submission_5/
-  |     +--final_report.pdf
-  +--lectures/
-  |  +--L1.md
-  |  +--L2.md
-  |  +--L3.md
-  |  +--L4.md
-  |  +--L5.md
-  |  +--L6.md
-  +--meetings/
-  |  +--sample.md
-  |  +--2018-09/
-  |  |  +--27.md
-  |  +--2018-10/
-  |  |  +--04.md
-  |  |  +--11.md
-  |  |  +--18.md
-  |  |  +--25.md
-  |  +--2018-11/
-  |  |  +--01.md
-  |  |  +--08.md
-  |  |  +--15.md
-  |  |  +--22.md
-  |  |  +--29.md
-  |  +--2018-12/
-  |  |  +--06.md
-  |  |  +--13.md
-  |  +--2019-01/
-  |  +--2019-02/
-  |  +--2019-03/
-  |  +--2019-04/
-  +--resources/
-  |  +--dandelion_logo.png
-  |  +--dandelion_logo.svg
-  +--src/
-  |  +--kernel/
-  |  |  +--core/
-  |  |  +-optional/
-  |  |     +--filesystem/
-  |  |     |  +--ipc_mechanism/
-  |  |     |  |  +--optional/
-  |  |     |  |  |  +--pipes/
-  |  |     |  |  |  | +--named_pipes/
-  |  |     |  |  |  +--queues/
-  |  |     |  |  |  +--shared_memory/
-  |  |     |  |  +--signals/
-  |  |     |  |  +--sockets/
-  |  |     |  +--scheduler/
-  |  |     |  +--shell/
-  |  |     |  |  +--commands/
-  |  |     |  |  +--interpreter/
-  |  |     |  +--virtual_memory_manager/
-  |  |     +--io/
-  |  |        +--keyboard/
-  |  |        +--screen/
-  |  |        +--speaker/
-  |  +--modules/
-  +--target/
-  +--tests/
+```
+--src/
+  +--bin/
+  |  +--test-basic-boot.rs
+  |  +--test-exception-breakpoint.rs
+  |  +--test-exception-double-fault-stack-overflow.rs
+  |  +--test-firm-deadline-exception.rs
+  |  +--test-hard-deadline-exception.rs
+  |  +--test-panic.rs
+  |  +--test-soft-deadline-exception.rs
+  |  +--test-task-remaining-exception.rs
+  |  +--test-time-remaining-exception.rs
+  +--kernel/
+  |  +--ipc/
+  |  |  +--mod.rs
+  |  +--scheduler/
+  |  |  +--mod.rs
+  |  |  +--admitter.rs
+  |  |  +--dispatcher.rs
+  |  |  +--swapper.rs
+  |  +--shell/
+  |  |  +--mod.rs
+  |  +--vmm/
+  |  |  +--mod.rs
+  |  |  +--gdt.rs
+  |  |  +--memory.rs
+  |  +--mod.rs
+  |  +--acpi.rs
+  |  +--interrupt.rs
+  |  +--process.rs
+  |  +--serial.rs
+  |  +--time.rs
+  |  +--vga_buffer.rs
+  +--lib.rs
+  +--main.rs
+```
 
 ## Contributing
 
@@ -247,7 +186,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/AntoineSebert/dandelion/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/AntoineSebert/dandelion/tags).
 
 ## Authors
 
