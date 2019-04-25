@@ -1,6 +1,6 @@
 [package]
 name = "dandelion"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Antoine \"Anthony\" Sébert <antoine.sb@orange.fr>"]
 edition = "2018"
 publish = false
