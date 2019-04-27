@@ -25,7 +25,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "bootloader"
-version = "0.5.3"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "fixedvec 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -60,7 +60,7 @@ version = "0.2.0"
 dependencies = [
  "array-init 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "arraydeque 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "bootloader 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bootloader 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cmos 0.1.1 (git+https://github.com/AntoineSebert/cmos)",
  "either 1.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "integer-sqrt 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -351,7 +351,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum arraydeque 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)" = "f0ffd3d69bd89910509a5d31d1f1353f38ccffdd116dd0099bbd6627f7bd8ad8"
 "checksum bit_field 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ed8765909f9009617974ab6b7d332625b320b33c326b1e9321382ef1999b5d56"
 "checksum bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "228047a76f468627ca71776ecdebd732a3423081fcf5125585bcd7c49886ce12"
-"checksum bootloader 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a8f7c11b70b5781deec899276f7d67611eaf296a8bd7dcc9b9d37c71a5389c52"
+"checksum bootloader 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8654b1ebbd38d2a8687a451ad53466d01b5edc9d75ec63d676525a6103d77151"
 "checksum cc 1.0.35 (registry+https://github.com/rust-lang/crates.io-index)" = "5e5f3fee5eeb60324c2781f1e41286bdee933850fff9b3c672587fed5ec58c83"
 "checksum cmos 0.1.1 (git+https://github.com/AntoineSebert/cmos)" = "<none>"
 "checksum cpuio 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "22b8e308ccfc5acf3b82f79c0eac444cf6114cb2ac67a230ca6c177210068daa"
