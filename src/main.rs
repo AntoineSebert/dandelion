@@ -20,6 +20,7 @@ misc
 	cargo deps --all-deps | dot -Tpng > graph.png
 */
 
+#![allow(dead_code)]
 #![cfg_attr(not(test), no_std)]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
@@ -30,39 +31,21 @@ misc
 #![feature(core_intrinsics)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
-use core::{
-	alloc::{GlobalAlloc, Layout},
-	panic::PanicInfo,
-	ptr::null_mut,
-};
+use core::panic::PanicInfo;
 use dandelion::{hlt_loop, kernel, println};
-use x86_64::instructions::interrupts;
-
-struct MyAllocator;
-
-unsafe impl GlobalAlloc for MyAllocator {
-	unsafe fn alloc(&self, _layout: Layout) -> *mut u8 { null_mut() }
-
-	unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
-}
-
-#[global_allocator]
-static A: MyAllocator = MyAllocator;
+use kernel::{acpi, process, interrupts, scheduler, vmm};
+use x86_64::instructions;
 
 // OS entry point override
 entry_point!(kernel_main);
 
 #[cfg(not(test))]
-#[allow(clippy::print_literal)]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use kernel::{
-		process::{sample_runnable_2, PRIORITY::*},
-		scheduler::{admitter::request, process_exists, run, terminate},
-	};
+	use process::{sample_runnable_2, PRIORITY::*};
+	use scheduler::{admitter::request, process_exists, run, terminate};
 
 	println!("Hello World{}", "!");
 	initialize_components();
-	unsafe { assert!(A.alloc(Layout::new::<u32>()).is_null()) };
 	map_memory(boot_info);
 
 	/* scheduler */
@@ -82,9 +65,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	hlt_loop();
 }
 
-#[allow(dead_code)]
 fn map_memory(boot_info: &'static BootInfo) {
-	use kernel::vmm::memory::{create_example_mapping, init, init_frame_allocator};
+	use vmm::memory::{create_example_mapping, init, init_frame_allocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
 	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
@@ -99,13 +81,9 @@ fn map_memory(boot_info: &'static BootInfo) {
 	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 }
 
-#[allow(dead_code)]
 fn initialize_components() {
-	use kernel::{
-		acpi,
-		interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt, PICS},
-		vmm::gdt,
-	};
+	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt, PICS};
+	use vmm::gdt;
 
 	unsafe {
 		match acpi::init() {
@@ -115,9 +93,9 @@ fn initialize_components() {
 	};
 
 	gdt::init();
-	kernel::interrupts::init();
+	interrupts::init();
 	unsafe { PICS.lock().initialize() };
-	interrupts::enable();
+	instructions::interrupts::enable();
 	change_rtc_interrupt_rate(15);
 	enable_rtc_interrupt();
 }
