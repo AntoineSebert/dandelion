@@ -29,10 +29,10 @@
 - :sunflower: [Running the tests]
   - :tulip: [End to end tests]
   - :blossom: [Coding style tests]
-- :herb: [Deployment]
+- :herb: [Deployment](# deployment)
 - :maple_leaf: [Built tool](#build tool)
 - 🌲 [Documentation](#documentation)
-- 🌹 [File hierarchy]
+- 🌹 [File hierarchy](#file hierarchy)
 - :seedling: [Contributing](#contributing)
 - :cactus: [Versioning](#versioning)
 - :leaves: [Authors](#authors)
@@ -54,21 +54,7 @@ Dandelion is a hard time-sharing RTOS with a three-level scheduler
   - swapper (medium-term) : swaps in and out the processes, depending on their activity
   - dispatcher (short-term) : decide which ready process to run and to which processor/core to assign
 
-### EPSRC / AHRC principles of robotics
-
-1. Robots should not be designed solely or primarily to kill or harm humans.
-2. Humans, not robots, are responsible agents. Robots are tools designed to achieve human goals.
-3. Robots should be designed in ways that assure their safety and security.
-4. Robots are artifacts; they should not be designed to exploit vulnerable users by evoking an emotional response or dependency. It should always be possible to tell a robot from a human.
-5. It should always be possible to find out who is legally responsible for a robot.
-
 ## Technical choices
-
-### File formats
-
-* configuration files : toml
-* data exchange format : JSON
-* documents format : Markdown
 
 ## Getting started
 
