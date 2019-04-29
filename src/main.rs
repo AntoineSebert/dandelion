@@ -24,7 +24,6 @@ misc
 #![cfg_attr(not(test), no_std)]
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(unused_imports))]
-#![deny(clippy::all)]
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
@@ -33,7 +32,7 @@ misc
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, kernel, println};
-use kernel::{acpi, process, interrupts, scheduler, vmm};
+use kernel::{acpi, interrupts, process, scheduler, vmm};
 use x86_64::instructions;
 
 // OS entry point override

@@ -146,6 +146,8 @@ impl Write for Writer {
  * Macros
  */
 
+// create timed_print & timed_println macros
+
 #[macro_export]
 macro_rules! print {
 	($($arg:tt)*) => ($crate::kernel::vga_buffer::_print(format_args!($($arg)*)));
@@ -173,6 +175,7 @@ pub fn _print(args: Arguments) {
 #[cfg(test)]
 mod test {
 	use super::*;
+
 	fn construct_writer() -> Writer {
 		use std::boxed::Box;
 

@@ -39,6 +39,8 @@ pub mod interrupt_indexes {
 		PrimaryAta,
 		SecondaryAta,
 	}
+	/// These interrupts are not actually part of the PIC, but PIC_2_OFFSET is used to calculate the offset of the
+	/// interrupts within the IDT.
 	#[derive(Debug, Clone, Copy)]
 	#[repr(u8)]
 	pub enum RealTime {
@@ -171,7 +173,6 @@ extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFra
 // hardware
 
 extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	// wake up short-term scheduler
 	//print!(".");
 	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
