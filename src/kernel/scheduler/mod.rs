@@ -74,39 +74,39 @@ pub fn process_exists(pid: u8) -> bool {
 /// Terminate a job
 /// Returns true if the process exists and has been successfully terminated, false otherwise.
 pub fn terminate(pid: u8) -> bool {
-	use super::process::get_state;
+	if process_exists(pid) {
+		use super::process::{get_state, set_state};
 
-	if !process_exists(pid) {
-		return false;
-	}
-
-	let mut pt_guard = PROCESS_TABLE[pid as usize].write(); // lock process in process table
-	let state = get_state(pt_guard.as_ref().unwrap());
-	//((pt_guard.as_ref().unwrap().0).1).0 = State::Limbo(Limbo::Terminated); // set process state to terminated
-	match state {
-		State::MainMemory(MainMemory::Running) => {
-			let guard = RUNNING.read();
-			if (*guard).is_some() && (*guard).unwrap() == pid {
-				let mut wguard = RUNNING.write();
-				(*wguard).take();
-				drop(wguard);
+		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
+		let state = get_state(pt_guard.as_ref().unwrap());
+		set_state(pt_guard.as_mut().unwrap(), State::Limbo(Limbo::Terminated));
+		match state {
+			State::MainMemory(MainMemory::Running) => {
+				let guard = RUNNING.read();
+				if (*guard).is_some() && (*guard).unwrap() == pid {
+					let mut wguard = RUNNING.write();
+					(*wguard).take();
+					drop(wguard);
+				}
+				drop(guard);
 			}
-			drop(guard);
-		}
-		State::MainMemory(MainMemory::Ready) => {
-			queue_remove(&READY_QUEUE, pid);
-		}
-		State::SwapSpace(_) => {
-			queue_remove(&BLOCKED_QUEUE, pid);
-		}
-		_ => {}
-	};
-	*pt_guard = None;
-	drop(pt_guard);
+			State::MainMemory(MainMemory::Ready) => {
+				queue_remove(&READY_QUEUE, pid);
+			}
+			State::SwapSpace(_) => {
+				queue_remove(&BLOCKED_QUEUE, pid);
+			}
+			_ => {}
+		};
+		*pt_guard = None;
+		drop(pt_guard);
 
-	decrement();
+		decrement();
 
-	true
+		true
+	} else {
+		false
+	}
 }
 
 /*
