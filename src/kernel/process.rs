@@ -113,22 +113,15 @@ pub fn sample_runnable_2(args: Arguments) -> u64 {
 /// Sample job streaming prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
 /// On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
 #[allow(dead_code)]
-fn sample_runnable(limit: u64, output: bool /* args: Arguments */) {
-	use crate::{println, serial_println};
+fn sample_runnable(_args: Arguments) {
+	use crate::println;
+	use core::u64::MAX;
 	use integer_sqrt::IntegerSquareRoot;
 
-	// arg 0 is name
-	// arg 1 is --limit=number
-	// arg 2 is output=true/false
-
-	if output {
-		println!("2");
-	} else {
-		serial_println!("2");
-	}
+	println!("2");
 	let mut candidate: u64 = 3;
 	loop {
-		if limit < candidate {
+		if candidate == MAX {
 			break;
 		}
 		let mut iterator = 3;
@@ -144,11 +137,7 @@ fn sample_runnable(limit: u64, output: bool /* args: Arguments */) {
 			iterator += 2;
 		}
 		if is_prime {
-			if output {
-				println!("{}", candidate);
-			} else {
-				serial_println!("{}", candidate);
-			}
+			println!("{}", candidate);
 		}
 		candidate += 2;
 	}
