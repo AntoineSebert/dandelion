@@ -12,8 +12,11 @@ use spin::Mutex;
 pub fn update(strategy: &Fn(&Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8>) -> (u8, usize, usize, Option<u8>) {
 	if 0 < queue_size(&READY_QUEUE) {
 		terminator(&READY_QUEUE);
-		terminator(&BLOCKED_QUEUE);
 		strategy(&READY_QUEUE);
+	}
+
+	if 0 < queue_size(&BLOCKED_QUEUE) {
+		terminator(&BLOCKED_QUEUE);
 	}
 
 	global_info()
