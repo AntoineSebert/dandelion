@@ -65,11 +65,11 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 }
 
 fn map_memory(boot_info: &'static BootInfo) {
-	use vmm::memory::{create_example_mapping, init, init_frame_allocator};
+	use vmm::memory::{create_example_mapping, init, BootInfoFrameAllocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
 	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
-	let mut frame_allocator = init_frame_allocator(&boot_info.memory_map);
+	let mut frame_allocator = BootInfoFrameAllocator::init(&boot_info.memory_map);
 
 	// map a previously unmapped page
 	let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
