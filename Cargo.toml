@@ -13,10 +13,27 @@ categories = ["embedded", "no-std"]
 license = "CC-BY-NC-SA-4.0"
 maintenance = { status = "experimental" }
 
+[[test]]
+name = "panic_handler"
+harness = false
+
+[[test]]
+name = "stack_overflow"
+harness = false
+
 #[doc]
 #https://doc.rust-lang.org/rustdoc
 
 [package.metadata.bootimage]
+test-args = [
+	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
+	"-serial", "mon:stdio",
+	"-display", "none"
+]
+run-args = [
+	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "mon:stdio"
+]
+test-success-exit-code = 33
 default-target = "x86_64-dandelion.json"
 
 [dependencies]
@@ -55,3 +72,9 @@ default-features = false
 
 [dev-dependencies]
 array-init = "^0.0"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
