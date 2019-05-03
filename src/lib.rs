@@ -26,4 +26,21 @@ pub fn hlt_loop() -> ! {
 	}
 }
 
+#[cfg(test)]
+entry_point!(test_kernel_main);
+
+/// Entry point for `cargo xtest`
+#[cfg(test)]
+fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
+	init();
+	test_main();
+	hlt_loop();
+}
+
+#[cfg(test)]
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+	test_panic_handler(info)
+}
+
 // environment variables ?

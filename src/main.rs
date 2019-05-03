@@ -14,51 +14,56 @@
 //!		cargo deps --all-deps | dot -Tpng > graph.png
 //!		https://perf.rust-lang.org/
 
-#![allow(dead_code)]
-#![cfg_attr(not(test), no_std)]
-#![cfg_attr(not(test), no_main)]
-#![cfg_attr(test, allow(unused_imports))]
+#![no_std]
+#![no_main]
+#![test_runner(dandelion::test_runner)]
+#![reexport_test_harness_main = "test_main"]
+
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
 #![feature(core_intrinsics)]
+#![feature(custom_test_frameworks)]
 
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, kernel, println};
 use kernel::{acpi, interrupts, process, scheduler, vmm};
-use x86_64::instructions;
 
-// OS entry point override.of
-entry_point!(kernel_main);
+entry_point!(kernel_main); // OS entry point override.
 
 /// Entry point of the OS.
-/// Initialize the kernel components and runs processes.
+/// Initialize the kernel components and launch the user space.
 /// Infinite loop at the end.
-#[cfg(not(test))]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	use process::{sample_runnable_2, PRIORITY::*};
-	use scheduler::{admitter::request, process_exists, run, terminate};
 
 	println!("Hello World{}", "!");
 	initialize_components();
 	map_memory(boot_info);
 
-	/* scheduler */
-	{
-		println!("process 0 exists ? {}", process_exists(0));
-		request((None, MEDIUM), sample_runnable_2);
-		println!("process 0 exists ? {}", process_exists(0));
+	#[cfg(test)]
+	test_main();
 
-		let result = run();
-		println!("Processed finished with code : {}", result);
-
-		println!("removing process 0...{}", terminate(0));
-		println!("process 0 exists ? {}", process_exists(0));
-	}
+	user_space();
 
 	println!("It did not crash!");
 	hlt_loop();
+}
+
+/// Schedule and run the user processes.
+fn user_space() {
+	use process::{sample_runnable_2, PRIORITY::*};
+	use scheduler::{admitter::request, process_exists, run, terminate};
+
+	println!("process 0 exists ? {}", process_exists(0));
+	request((None, MEDIUM), sample_runnable_2);
+	println!("process 0 exists ? {}", process_exists(0));
+
+	let result = run();
+	println!("Processed finished with code : {}", result);
+
+	println!("removing process 0...{}", terminate(0));
+	println!("process 0 exists ? {}", process_exists(0));
 }
 
 /// Creates a mapper and a frame allocator.
@@ -106,4 +111,10 @@ fn initialize_components() {
 fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
 	hlt_loop();
+}
+
+#[cfg(test)]
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+	dandelion::test_panic_handler(info)
 }
