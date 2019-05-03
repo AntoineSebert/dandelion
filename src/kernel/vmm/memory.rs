@@ -63,7 +63,7 @@ pub fn create_example_mapping(
 /// A FrameAllocator that always returns `None`.
 pub struct EmptyFrameAllocator;
 
-impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
+unsafe impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
 	fn allocate_frame(&mut self) -> Option<PhysFrame> { None }
 }
 
@@ -91,7 +91,7 @@ impl BootInfoFrameAllocator {
 	}
 }
 
-impl FrameAllocator<Size4KiB> for BootInfoFrameAllocator {
+unsafe impl FrameAllocator<Size4KiB> for BootInfoFrameAllocator {
 	fn allocate_frame(&mut self) -> Option<PhysFrame> {
 		let frame = self.usable_frames().nth(self.next);
 		self.next += 1;
