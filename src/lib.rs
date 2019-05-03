@@ -2,7 +2,6 @@
 #![cfg_attr(test, no_main)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
-
 #![feature(abi_x86_interrupt)]
 #![feature(asm)]
 #![feature(trait_alias)]
@@ -11,10 +10,10 @@
 
 pub mod kernel;
 
-use core::panic::PanicInfo;
-use x86_64::instructions;
 #[cfg(test)]
 use bootloader::{entry_point, BootInfo};
+use core::panic::PanicInfo;
+use x86_64::instructions;
 
 pub fn init() {
 	use kernel::{interrupts, vmm::gdt};
@@ -81,8 +80,6 @@ fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
 
 #[cfg(test)]
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-	test_panic_handler(info)
-}
+fn panic(info: &PanicInfo) -> ! { test_panic_handler(info) }
 
 // environment variables ?

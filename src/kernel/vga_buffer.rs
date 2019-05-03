@@ -3,14 +3,17 @@
  * @date	20/01/2019
  */
 
+#[cfg(test)]
+use crate::{serial_print, serial_println};
 use core::fmt::{self, Arguments, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
 use Color::*;
-#[cfg(test)]
 
 lazy_static! {
+	/// A global `Writer` instance that can be used for printing to the VGA text buffer.
+	/// Used by the `print!` and `println!` macros.
 	pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
 		column_position: 0,
 		color_code: ColorCode::new(LightGreen, Black),

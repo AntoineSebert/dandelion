@@ -2,11 +2,11 @@
 #![no_main]
 #![feature(panic_info_message)]
 
-use dandelion::{exit_qemu, serial_print, serial_println, QemuExitCode};
 use core::{
 	fmt::{self, Write},
 	panic::PanicInfo,
 };
+use dandelion::{exit_qemu, serial_print, serial_println, QemuExitCode};
 
 const MESSAGE: &str = "Example panic message from panic_handler test";
 const PANIC_LINE: u32 = 17; // adjust this when moving the `panic!` call

@@ -4,8 +4,8 @@
 #![test_runner(dandelion::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-use dandelion::{println, serial_print, serial_println};
 use core::panic::PanicInfo;
+use dandelion::{println, serial_print, serial_println};
 
 #[no_mangle] // don't mangle the name of this function
 pub extern "C" fn _start() -> ! {
@@ -15,9 +15,7 @@ pub extern "C" fn _start() -> ! {
 }
 
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-	dandelion::test_panic_handler(info)
-}
+fn panic(info: &PanicInfo) -> ! { dandelion::test_panic_handler(info) }
 
 #[test_case]
 fn test_println() {

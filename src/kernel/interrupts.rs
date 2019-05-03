@@ -5,7 +5,7 @@
 
 //#![cfg(not(windows))]
 
-use crate::{kernel::vmm::gdt, hlt_loop, print, println};
+use crate::{hlt_loop, kernel::vmm::gdt, print, println};
 use interrupt_indexes::{Hardware::*, RealTime::*};
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;

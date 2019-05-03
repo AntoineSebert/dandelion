@@ -22,7 +22,6 @@
 #![no_main]
 #![test_runner(dandelion::test_runner)]
 #![reexport_test_harness_main = "test_main"]
-
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
@@ -40,7 +39,6 @@ entry_point!(kernel_main); // OS entry point override.
 /// Initialize the kernel components and launch the user space.
 /// Infinite loop at the end.
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-
 	println!("Hello World{}", "!");
 	initialize_components();
 	map_memory(boot_info);
@@ -115,6 +113,4 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[cfg(test)]
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-	dandelion::test_panic_handler(info)
-}
+fn panic(info: &PanicInfo) -> ! { dandelion::test_panic_handler(info) }
