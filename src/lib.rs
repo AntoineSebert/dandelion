@@ -15,6 +15,11 @@ use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use x86_64::instructions;
 
+#[cfg(test)]
+entry_point!(test_kernel_main); // OS entry point override for tests.
+
+/// Initialize the ACPI, the GDT,the IDT and the PICS.
+/// Enables the interrupts and changes RTC interrupt rate.
 pub fn init() {
 	use kernel::{interrupts, vmm::gdt};
 
@@ -58,19 +63,19 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 
 /// Halts the CPU until an interrupt occurs.
 /// The program remains idle.
-/// Brøther may I have some lööps ?
 pub fn hlt_loop() -> ! {
 	use instructions::hlt;
 
+	// Brøther may I have some lööps ?
 	loop {
 		hlt();
 	}
 }
 
-#[cfg(test)]
-entry_point!(test_kernel_main);
+/// Runs all the tests.
+pub fn test_runner(tests: &[&dyn Fn()]) {
 
-/// Entry point for `cargo xtest`
+/// Entry point for `cargo xtest`.
 #[cfg(test)]
 fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
 	init();
@@ -78,8 +83,7 @@ fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
 	hlt_loop();
 }
 
+/// Calls `test_panic_handler(&PanicInfo)` in case of kernel panic.
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! { test_panic_handler(info) }
-
-// environment variables ?

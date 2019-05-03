@@ -1,6 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	22/03/2019
- */
+// https://wiki.osdev.org/ACPI
 
 pub unsafe fn init() -> Result<(), ()> { Ok(()) }

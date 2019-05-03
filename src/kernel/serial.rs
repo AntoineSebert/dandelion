@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	20/01/2019
- */
-
 use lazy_static::lazy_static;
 use spin::Mutex;
 use uart_16550::SerialPort;
@@ -15,9 +10,7 @@ lazy_static! {
 	};
 }
 
-/*
- * Macros
- */
+// Macros
 
 #[doc(hidden)]
 pub fn _print(args: ::core::fmt::Arguments) {

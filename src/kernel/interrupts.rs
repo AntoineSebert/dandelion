@@ -1,12 +1,7 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	03/02/2019
- */
-
-//#![cfg(not(windows))]
+//#![cfg(not(windows))] // makes the build fail
 
 use crate::{hlt_loop, kernel::vmm::gdt, print, println};
-use interrupt_indexes::{Hardware::*, RealTime::*};
+use interrupt_indexes::Hardware::*;
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
@@ -15,8 +10,10 @@ use x86_64::{
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
 
-pub const PIC_1_OFFSET: u8 = 32; // 32 to 39
-pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8; // 40 to 47
+/// From 32 to 39.
+pub const PIC_1_OFFSET: u8 = 32;
+/// From 40 to 47.
+pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8;
 
 pub mod interrupt_indexes {
 	#[derive(Debug, Clone, Copy)]
@@ -39,26 +36,7 @@ pub mod interrupt_indexes {
 		PrimaryAta,
 		SecondaryAta,
 	}
-	/// These interrupts are not actually part of the PIC, but PIC_2_OFFSET is used to calculate the offset of the
-	/// interrupts within the IDT.
-	#[derive(Debug, Clone, Copy)]
-	#[repr(u8)]
-	pub enum RealTime {
-		HardDeadline = super::PIC_2_OFFSET + 8,
-		FirmDeadline,
-		SoftDeadline,
-		TimeRemaining,
-		TaskRemaining,
-		MissedDeadline,
-	}
 	impl Hardware {
-		#[inline]
-		pub fn as_u8(self) -> u8 { self as u8 }
-
-		#[inline]
-		pub fn as_usize(self) -> usize { usize::from(self.as_u8()) }
-	}
-	impl RealTime {
 		#[inline]
 		pub fn as_u8(self) -> u8 { self as u8 }
 
@@ -88,7 +66,9 @@ lazy_static! {
 			idt.device_not_available.set_handler_fn();
 			*/
 			unsafe {
-				idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
+				idt.double_fault
+					.set_handler_fn(double_fault_handler)
+					.set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
 			}
 			/*
 			idt.invalid_tss.set_handler_fn();
@@ -131,20 +111,10 @@ lazy_static! {
 			idt[SecondaryAta.as_usize()].set_handler_fn(_interrupt_handler);
 			*/
 		}
-		/* realtime */ {
-			idt[HardDeadline.as_usize()].set_handler_fn(hard_deadline_handler);
-			idt[FirmDeadline.as_usize()].set_handler_fn(firm_deadline_handler);
-			idt[SoftDeadline.as_usize()].set_handler_fn(soft_deadline_handler);
-			idt[TimeRemaining.as_usize()].set_handler_fn(time_remaining_handler);
-			idt[TaskRemaining.as_usize()].set_handler_fn(task_remaining_handler);
-			idt[MissedDeadline.as_usize()].set_handler_fn(missed_deadline_handler);
-		}
 
 		idt
 	};
 }
-
-// handlers
 
 // CPU exceptions
 
@@ -252,41 +222,6 @@ pub fn enable_rtc_interrupt() {
 		}
 	});
 }
-
-// realtime
-
-extern "x86-interrupt" fn hard_deadline_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: HARD DEADLINE\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn firm_deadline_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: FIRM DEADLINE\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn soft_deadline_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: SOFT DEADLINE\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn time_remaining_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: TIME REMAINING\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn task_remaining_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: TASK REMAINING\n{:#?}", stack_frame);
-}
-
-extern "x86-interrupt" fn missed_deadline_handler(stack_frame: &mut InterruptStackFrame) {
-	println!("EXCEPTION: MISSED DEADLINE\n{:#?}", stack_frame);
-}
-
-/*
-uint as error code
-argument as power of 2
-number between 0 and 1 as estimated remaining time
-	-> 0 : 1/2^0 = 1
-	-> 1 : 1/2^1 = 0.5
-	-> 2 : 1/2^2 = 0.25
-*/
 
 #[cfg(test)]
 use crate::{serial_print, serial_println};

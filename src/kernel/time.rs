@@ -1,18 +1,11 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	06/03/2019
- */
-
 // https://wiki.osdev.org/HPET
 // https://wiki.osdev.org/APIC_timer
 // https://wiki.osdev.org/Time_And_Date
 
-// https://doc.rust-lang.org/book/operators-and-overloading.html
-// https://doc.rust-lang.org/core/ops/index.html
-
 use cmos::RTCDateTime;
 use core::time::Duration;
 
+/// Return the current datetime as `RTCDateTime`.
 pub fn get_datetime() -> RTCDateTime {
 	use cmos::{CMOSCenturyHandler, CMOS};
 
@@ -20,6 +13,7 @@ pub fn get_datetime() -> RTCDateTime {
 	cmos.read_rtc(CMOSCenturyHandler::CurrentYear(2019))
 }
 
+/// Return the difference between two `RTCDateTime` as a `Duration`.
 pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration {
 	let _result: RTCDateTime = RTCDateTime {
 		second: first.second - second.second,
@@ -33,7 +27,7 @@ pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration {
 	Duration::new(0, 0)
 }
 
-/// Operations
+// Operations
 
 // implement derive traits in cmos crate
 

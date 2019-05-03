@@ -75,7 +75,11 @@ pub struct BootInfoFrameAllocator {
 
 impl BootInfoFrameAllocator {
 	/// Create a FrameAllocator from the passed memory map.
-	pub fn init(memory_map: &'static MemoryMap) -> Self { BootInfoFrameAllocator { memory_map, next: 0 } }
+	///
+	/// This function is unsafe because the caller must guarantee that the passed
+	/// memory map is valid. The main requirement is that all frames that are marked
+	/// as `USABLE` in it are really unused.
+	pub unsafe fn init(memory_map: &'static MemoryMap) -> Self { BootInfoFrameAllocator { memory_map, next: 0 } }
 
 	/// Returns an iterator over the usable frames specified in the memory map.
 	fn usable_frames(&self) -> impl Iterator<Item = PhysFrame> {
