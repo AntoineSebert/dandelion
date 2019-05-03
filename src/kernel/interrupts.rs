@@ -3,9 +3,9 @@
  * @date	03/02/2019
  */
 
-//#![cfg(not(windows))] // fix lint errors, but probably important
+//#![cfg(not(windows))]
 
-use crate::{hlt_loop, print, println};
+use crate::{kernel::vmm::gdt, hlt_loop, print, println};
 use interrupt_indexes::{Hardware::*, RealTime::*};
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
@@ -69,13 +69,12 @@ pub mod interrupt_indexes {
 
 pub static PICS: Mutex<ChainedPics> = Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
-pub fn init() { IDT.load(); }
+pub fn init_idt() { IDT.load(); }
 
 lazy_static! {
 	static ref IDT: InterruptDescriptorTable = {
 		let mut idt = InterruptDescriptorTable::new();
 		/* software */ {
-			use super::vmm::gdt::DOUBLE_FAULT_IST_INDEX;
 			/*
 			idt.divide_by_zero.set_handler_fn();
 			idt.debug.set_handler_fn();
@@ -89,7 +88,7 @@ lazy_static! {
 			idt.device_not_available.set_handler_fn();
 			*/
 			unsafe {
-				idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(DOUBLE_FAULT_IST_INDEX);
+				idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
 			}
 			/*
 			idt.invalid_tss.set_handler_fn();
@@ -145,9 +144,7 @@ lazy_static! {
 	};
 }
 
-/*
- * handlers
- */
+// handlers
 
 // CPU exceptions
 

@@ -1,26 +1,68 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	27/01/2019
- */
+#![no_std]
+#![cfg_attr(test, no_main)]
+#![test_runner(crate::test_runner)]
+#![reexport_test_harness_main = "test_main"]
 
-#![cfg_attr(not(test), no_std)]
 #![feature(abi_x86_interrupt)]
 #![feature(asm)]
 #![feature(trait_alias)]
 #![feature(core_intrinsics)]
+#![feature(custom_test_frameworks)]
 
 pub mod kernel;
 
-use x86_64::instructions::{hlt, port::Port};
+use core::panic::PanicInfo;
+use x86_64::instructions;
+#[cfg(test)]
+use bootloader::{entry_point, BootInfo};
 
-/// safely exit the emulator
-pub unsafe fn exit_qemu() {
-	let mut port = Port::<u32>::new(0xf4);
-	port.write(0);
+pub fn init() {
+	use kernel::{interrupts, vmm::gdt};
+
+	gdt::init();
+	interrupts::init_idt();
+	unsafe { interrupts::PICS.lock().initialize() };
+	instructions::interrupts::enable();
 }
 
-/// brøther may I have some lööps
+pub fn test_runner(tests: &[&dyn Fn()]) {
+	serial_println!("Running {} tests", tests.len());
+	for test in tests {
+		test();
+	}
+	exit_qemu(QemuExitCode::Success);
+}
+
+pub fn test_panic_handler(info: &PanicInfo) -> ! {
+	serial_println!("[failed]\n");
+	serial_println!("Error: {}\n", info);
+	exit_qemu(QemuExitCode::Failed);
+	hlt_loop();
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(u32)]
+pub enum QemuExitCode {
+	Success = 0x10,
+	Failed = 0x11,
+}
+
+/// safely exit the emulator.
+pub fn exit_qemu(exit_code: QemuExitCode) {
+	use instructions::port::Port;
+
+	unsafe {
+		let mut port = Port::new(0xf4);
+		port.write(exit_code as u32);
+	}
+}
+
+/// Halts the CPU until an interrupt occurs.
+/// The program remains idle.
+/// Brøther may I have some lööps ?
 pub fn hlt_loop() -> ! {
+	use instructions::hlt;
+
 	loop {
 		hlt();
 	}

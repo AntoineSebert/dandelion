@@ -8,6 +8,7 @@ use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
 use Color::*;
+#[cfg(test)]
 
 lazy_static! {
 	pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {

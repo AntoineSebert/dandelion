@@ -87,8 +87,7 @@ fn map_memory(boot_info: &'static BootInfo) {
 /// Initializes the ACPI, the GDT,the IDT and the PICS.
 /// Enables the interrupts and changes RTC interrupt rate.
 fn initialize_components() {
-	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt, PICS};
-	use vmm::gdt;
+	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt};
 
 	unsafe {
 		match acpi::init() {
@@ -97,10 +96,7 @@ fn initialize_components() {
 		}
 	};
 
-	gdt::init();
-	interrupts::init();
-	unsafe { PICS.lock().initialize() };
-	instructions::interrupts::enable();
+	dandelion::init();
 	change_rtc_interrupt_rate(15);
 	enable_rtc_interrupt(); // really useful ?
 }
