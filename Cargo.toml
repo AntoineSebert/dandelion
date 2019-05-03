@@ -27,7 +27,7 @@ maintenance = { status = "experimental" }
 bootloader = { version = "^0.6", features = ["map_physical_memory"] }
 volatile = "^0.2"
 uart_16550 = "^0.2"
-x86_64 = "^0.5"
+x86_64 = "^0.6"
 pic8259_simple = "^0.1"
 integer-sqrt = "^0.1"
 cmos = { version = "^0.1", git = "https://github.com/AntoineSebert/cmos" }
