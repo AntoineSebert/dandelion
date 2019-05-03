@@ -142,11 +142,18 @@ impl Write for Writer {
 	}
 }
 
-/*
- * Macros
- */
+// Macros
 
-// create timed_print & timed_println macros
+#[macro_export]
+macro_rules! timed_print {
+	($($arg:tt)*) => ($crate::kernel::vga_buffer::_print(format_args!("[{}] {}", "date", $($arg)*)));
+}
+
+#[macro_export]
+macro_rules! timed_println {
+	() => ($crate::print!("\n"));
+	($($arg:tt)*) => ($crate::timed_print!("{}\n", format_args!($($arg)*)));
+}
 
 #[macro_export]
 macro_rules! print {
