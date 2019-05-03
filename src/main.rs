@@ -1,24 +1,18 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	20/01/2019
- */
-
-/*
-run & tests
-	cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
-
-format & lint
-	cargo +nightly fmt && cargo +nightly clippy
-
-bootable USB
-	dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
-
-misc
-	https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
-	let mortal_heroes: String = "your fame";
-	tokei ./src --files
-	cargo deps --all-deps | dot -Tpng > graph.png
-*/
+//! run & tests
+//!		cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
+//!
+//! format & lint
+//!		cargo +nightly fmt && cargo +nightly clippy
+//!
+//! bootable USB
+//!		dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
+//!
+//! misc
+//!		https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
+//!		let mortal_heroes: String = "your fame";
+//!		tokei ./src --files
+//!		cargo deps --all-deps | dot -Tpng > graph.png
+//!		https://perf.rust-lang.org/
 
 #![allow(dead_code)]
 #![cfg_attr(not(test), no_std)]
@@ -35,9 +29,12 @@ use dandelion::{hlt_loop, kernel, println};
 use kernel::{acpi, interrupts, process, scheduler, vmm};
 use x86_64::instructions;
 
-// OS entry point override
+// OS entry point override.of
 entry_point!(kernel_main);
 
+/// Entry point of the OS.
+/// Initialize the kernel components and runs processes.
+/// Infinite loop at the end.
 #[cfg(not(test))]
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	use process::{sample_runnable_2, PRIORITY::*};
@@ -64,6 +61,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	hlt_loop();
 }
 
+/// Creates a mapper and a frame allocator.
+/// Maps a page corresponding to the screen and writes "New!" into it.
 fn map_memory(boot_info: &'static BootInfo) {
 	use vmm::memory::{create_example_mapping, init, BootInfoFrameAllocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
@@ -80,6 +79,8 @@ fn map_memory(boot_info: &'static BootInfo) {
 	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 }
 
+/// Initializes the ACPI, the GDT,the IDT and the PICS.
+/// Enables the interrupts and changes RTC interrupt rate.
 fn initialize_components() {
 	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt, PICS};
 	use vmm::gdt;
@@ -96,13 +97,10 @@ fn initialize_components() {
 	unsafe { PICS.lock().initialize() };
 	instructions::interrupts::enable();
 	change_rtc_interrupt_rate(15);
-	enable_rtc_interrupt();
+	enable_rtc_interrupt(); // really useful ?
 }
 
-/*
- * This function is called on panic.
- * @param	info	information about the panic error
- */
+/// Called on panic and prints information about the panic error.
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
