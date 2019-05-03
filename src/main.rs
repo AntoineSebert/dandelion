@@ -1,5 +1,9 @@
+//! target file argument (sometimes needed)
+//!		--target x86_64-dandelion.json
+//!
 //! run & tests
-//!		cls && bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04 && bootimage test
+//!		cargo xrun
+//!		bootimage test
 //!
 //! format & lint
 //!		cargo +nightly fmt && cargo +nightly clippy
