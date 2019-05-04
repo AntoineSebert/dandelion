@@ -197,6 +197,8 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 
 /// Change the RTC interrupt rate.
 /// The parameter must 2 and not over 15 for physical constraints.
+/// The default rate is 6.
+/// Returns the new frequency in Hertz.
 pub fn change_rtc_interrupt_rate(mut rate: u8) -> u16 {
 	rate &= 0x0F;
 	without_interrupts(|| {
@@ -214,6 +216,7 @@ pub fn change_rtc_interrupt_rate(mut rate: u8) -> u16 {
 	32768 >> (rate - 1)
 }
 
+/// Enable the RTC interrupt.
 pub fn enable_rtc_interrupt() {
 	without_interrupts(|| {
 		let mut address_port = Port::<u8>::new(0x70);
