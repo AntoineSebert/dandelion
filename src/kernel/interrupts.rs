@@ -195,8 +195,10 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 	unsafe { PICS.lock().notify_end_of_interrupt(RealTimeClock.as_u8()) }
 }
 
-pub fn change_rtc_interrupt_rate(mut rate: u8) {
-	rate &= 0x0F; // rate must be above 2 and not over 15, by default 6
+/// Change the RTC interrupt rate.
+/// The parameter must 2 and not over 15 for physical constraints.
+pub fn change_rtc_interrupt_rate(mut rate: u8) -> u16 {
+	rate &= 0x0F;
 	without_interrupts(|| {
 		let mut address_port = Port::<u8>::new(0x70);
 		let mut data_port = Port::<u8>::new(0x71);
@@ -209,7 +211,7 @@ pub fn change_rtc_interrupt_rate(mut rate: u8) {
 		}
 	});
 
-	println!("New frequency is {}", 32768 >> (rate - 1));
+	32768 >> (rate - 1)
 }
 
 pub fn enable_rtc_interrupt() {
