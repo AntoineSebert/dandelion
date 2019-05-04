@@ -99,7 +99,21 @@ pub fn get_estimated_remaining_time(task: &Task) -> Duration {
 
 // Mutators
 
+#[inline]
 pub fn set_state(task: &mut Task, state: State) { ((task.0).1).0 = state; }
+
+// Other
+
+// replace by "new"
+pub fn create_task(constraint: Constraint, code: Runnable) -> Task {
+	use super::time::get_datetime;
+
+	let create_metadata = |constraint: Constraint| -> Metadata {
+		(constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime()))
+	};
+
+	(create_metadata(constraint), code)
+}
 
 // Samples
 

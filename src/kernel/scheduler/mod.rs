@@ -15,22 +15,14 @@ use spin::{Mutex, RwLock};
 // should be replaced by a set
 lazy_static! {
 	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
-}
 
-lazy_static! {
 	pub static ref BLOCKED_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
-}
 
-lazy_static! {
 	pub static ref READY_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
-}
 
-lazy_static! {
 	pub static ref RUNNING: RwLock<Option<u8>> = RwLock::new(None);
-}
 
-lazy_static! {
-	pub static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
+	static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
 }
 
 /// Run the current running process.
@@ -66,7 +58,32 @@ pub fn process_exists(pid: u8) -> bool {
 	result
 }
 
-/// Terminate a job
+/// Browse PROCESS_TABLE and return the first available slot if it exists.
+pub fn get_slot() -> Option<usize> {
+	for index in 0..256 {
+		let guard = PROCESS_TABLE[index].read();
+		if (*guard).is_none() {
+			return Some(index as usize);
+		}
+		drop(guard);
+	}
+	None
+}
+
+/// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
+fn add_task(constraint: Constraint, code: Runnable, index: usize) {
+	use crate::println;
+
+	let mut guard = PROCESS_TABLE[index].write();
+	*guard = Some(create_task(constraint, code));
+	drop(guard);
+
+	increment();
+
+	println!("New process admitted at index {}", index);
+}
+
+/// Terminate a job.
 /// Returns true if the process exists and has been successfully terminated, false otherwise.
 pub fn terminate(pid: u8) -> bool {
 	if process_exists(pid) {
@@ -104,9 +121,7 @@ pub fn terminate(pid: u8) -> bool {
 	}
 }
 
-/*
-	PROCESSES_COUNT
-*/
+// processes count
 
 pub fn get_process_count() -> u8 {
 	let guard = PROCESS_COUNT.read();
@@ -135,9 +150,7 @@ fn decrement() -> u8 {
 	new_val
 }
 
-/*
-	QUEUES
-*/
+// queues
 
 pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: State) -> Result<(), CapacityError<u8>> {
 	let mut q_guard = queue.lock();

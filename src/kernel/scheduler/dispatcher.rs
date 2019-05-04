@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	03/03/2019
- */
-
 use super::{queue_size, BLOCKED_QUEUE, READY_QUEUE};
 use arraydeque::ArrayDeque;
 use spin::Mutex;
