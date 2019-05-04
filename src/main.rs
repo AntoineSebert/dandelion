@@ -3,10 +3,14 @@
 //!
 //! run & tests
 //!		cargo xrun
-//!		bootimage test
+//!		cargo xtest
 //!
 //! format & lint
 //!		cargo +nightly fmt && cargo +nightly clippy
+//!
+//! repository data
+//!		tokei ./src --files
+//!		cargo deps --all-deps | dot -Tpng > graph.png
 //!
 //! bootable USB
 //!		dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
@@ -14,8 +18,6 @@
 //! misc
 //!		https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
 //!		let mortal_heroes: String = "your fame";
-//!		tokei ./src --files
-//!		cargo deps --all-deps | dot -Tpng > graph.png
 //!		https://perf.rust-lang.org/
 
 #![no_std]
@@ -31,7 +33,6 @@
 use bootloader::{bootinfo::BootInfo, entry_point};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, kernel, println};
-use kernel::{acpi, interrupts, process, scheduler, vmm};
 
 entry_point!(kernel_main); // OS entry point override.
 
@@ -40,7 +41,7 @@ entry_point!(kernel_main); // OS entry point override.
 /// Infinite loop at the end.
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	println!("Hello World{}", "!");
-	initialize_components();
+	dandelion::init();
 	map_memory(boot_info);
 
 	#[cfg(test)]
@@ -54,8 +55,8 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 /// Schedule and run the user processes.
 fn user_space() {
-	use process::{sample_runnable_2, PRIORITY::*};
-	use scheduler::{admitter::request, process_exists, run, terminate};
+	use kernel::process::{sample_runnable_2, PRIORITY::*};
+	use kernel::scheduler::{admitter::request, process_exists, run, terminate};
 
 	println!("process 0 exists ? {}", process_exists(0));
 	request((None, MEDIUM), sample_runnable_2);
@@ -71,11 +72,11 @@ fn user_space() {
 /// Creates a mapper and a frame allocator.
 /// Maps a page corresponding to the screen and writes "New!" into it.
 fn map_memory(boot_info: &'static BootInfo) {
-	use vmm::memory::{create_example_mapping, init, BootInfoFrameAllocator};
+	use kernel::vmm::memory::{create_example_mapping, init, BootInfoFrameAllocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
 	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
-	let mut frame_allocator = BootInfoFrameAllocator::init(&boot_info.memory_map);
+	let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
 
 	// map a previously unmapped page
 	let page = Page::containing_address(VirtAddr::new(0xdeadbeaf000));
@@ -86,23 +87,6 @@ fn map_memory(boot_info: &'static BootInfo) {
 	unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
 }
 
-/// Initializes the ACPI, the GDT,the IDT and the PICS.
-/// Enables the interrupts and changes RTC interrupt rate.
-fn initialize_components() {
-	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt};
-
-	unsafe {
-		match acpi::init() {
-			Ok(_) => println!("ACPI initialized"),
-			Err(_) => println!("Could not initialize ACPI"),
-		}
-	};
-
-	dandelion::init();
-	change_rtc_interrupt_rate(15);
-	enable_rtc_interrupt(); // really useful ?
-}
-
 /// Called on panic and prints information about the panic error.
 #[cfg(not(test))]
 #[panic_handler]
@@ -111,6 +95,7 @@ fn panic(info: &PanicInfo) -> ! {
 	hlt_loop();
 }
 
+/// Panic handler for testing purposes, calls `test_panic_handler(&PanicInfo)`.
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! { dandelion::test_panic_handler(info) }

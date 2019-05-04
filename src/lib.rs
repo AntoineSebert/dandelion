@@ -4,9 +4,10 @@
 #![reexport_test_harness_main = "test_main"]
 #![feature(abi_x86_interrupt)]
 #![feature(asm)]
-#![feature(trait_alias)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
+#![feature(todo_macro)]
+#![feature(trait_alias)]
 
 pub mod kernel;
 
@@ -21,27 +22,23 @@ entry_point!(test_kernel_main); // OS entry point override for tests.
 /// Initialize the ACPI, the GDT,the IDT and the PICS.
 /// Enables the interrupts and changes RTC interrupt rate.
 pub fn init() {
-	use kernel::{interrupts, vmm::gdt};
+	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt};
+	use kernel::{acpi, interrupts, vmm::gdt};
+
+	unsafe {
+		match acpi::init() {
+			Ok(_) => println!("ACPI initialized"),
+			Err(_) => println!("Could not initialize ACPI"),
+		}
+	};
 
 	gdt::init();
 	interrupts::init_idt();
 	unsafe { interrupts::PICS.lock().initialize() };
 	instructions::interrupts::enable();
-}
 
-pub fn test_runner(tests: &[&dyn Fn()]) {
-	serial_println!("Running {} tests", tests.len());
-	for test in tests {
-		test();
-	}
-	exit_qemu(QemuExitCode::Success);
-}
-
-pub fn test_panic_handler(info: &PanicInfo) -> ! {
-	serial_println!("[failed]\n");
-	serial_println!("Error: {}\n", info);
-	exit_qemu(QemuExitCode::Failed);
-	hlt_loop();
+	enable_rtc_interrupt();
+	change_rtc_interrupt_rate(15);
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -74,6 +71,20 @@ pub fn hlt_loop() -> ! {
 
 /// Runs all the tests.
 pub fn test_runner(tests: &[&dyn Fn()]) {
+	serial_println!("Running {} tests", tests.len());
+	for test in tests {
+		test();
+	}
+	exit_qemu(QemuExitCode::Success);
+}
+
+/// Panic handler for tests that exit qemu with a `Failed` exit code.
+pub fn test_panic_handler(info: &PanicInfo) -> ! {
+	serial_println!("[failed]\n");
+	serial_println!("Error: {}\n", info);
+	exit_qemu(QemuExitCode::Failed);
+	hlt_loop();
+}
 
 /// Entry point for `cargo xtest`.
 #[cfg(test)]
