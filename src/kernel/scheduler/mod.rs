@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	03/03/2019
- */
-
 // https://wiki.osdev.org/Loading_a_Process
 // https://wiki.osdev.org/Multiprocessor_Scheduling
 // https://wiki.osdev.org/Scheduling_Algorithms
@@ -38,7 +33,7 @@ lazy_static! {
 	pub static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
 }
 
-/// Run the current running process
+/// Run the current running process.
 pub fn run() -> u64 {
 	use crate::println;
 

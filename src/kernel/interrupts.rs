@@ -1,12 +1,15 @@
 //#![cfg(not(windows))] // makes the build fail
 
+
+#[cfg(test)]
+use crate::{serial_print, serial_println};
 use crate::{hlt_loop, kernel::vmm::gdt, print, println};
 use interrupt_indexes::Hardware::*;
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
 use x86_64::{
-	instructions::{interrupts::without_interrupts, port::Port},
+	instructions::{interrupts::{self, without_interrupts}, port::Port},
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
 
@@ -223,13 +226,10 @@ pub fn enable_rtc_interrupt() {
 	});
 }
 
-#[cfg(test)]
-use crate::{serial_print, serial_println};
-
+/// Invoke a breakpoint exception.
 #[test_case]
 fn test_breakpoint_exception() {
 	serial_print!("test_breakpoint_exception...");
-	// invoke a breakpoint exception
-	x86_64::instructions::interrupts::int3();
+	interrupts::int3();
 	serial_println!("[ok]");
 }

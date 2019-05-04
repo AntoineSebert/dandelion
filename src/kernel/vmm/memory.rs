@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	05/02/2019
- */
-
 use bootloader::bootinfo::{MemoryMap, MemoryRegionType::Usable};
 use x86_64::{
 	structures::paging::{

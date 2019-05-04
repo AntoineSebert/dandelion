@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	20/01/2019
- */
-
 #[cfg(test)]
 use crate::{serial_print, serial_println};
 use core::fmt::{self, Arguments, Write};
@@ -21,9 +16,7 @@ lazy_static! {
 	});
 }
 
-/*
- * Colors
- */
+// Colors
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -57,9 +50,7 @@ impl ColorCode {
 	}
 }
 
-/*
- * Text buffer
- */
+// Text buffer
 
 const BUFFER_HEIGHT: usize = 25;
 const BUFFER_WIDTH: usize = 80;
@@ -81,10 +72,6 @@ pub struct Writer {
 	color_code: ColorCode,
 	buffer: &'static mut Buffer,
 }
-
-/*
- * Printing
- */
 
 impl Writer {
 	pub fn write_byte(&mut self, byte: u8) {
@@ -135,10 +122,6 @@ impl Writer {
 	}
 }
 
-/*
- * Formatting macros
- */
-
 impl Write for Writer {
 	fn write_str(&mut self, s: &str) -> fmt::Result {
 		self.write_string(s);
@@ -179,7 +162,7 @@ pub fn _print(args: Arguments) {
 	});
 }
 
-/// Unit tests
+// Unit tests
 
 #[test_case]
 fn test_println_simple() {
