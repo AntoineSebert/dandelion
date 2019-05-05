@@ -55,9 +55,9 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 pub mod strategy {
 	use crate::kernel::scheduler::PROCESS_TABLE;
 	use arraydeque::ArrayDeque;
-	use spin::Mutex;
 	use core::cmp::Ordering::*;
 	use either::{Left, Right};
+	use spin::Mutex;
 
 	/// Put the processes in READY_QUEUE by order of PID.
 	/// Return the PID of the first process in the ready queue if it exists.

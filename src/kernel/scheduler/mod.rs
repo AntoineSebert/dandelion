@@ -16,13 +16,9 @@ use spin::{Mutex, RwLock};
 // should be replaced by a set
 lazy_static! {
 	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
-
 	pub static ref BLOCKED_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
-
 	pub static ref READY_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
-
 	pub static ref RUNNING: RwLock<Option<u8>> = RwLock::new(None);
-
 	static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
 }
 
@@ -37,7 +33,7 @@ pub fn run() -> Option<u64> {
 			drop(pt_guard);
 			drop(guard);
 			Some(value)
-		},
+		}
 		None => {
 			drop(guard);
 			None

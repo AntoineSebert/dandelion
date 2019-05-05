@@ -1,8 +1,3 @@
-/*
- * @author	Antoine "Anthony" Louis Thibaut Sébert
- * @date	03/03/2019
- */
-
 // https://wiki.osdev.org/Context_Switching
 
 /*

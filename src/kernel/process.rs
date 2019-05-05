@@ -45,16 +45,20 @@ pub type Arguments<'a> = &'a [&'a str];
 /// 0 : estimated completion time
 /// 1 : interval
 /// 2 : last execution (can be in future for delayed tasks)
-pub type Periodic = (Duration, Duration, RTCDateTime);
+pub type Periodic = (Duration, Duration, RTCDateTime); // make tuple struct
+
 /// 0 : estimated completion time
 /// 1 : deadline
 /// 2 : start delay
-pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>);
+pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // make tuple struct
 
-pub type Info = (State, Duration, RTCDateTime);
-pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY);
+/// 0 : process state
+/// 1 : elapsed running time
+/// 2 : creation time
+pub type Info = (State, Duration, RTCDateTime); // make tuple struct
+pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY); // make tuple struct
 
-pub type Metadata = (Constraint, Info);
+pub type Metadata = (Constraint, Info); // make tuple struct
 
 pub type Runnable = fn(Arguments) -> u64;
 
@@ -73,10 +77,7 @@ impl Task {
 	pub fn new(constraint: Constraint, code: Runnable) -> Task {
 		use super::time::get_datetime;
 
-		Task {
-			metadata: (constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime())),
-			code,
-		}
+		Task { metadata: (constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime())), code }
 	}
 
 	#[inline]
@@ -140,8 +141,8 @@ pub fn sample_runnable_2(args: Arguments) -> u64 {
 	0
 }
 
-/// Streams prime numbers on the serial port up to a limit (passed as parameter) less than 2^64
-/// On my computer, find all the primes between 0 and 1.000.000 in 2:05 min
+/// Streams prime numbers on the serial port up to a limit (passed as parameter) less than 2^64.
+/// On my computer, finds all the primes between 0 and 1.000.000 in 2:05 min.
 #[allow(dead_code)]
 fn sample_runnable(_args: Arguments) -> u64 {
 	use crate::println;

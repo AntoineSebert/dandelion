@@ -1,15 +1,14 @@
 //#![cfg(not(windows))] // makes the build fail
 
-
+use crate::{hlt_loop, kernel::vmm::gdt, print, println};
 #[cfg(test)]
 use crate::{serial_print, serial_println};
-use crate::{hlt_loop, kernel::vmm::gdt, print, println};
 use interrupt_indexes::Hardware::*;
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
 use spin::Mutex;
 use x86_64::{
-	instructions::{interrupts::{self, without_interrupts}, port::Port},
+	instructions::{interrupts::without_interrupts, port::Port},
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
 
