@@ -28,7 +28,7 @@ fn is_schedulable(constraint: Constraint) -> bool {
 
 pub mod strategy {
 	use crate::kernel::{
-		process::{get_estimated_remaining_time, get_realtime, Constraint, Task},
+		process::{Constraint, Task},
 		scheduler::PROCESS_TABLE,
 	};
 	use arraydeque::ArrayDeque;
@@ -41,8 +41,8 @@ pub mod strategy {
 			let mut temp: ArrayDeque<_> = ArrayDeque::new();
 			for element in PROCESS_TABLE.iter() {
 				let guard = element.read();
-				if let Some(v) = *guard {
-					if get_realtime(&v).is_some() {
+				if let Some(v) = (*guard).as_ref() {
+					if v.get_periodicity().is_some() {
 						// capacity error should never happen if PROCESS_TABLE and realtime_tasks have the same size
 						if let Ok(()) = temp.push_back(element.write()) {}
 					}
@@ -56,9 +56,9 @@ pub mod strategy {
 			let mut temp = 0.0;
 
 			for task in realtime_tasks.iter() {
-				temp += match get_realtime(&(task).unwrap()).unwrap() {
+				temp += match task.as_ref().unwrap().get_periodicity().unwrap() {
 					Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
-					Right(_) => get_estimated_remaining_time(&(task).unwrap()).as_secs() as f64 / 256_f64,
+					Right(_) => task.as_ref().unwrap().get_estimated_remaining_time().unwrap().as_secs() as f64 / 256_f64,
 				}
 			}
 

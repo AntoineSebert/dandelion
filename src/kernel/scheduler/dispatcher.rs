@@ -31,14 +31,14 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 
 /// Remove the processes those deadlines have been missed in the given queue.
 fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
-	use crate::kernel::{process::get_realtime, scheduler::PROCESS_TABLE, time::get_datetime};
+	use crate::kernel::{scheduler::PROCESS_TABLE, time::get_datetime};
 	use core::cmp::Ordering::Less;
 
 	let mut guard = queue.lock();
 	let mut counter = 0;
 	for index in 0..(*guard).len() {
 		let pt_guard = PROCESS_TABLE[index as usize].read();
-		let realtime = get_realtime(&(*pt_guard).unwrap());
+		let realtime = (*pt_guard).as_ref().unwrap().get_periodicity();
 		if realtime.is_some() && realtime.unwrap().is_right() {
 			let deadline = realtime.unwrap().right().unwrap().1;
 			if deadline.cmp(&get_datetime()) == Less {
@@ -53,12 +53,11 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 }
 
 pub mod strategy {
-	use crate::kernel::{
-		process::{get_constraint, get_priority, get_realtime},
-		scheduler::PROCESS_TABLE,
-	};
+	use crate::kernel::scheduler::PROCESS_TABLE;
 	use arraydeque::ArrayDeque;
 	use spin::Mutex;
+	use core::cmp::Ordering::*;
+	use either::{Left, Right};
 
 	/// Put the processes in READY_QUEUE by order of PID.
 	/// Return the PID of the first process in the ready queue if it exists.
@@ -78,13 +77,11 @@ pub mod strategy {
 		let mut guard = queue.lock();
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
-			use core::cmp::Ordering::Equal;
-
 			let pt_guard = PROCESS_TABLE[*a as usize].read();
-			let priority_a = get_priority(&(*pt_guard).unwrap());
+			let priority_a = (*pt_guard).as_ref().unwrap().get_priority();
 			drop(pt_guard);
 			let pt_guard = PROCESS_TABLE[*b as usize].read();
-			let priority_b = get_priority(&(*pt_guard).unwrap());
+			let priority_b = (*pt_guard).as_ref().unwrap().get_priority();
 			drop(pt_guard);
 
 			match priority_a.partial_cmp(&priority_b) {
@@ -106,19 +103,15 @@ pub mod strategy {
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
 			use crate::kernel::process::PRIORITY::*;
-			use core::cmp::Ordering::*;
-			use either::{Left, Right};
 
-			let pt_guard = PROCESS_TABLE[*a as usize].read();
-			let process = (*pt_guard).unwrap();
-			let constraint_a = get_constraint(&process);
-			drop(pt_guard);
-			let pt_guard = PROCESS_TABLE[*b as usize].read();
-			let process = (*pt_guard).unwrap();
-			let constraint_b = get_constraint(&process);
-			drop(pt_guard);
+			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
+			let process = (*pt_guard_a).as_ref().unwrap();
+			let constraint_a = process.get_constraint();
+			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
+			let process = (*pt_guard_b).as_ref().unwrap();
+			let constraint_b = process.get_constraint();
 
-			match (constraint_a.0, constraint_b.0) {
+			let order = match (constraint_a.0, constraint_b.0) {
 				(None, None) => {
 					match constraint_a.1.partial_cmp(&constraint_b.1) {
 						Some(ord) => ord,
@@ -207,7 +200,11 @@ pub mod strategy {
 						}
 					}
 				}
-			}
+			};
+			drop(pt_guard_a);
+			drop(pt_guard_b);
+
+			order
 		});
 		let first_value = Some(*(*guard).front().unwrap());
 
@@ -221,17 +218,13 @@ pub mod strategy {
 		let mut guard = queue.lock();
 
 		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
-			use core::cmp::Ordering::*;
-			use either::{Left, Right};
+			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
+			let periodicity_a = (*pt_guard_a).as_ref().unwrap().get_periodicity();
 
-			let pt_guard = PROCESS_TABLE[*a as usize].read();
-			let realtime_a = get_realtime(&(*pt_guard).unwrap());
-			drop(pt_guard);
-			let pt_guard = PROCESS_TABLE[*b as usize].read();
-			let realtime_b = get_realtime(&(*pt_guard).unwrap());
-			drop(pt_guard);
+			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
+			let periodicity_b = (*pt_guard_b).as_ref().unwrap().get_periodicity();
 
-			match (realtime_a, realtime_b) {
+			let order = match (periodicity_a, periodicity_b) {
 				(None, None) => Equal,
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
@@ -263,7 +256,11 @@ pub mod strategy {
 						}
 					}
 				}
-			}
+			};
+			drop(pt_guard_a);
+			drop(pt_guard_b);
+
+			order
 		});
 		let first_value = Some(*(*guard).front().unwrap());
 

@@ -62,8 +62,10 @@ fn user_space() {
 	request((None, MEDIUM), sample_runnable_2);
 	println!("process 0 exists ? {}", process_exists(0));
 
-	let result = run();
-	println!("Processed finished with code : {}", result);
+	match run() {
+		Some(value) => println!("Processed finished with code : {}", value),
+		None => println!("No process to run"),
+	}
 
 	println!("removing process 0...{}", terminate(0));
 	println!("process 0 exists ? {}", process_exists(0));

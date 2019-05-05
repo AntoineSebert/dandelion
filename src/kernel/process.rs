@@ -57,62 +57,73 @@ pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY);
 pub type Metadata = (Constraint, Info);
 
 pub type Runnable = fn(Arguments) -> u64;
-pub type Task = (Metadata, Runnable);
+
+//#[derive(Eq, PartialEq, Ord, PartialOrd, Debug)]
+pub struct Task {
+	metadata: Metadata,
+	code: Runnable,
+}
 
 pub type Job<'a> = (Metadata, &'a [&'a Runnable]);
 pub type Group<'a> = &'a [&'a Task];
 
 // Accessors
 
-/// Return the `Metadata` of a `Task`.
-pub fn get_metadata(task: &Task) -> &Metadata { &task.0 }
+impl Task {
+	pub fn new(constraint: Constraint, code: Runnable) -> Task {
+		use super::time::get_datetime;
 
-pub fn get_constraint(task: &Task) -> &Constraint { &(task.0).0 }
-
-pub fn get_realtime(task: &Task) -> Option<Either<Periodic, Aperiodic>> { ((task.0).0).0 }
-
-pub fn get_runnable(task: &Task) -> &Runnable { &task.1 }
-
-pub fn get_priority(task: &Task) -> PRIORITY { ((task.0).0).1 }
-
-pub fn get_info(task: &Task) -> &Info { &(task.0).1 }
-
-pub fn get_state(task: &Task) -> State { ((task.0).1).0 }
-
-pub fn get_running_time(task: &Task) -> Duration { ((task.0).1).1 }
-
-pub fn get_creation_time(task: &Task) -> RTCDateTime { ((task.0).1).2 }
-
-pub fn get_estimated_remaining_time(task: &Task) -> Duration {
-	use Either::{Left, Right};
-
-	match get_realtime(task) {
-		Some(periodicity) => {
-			match periodicity {
-				Left(periodic) => periodic.0 - ((task.0).1).1,
-				Right(aperiodic) => aperiodic.0 - ((task.0).1).1,
-			}
+		Task {
+			metadata: (constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime())),
+			code,
 		}
-		None => Duration::new(0, 0),
 	}
-}
 
-// Mutators
+	#[inline]
+	pub fn get_metadata(&self) -> &Metadata { &self.metadata }
 
-#[inline]
-pub fn set_state(task: &mut Task, state: State) { ((task.0).1).0 = state; }
+	#[inline]
+	pub fn get_constraint(&self) -> &Constraint { &self.metadata.0 }
 
-// Other
+	#[inline]
+	pub fn get_periodicity(&self) -> &Option<Either<Periodic, Aperiodic>> { &(self.metadata.0).0 }
 
-// replace by "new"
-pub fn create_task(constraint: Constraint, code: Runnable) -> Task {
-	use super::time::get_datetime;
+	#[inline]
+	pub fn get_runnable(&self) -> &Runnable { &self.code }
 
-	let create_metadata = |constraint: Constraint| -> Metadata {
-		(constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime()))
-	};
+	#[inline]
+	pub fn get_priority(&self) -> PRIORITY { (self.metadata.0).1 }
 
-	(create_metadata(constraint), code)
+	#[inline]
+	pub fn get_info(&self) -> &Info { &self.metadata.1 }
+
+	#[inline]
+	pub fn get_state(&self) -> State { (self.metadata.1).0 }
+
+	#[inline]
+	pub fn get_running_time(&self) -> &Duration { &(self.metadata.1).1 }
+
+	#[inline]
+	pub fn get_creation_time(&self) -> &RTCDateTime { &(self.metadata.1).2 }
+
+	pub fn get_estimated_remaining_time(&self) -> Option<Duration> {
+		use Either::{Left, Right};
+
+		match self.get_periodicity() {
+			Some(periodicity) => {
+				match periodicity {
+					Left(periodic) => Some(periodic.0 - (self.metadata.1).1),
+					Right(aperiodic) => Some(aperiodic.0 - (self.metadata.1).1),
+				}
+			}
+			None => None,
+		}
+	}
+
+	// Mutators
+
+	#[inline]
+	pub fn set_state(&mut self, state: State) { (self.metadata.1).0 = state; }
 }
 
 // Samples

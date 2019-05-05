@@ -6,7 +6,8 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
-use super::process::*;
+use super::process::{Constraint, Runnable, State, Task};
+use crate::println;
 use array_init::array_init;
 use arraydeque::{ArrayDeque, CapacityError};
 use lazy_static::lazy_static;
@@ -26,28 +27,22 @@ lazy_static! {
 }
 
 /// Run the current running process.
-pub fn run() -> u64 {
-	use crate::println;
-
+pub fn run() -> Option<u64> {
 	let guard = RUNNING.read();
-	if (*guard).is_none() {
-		println!("No process to run");
-		drop(guard);
-		return 0;
-	}
-	let index = usize::from((*guard).unwrap());
-	drop(guard);
-	let guard = PROCESS_TABLE[index].read();
-	let result = if (*guard).is_none() {
-		println!("No process to run");
-		0
-	} else {
-		println!("Running...");
-		guard.as_ref().unwrap().1(&["sample_runnable_2"])
-	};
-	drop(guard);
 
-	result
+	match *guard {
+		Some(index) => {
+			let pt_guard = PROCESS_TABLE[usize::from(index)].read();
+			let value = (*pt_guard).as_ref().unwrap().get_runnable()(&["sample_runnable_2"]);
+			drop(pt_guard);
+			drop(guard);
+			Some(value)
+		},
+		None => {
+			drop(guard);
+			None
+		}
+	}
 }
 
 /// Check if a process exists
@@ -72,10 +67,8 @@ pub fn get_slot() -> Option<usize> {
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
 fn add_task(constraint: Constraint, code: Runnable, index: usize) {
-	use crate::println;
-
 	let mut guard = PROCESS_TABLE[index].write();
-	*guard = Some(create_task(constraint, code));
+	*guard = Some(Task::new(constraint, code));
 	drop(guard);
 
 	increment();
@@ -86,12 +79,12 @@ fn add_task(constraint: Constraint, code: Runnable, index: usize) {
 /// Terminate a job.
 /// Returns true if the process exists and has been successfully terminated, false otherwise.
 pub fn terminate(pid: u8) -> bool {
-	if process_exists(pid) {
-		use super::process::{get_state, set_state};
+	use super::process::{Limbo, MainMemory};
 
+	if process_exists(pid) {
 		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
-		let state = get_state(pt_guard.as_ref().unwrap());
-		set_state(pt_guard.as_mut().unwrap(), State::Limbo(Limbo::Terminated));
+		let state = (*pt_guard).as_ref().unwrap().get_state();
+		(*pt_guard).as_mut().unwrap().set_state(State::Limbo(Limbo::Terminated));
 		match state {
 			State::MainMemory(MainMemory::Running) => {
 				let guard = RUNNING.read();
@@ -162,7 +155,7 @@ pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: Sta
 	let result = (*q_guard).push_back(pid);
 	if result.is_ok() {
 		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
-		set_state(&mut (*pt_guard).unwrap(), state);
+		(*pt_guard).as_mut().unwrap().set_state(state);
 		drop(pt_guard);
 	}
 	drop(q_guard);

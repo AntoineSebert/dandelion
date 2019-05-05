@@ -34,14 +34,13 @@ use crate::kernel::process::{self, MainMemory, State};
 /// Set the value of RUNNING and update the state of the related process if it exists.
 fn set_running(value: Option<u8>) {
 	use super::PROCESS_TABLE;
-	use process::set_state;
 
 	let mut r_guard = RUNNING.write();
 	*r_guard = value;
 
 	if (*r_guard).is_some() {
 		let mut pt_guard = PROCESS_TABLE[(*r_guard).unwrap() as usize].write();
-		set_state(&mut (*pt_guard).unwrap(), State::MainMemory(MainMemory::Running));
+		(*pt_guard).as_mut().unwrap().set_state(State::MainMemory(MainMemory::Running));
 		drop(pt_guard);
 	}
 
