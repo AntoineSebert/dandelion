@@ -6,7 +6,7 @@
 #![feature(asm)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
-#![feature(todo_macro)]
+#![feature(duration_float)]
 #![feature(trait_alias)]
 
 pub mod kernel;

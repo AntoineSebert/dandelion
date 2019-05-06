@@ -29,7 +29,7 @@ pub fn run() -> Option<u64> {
 	match *guard {
 		Some(index) => {
 			let pt_guard = PROCESS_TABLE[usize::from(index)].read();
-			let value = (*pt_guard).as_ref().unwrap().get_runnable()(&["sample_runnable_2"]);
+			let value = pt_guard.as_ref().unwrap().get_runnable().0(&["sample_runnable_2"]);
 			drop(pt_guard);
 			drop(guard);
 			Some(value)
@@ -44,7 +44,7 @@ pub fn run() -> Option<u64> {
 /// Check if a process exists
 pub fn process_exists(pid: u8) -> bool {
 	let guard = PROCESS_TABLE[pid as usize].read();
-	let result = (*guard).is_some();
+	let result = guard.is_some();
 	drop(guard);
 	result
 }
@@ -53,7 +53,7 @@ pub fn process_exists(pid: u8) -> bool {
 pub fn get_slot() -> Option<usize> {
 	for index in 0..256 {
 		let guard = PROCESS_TABLE[index].read();
-		if (*guard).is_none() {
+		if guard.is_none() {
 			return Some(index as usize);
 		}
 		drop(guard);
@@ -79,14 +79,14 @@ pub fn terminate(pid: u8) -> bool {
 
 	if process_exists(pid) {
 		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
-		let state = (*pt_guard).as_ref().unwrap().get_state();
-		(*pt_guard).as_mut().unwrap().set_state(State::Limbo(Limbo::Terminated));
+		let state = pt_guard.as_ref().unwrap().get_state();
+		pt_guard.as_mut().unwrap().set_state(State::Limbo(Limbo::Terminated));
 		match state {
 			State::MainMemory(MainMemory::Running) => {
 				let guard = RUNNING.read();
-				if (*guard).is_some() && (*guard).unwrap() == pid {
+				if guard.is_some() && guard.unwrap() == pid {
 					let mut wguard = RUNNING.write();
-					(*wguard).take();
+					wguard.take();
 					drop(wguard);
 				}
 				drop(guard);
@@ -144,14 +144,14 @@ fn decrement() -> u8 {
 pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: State) -> Result<(), CapacityError<u8>> {
 	let mut q_guard = queue.lock();
 
-	if !process_exists(pid) || (*q_guard).contains(&pid) {
+	if !process_exists(pid) || q_guard.contains(&pid) {
 		return Ok(());
 	}
 
-	let result = (*q_guard).push_back(pid);
+	let result = q_guard.push_back(pid);
 	if result.is_ok() {
 		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
-		(*pt_guard).as_mut().unwrap().set_state(state);
+		pt_guard.as_mut().unwrap().set_state(state);
 		drop(pt_guard);
 	}
 	drop(q_guard);
@@ -162,9 +162,9 @@ pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: Sta
 pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 	let mut guard = queue.lock();
 
-	for index in 0..(*guard).len() {
+	for index in 0..guard.len() {
 		if (*guard)[index] == pid {
-			(*guard).remove(index);
+			guard.remove(index);
 			drop(guard);
 			return true;
 		}
@@ -177,7 +177,19 @@ pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 /// Return the size of the queue given as parameter.
 pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {
 	let guard = queue.lock();
-	let value = (*guard).len();
+	let value = guard.len();
+	drop(guard);
+	value
+}
+
+/// Return an `Option` containing a copy of the first element of the queue if it exists, and `None` otherwise.
+pub fn queue_front(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+	let guard = queue.lock();
+	let value = if !guard.is_empty() {
+		Some(*(guard.front().clone().unwrap()))
+	} else {
+		None
+	};
 	drop(guard);
 	value
 }

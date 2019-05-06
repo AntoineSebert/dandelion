@@ -1,22 +1,23 @@
-use super::{super::process::*, add_task, get_slot};
+use super::super::process::{Constraint, Runnable};
 
 /// Check whether the task can be accepted or not.
 /// If yes, a process is constructed and add to the process queue & job table, and true is returned.
 /// Otherwise, returns false.
 pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
+	use super::{add_task, get_slot};
+
 	let slot = get_slot();
 
 	if slot.is_none() || !is_schedulable(constraint) {
-		return None;
+		None
+	} else {
+		add_task(constraint, code, slot.unwrap());
+		slot
 	}
-
-	add_task(constraint, code, slot.unwrap());
-	slot
 }
 
 /// Figure out if the candidate is schedulable in the current context.
 fn is_schedulable(constraint: Constraint) -> bool {
-	// https://fr.wikipedia.org/wiki/Rate-monotonic_scheduling
 	if constraint.0.is_none() {
 		true
 	} else {
@@ -41,8 +42,8 @@ pub mod strategy {
 			let mut temp: ArrayDeque<_> = ArrayDeque::new();
 			for element in PROCESS_TABLE.iter() {
 				let guard = element.read();
-				if let Some(v) = (*guard).as_ref() {
-					if v.get_periodicity().is_some() {
+				if let Some(v) = guard.as_ref() {
+					if v.is_realtime() {
 						// capacity error should never happen if PROCESS_TABLE and realtime_tasks have the same size
 						if let Ok(()) = temp.push_back(element.write()) {}
 					}
@@ -57,16 +58,14 @@ pub mod strategy {
 
 			for task in realtime_tasks.iter() {
 				temp += match task.as_ref().unwrap().get_periodicity().unwrap() {
-					Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
-					Right(_) => {
-						task.as_ref().unwrap().get_estimated_remaining_time().unwrap().as_secs() as f64 / 256_f64
-					}
+					Left(periodic) => periodic.0.as_secs_f64() / periodic.1.as_secs_f64(),
+					Right(_) => task.as_ref().unwrap().get_estimated_remaining_time().unwrap().as_secs_f64() / 256_f64
 				}
 			}
 
 			temp += match constraint.0.unwrap() {
-				Left(periodic) => periodic.0.as_secs() as f64 / periodic.1.as_secs() as f64,
-				Right(aperiodic) => aperiodic.0.as_secs() as f64 / 256_f64,
+				Left(periodic) => periodic.0.as_secs_f64() / periodic.1.as_secs_f64(),
+				Right(aperiodic) => aperiodic.0.as_secs_f64() / 256_f64,
 			};
 
 			temp

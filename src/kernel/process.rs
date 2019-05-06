@@ -1,14 +1,21 @@
 #![allow(dead_code)]
 
 use cmos::RTCDateTime;
-use core::time::Duration;
-use either::Either;
+use core::{cmp::Ordering::{self, *}, fmt::{Debug, Display, Formatter, Result}, time::Duration};
+use either::Either::{self, Left, Right};
+use super::time::dt_add_du;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {
 	Limbo(Limbo),
 	MainMemory(MainMemory),
 	SwapSpace(SwapSpace),
+}
+
+impl Display for State {
+	fn fmt(&self, f: &mut Formatter) -> Result {
+		write!(f, "{:?}", *self)
+	}
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -60,25 +67,30 @@ pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY); // make t
 
 pub type Metadata = (Constraint, Info); // make tuple struct
 
-pub type Runnable = fn(Arguments) -> u64;
+// replace by type alias whenever possible this is just a hack to have PartialEq on Runnable
+pub struct Runnable(pub fn(Arguments) -> u64);
 
-//#[derive(Eq, PartialEq, Ord, PartialOrd, Debug)]
+impl PartialEq for Runnable {
+	fn eq(&self, other: &Self) -> bool { self as *const _ == other as *const _ }
+}
+impl Eq for Runnable {}
+
+#[derive(Eq)]
 pub struct Task {
 	metadata: Metadata,
 	code: Runnable,
 }
 
-pub type Job<'a> = (Metadata, &'a [&'a Runnable]);
-pub type Group<'a> = &'a [&'a Task];
-
-// Accessors
-
 impl Task {
+	// constructor
+
 	pub fn new(constraint: Constraint, code: Runnable) -> Task {
 		use super::time::get_datetime;
 
 		Task { metadata: (constraint, (State::Limbo(Limbo::Creating), <Duration>::new(0, 0), get_datetime())), code }
 	}
+
+	// accessors
 
 	#[inline]
 	pub fn get_metadata(&self) -> &Metadata { &self.metadata }
@@ -108,23 +120,107 @@ impl Task {
 	pub fn get_creation_time(&self) -> &RTCDateTime { &(self.metadata.1).2 }
 
 	pub fn get_estimated_remaining_time(&self) -> Option<Duration> {
-		use Either::{Left, Right};
-
 		match self.get_periodicity() {
-			Some(periodicity) => {
-				match periodicity {
-					Left(periodic) => Some(periodic.0 - (self.metadata.1).1),
-					Right(aperiodic) => Some(aperiodic.0 - (self.metadata.1).1),
-				}
+			Some(periodicity) => match periodicity {
+				Left(periodic) => Some(periodic.0 - (self.metadata.1).1),
+				Right(aperiodic) => Some(aperiodic.0 - (self.metadata.1).1),
 			}
 			None => None,
 		}
 	}
 
-	// Mutators
+	// mutators
 
 	#[inline]
 	pub fn set_state(&mut self, state: State) { (self.metadata.1).0 = state; }
+
+	pub fn set_last_execution(&mut self, datetime: &RTCDateTime) -> bool {
+		if self.is_periodic() {
+			self.get_periodicity().unwrap().left().unwrap().2 = *datetime;
+			true
+		} else {
+			false
+		}
+	}
+
+	#[inline]
+	pub fn set_elapsed_running_time(&mut self, duration: Duration) { (self.metadata.1).1 = duration }
+
+	// other
+
+	#[inline]
+	pub fn is_realtime(&self) -> bool { (self.metadata.0).0.is_some() }
+
+	#[inline]
+	pub fn is_periodic(&self) -> bool { self.is_realtime() && (self.metadata.0).0.as_ref().unwrap().is_left() }
+
+	#[inline]
+	pub fn is_aperiodic(&self) -> bool { self.is_realtime() && (self.metadata.0).0.as_ref().unwrap().is_right() }
+}
+
+// traits
+
+impl Debug for Task {
+	#[inline]
+	fn fmt(&self, f: &mut Formatter) -> Result {
+		write!(f, "Task {{ created: {:?}, state: {}, realtime: {} }}", self.get_creation_time(), self.get_state(), self.is_realtime())
+	}
+}
+
+impl PartialEq for Task {
+	#[inline]
+	fn eq(&self, other: &Self) -> bool { self as *const _ == other as *const _ }
+}
+
+impl Ord for Task {
+	fn cmp(&self, other: &Self) -> Ordering {
+		match (self.get_periodicity(), other.get_periodicity()) {
+			(Some(periodicity_a), Some(periodicity_b)) => periodicity_a.cmp(&periodicity_b),
+			(Some(_), None) => Greater,
+			(None, Some(_)) => Less,
+			(None, None) => Equal,
+		}
+	}
+}
+
+impl PartialOrd for Task {
+	#[inline]
+	fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+}
+
+pub struct Job<'a> {
+	metadata: Metadata,
+	thread: &'a [&'a Runnable],
+}
+
+pub struct Group<'a> {
+	member: &'a [&'a Task],
+}
+
+// order
+
+// to check
+pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {
+	match dt_add_du(a.2, a.1) {
+		Some(deadline_a) => if deadline_a < b.1 {
+			Less
+		} else if b.1 < deadline_a {
+			Greater
+		} else {
+			Equal
+		},
+		None => Less
+	}
+}
+
+// to check
+pub fn ord_p_p(a: &Periodic, b: &Periodic) -> Ordering {
+	match (dt_add_du(a.2, a.1), dt_add_du(b.2, b.1)) {
+		(Some(deadline_a), Some(deadline_b)) => deadline_a.cmp(&deadline_b),
+		(Some(_), None) => Greater,
+		(None, Some(_)) => Less,
+		(None, None) => Equal,
+	}
 }
 
 // Samples

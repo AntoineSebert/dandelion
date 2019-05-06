@@ -56,12 +56,12 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 /// Schedule and run the user processes.
 fn user_space() {
 	use kernel::{
-		process::{sample_runnable_2, PRIORITY::*},
+		process::{sample_runnable_2, PRIORITY::*, Runnable},
 		scheduler::{admitter::request, process_exists, run, terminate},
 	};
 
 	println!("process 0 exists ? {}", process_exists(0));
-	request((None, MEDIUM), sample_runnable_2);
+	request((None, MEDIUM), Runnable(sample_runnable_2));
 	println!("process 0 exists ? {}", process_exists(0));
 
 	match run() {
