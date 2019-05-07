@@ -49,7 +49,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "cmos"
 version = "0.1.1"
-source = "git+https://github.com/AntoineSebert/cmos#94f3c3a2eba914a1132d32df945b269e5caf583d"
+source = "git+https://github.com/AntoineSebert/cmos#ce2337f8e7c7f28301579573d70eac809beacae0"
 dependencies = [
  "cpuio 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
