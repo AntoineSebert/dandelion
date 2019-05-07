@@ -29,7 +29,7 @@ fn is_schedulable(constraint: Constraint) -> bool {
 
 pub mod strategy {
 	use crate::kernel::{
-		process::{Constraint, Task},
+		process::{task::Task, Constraint},
 		scheduler::PROCESS_TABLE,
 	};
 	use arraydeque::ArrayDeque;

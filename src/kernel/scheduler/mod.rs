@@ -6,16 +6,15 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
-use super::process::{Constraint, Runnable, State, Task};
+use super::process::{task::Task, Constraint, Runnable, State};
 use crate::println;
 use array_init::array_init;
 use arraydeque::{ArrayDeque, CapacityError};
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
 
-// should be replaced by a set
 lazy_static! {
-	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) };
+	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) }; // should be replaced by a set
 	pub static ref BLOCKED_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
 	pub static ref READY_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
 	pub static ref RUNNING: RwLock<Option<u8>> = RwLock::new(None);
@@ -25,17 +24,15 @@ lazy_static! {
 /// Run the current running process.
 pub fn run() -> Option<u64> {
 	match *(RUNNING.read()) {
-		Some(index) => Some(
-			PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(&["sample_runnable_2"])
-		),
+		Some(index) => {
+			Some(PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(&["sample_runnable_2"]))
+		}
 		None => None,
 	}
 }
 
 /// Check if a process exists
-pub fn process_exists(pid: u8) -> bool {
-	PROCESS_TABLE[pid as usize].read().is_some()
-}
+pub fn process_exists(pid: u8) -> bool { PROCESS_TABLE[pid as usize].read().is_some() }
 
 /// Browse PROCESS_TABLE and return the first available slot if it exists.
 pub fn get_slot() -> Option<usize> {
@@ -43,7 +40,7 @@ pub fn get_slot() -> Option<usize> {
 	for index in 0..256 {
 		if PROCESS_TABLE[index].read().is_none() {
 			result = Some(index as usize);
-			break
+			break;
 		}
 	}
 	result
@@ -66,15 +63,20 @@ pub fn terminate(pid: u8) -> bool {
 		let mut pt_guard = PROCESS_TABLE[pid as usize].write();
 		pt_guard.as_mut().unwrap().set_state(State::Limbo(Limbo::Terminated));
 		match pt_guard.as_ref().unwrap().get_state() {
-			State::MainMemory(MainMemory::Running) => match get_running() {
-				Some(running_pid) => if running_pid == pid {
-					RUNNING.write().take();
-				},
-				None => {},
-			},
-			State::MainMemory(MainMemory::Ready) => { queue_remove(&READY_QUEUE, pid); },
-			State::SwapSpace(_) => { queue_remove(&BLOCKED_QUEUE, pid); },
-			State::Limbo(_) => {},
+			State::MainMemory(MainMemory::Running) => {
+				if let Some(running_pid) = get_running() {
+					if running_pid == pid {
+						RUNNING.write().take();
+					}
+				}
+			}
+			State::MainMemory(MainMemory::Ready) => {
+				queue_remove(&READY_QUEUE, pid);
+			}
+			State::SwapSpace(_) => {
+				queue_remove(&BLOCKED_QUEUE, pid);
+			}
+			State::Limbo(_) => {}
 		};
 		*pt_guard = None;
 
@@ -88,16 +90,14 @@ pub fn terminate(pid: u8) -> bool {
 
 // processes count
 
-pub fn get_process_count() -> u8 {
-	PROCESS_COUNT.read().clone()
-}
+pub fn get_process_count() -> u8 { *PROCESS_COUNT.read() }
 
 fn increment() -> u8 {
 	let mut guard = PROCESS_COUNT.write();
 	if *guard < 255 {
 		*guard += 1;
 	}
-	guard.clone()
+	*guard
 }
 
 fn decrement() -> u8 {
@@ -105,7 +105,7 @@ fn decrement() -> u8 {
 	if 0 < *guard {
 		*guard -= 1;
 	}
-	guard.clone()
+	*guard
 }
 
 // queues
@@ -139,9 +139,7 @@ pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 }
 
 /// Return the size of the queue given as parameter.
-pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {
-	queue.lock().len()
-}
+pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize { queue.lock().len() }
 
 /// Return an `Option` containing a copy of the first element of the queue if it exists, and `None` otherwise.
 pub fn queue_front(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {

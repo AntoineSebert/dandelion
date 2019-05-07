@@ -81,9 +81,12 @@ pub mod strategy {
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn priority(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
 		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
-			PROCESS_TABLE[*a as usize].read().as_ref().unwrap().get_priority().cmp(
-				&PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_priority()
-			)
+			PROCESS_TABLE[*a as usize]
+				.read()
+				.as_ref()
+				.unwrap()
+				.get_priority()
+				.cmp(&PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_priority())
 		});
 
 		queue_front(queue)
@@ -125,7 +128,7 @@ pub mod strategy {
 		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
 			match (
 				PROCESS_TABLE[*a as usize].read().as_ref().unwrap().get_periodicity(),
-				PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_periodicity()
+				PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_periodicity(),
 			) {
 				(None, None) => Equal,
 				(None, Some(_)) => Less,

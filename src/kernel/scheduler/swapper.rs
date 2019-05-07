@@ -34,14 +34,16 @@ fn set_running(value: Option<u8>) {
 	*r_guard = value;
 
 	if r_guard.is_some() {
-		PROCESS_TABLE[r_guard.unwrap() as usize].write().as_mut().unwrap().set_state(State::MainMemory(MainMemory::Running));
+		PROCESS_TABLE[r_guard.unwrap() as usize]
+			.write()
+			.as_mut()
+			.unwrap()
+			.set_state(State::MainMemory(MainMemory::Running));
 	}
 }
 
 /// Return the value of RUNNING.
-pub fn get_running() -> Option<u8> {
-	RUNNING.read().clone()
-}
+pub fn get_running() -> Option<u8> { *RUNNING.read() }
 
 /// Move the first element in READY_QUEUE to RUNNING (if there is no element, RUNNING is `None`).
 /// Move the element in RUNNING at the end of READY_QUEUE if it exists.
