@@ -185,11 +185,7 @@ pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize {
 /// Return an `Option` containing a copy of the first element of the queue if it exists, and `None` otherwise.
 pub fn queue_front(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
 	let guard = queue.lock();
-	let value = if !guard.is_empty() {
-		Some(*(guard.front().clone().unwrap()))
-	} else {
-		None
-	};
+	let value = if !guard.is_empty() { Some(*(guard.front().unwrap())) } else { None };
 	drop(guard);
 	value
 }

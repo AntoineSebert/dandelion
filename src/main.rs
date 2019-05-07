@@ -6,7 +6,7 @@
 //!		cargo xtest
 //!
 //! format & lint
-//!		cargo +nightly fmt && cargo +nightly clippy
+//!		cargo +nightly fmt && cargo +nightly xclippy
 //!
 //! repository data
 //!		tokei ./src --files
@@ -40,7 +40,7 @@ entry_point!(kernel_main); // OS entry point override.
 /// Initialize the kernel components and launch the user space.
 /// Infinite loop at the end.
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-	println!("Hello World{}", "!");
+	println!("Hello World!");
 	dandelion::init();
 	map_memory(boot_info);
 
@@ -56,7 +56,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 /// Schedule and run the user processes.
 fn user_space() {
 	use kernel::{
-		process::{sample_runnable_2, PRIORITY::*, Runnable},
+		process::{sample_runnable_2, Runnable, PRIORITY::*},
 		scheduler::{admitter::request, process_exists, run, terminate},
 	};
 

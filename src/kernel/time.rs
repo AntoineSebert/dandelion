@@ -84,11 +84,11 @@ pub fn dt_add_du(datetime: RTCDateTime, duration: Duration) -> Option<RTCDateTim
 /// However it is possible that `u64::MAX` seconds is greater than the maximal `RTCDateTime` possible.
 pub fn to_duration(datetime: RTCDateTime) -> Duration {
 	Duration::from_secs(
-		datetime.second as u64
-			+ (datetime.minute * 60) as u64
-			+ (datetime.hour as u64 * 3_600)
-			+ (datetime.day as u64 * 86_400)
-			+ (datetime.month as u64 * 2_628_000)
+		u64::from(datetime.second)
+			+ u64::from(datetime.minute) * 60
+			+ u64::from(datetime.hour) * 3_600
+			+ u64::from(datetime.day) * 86_400
+			+ u64::from(datetime.month) * 2_628_000
 			+ (datetime.year * 31_536_000) as u64,
 	)
 }

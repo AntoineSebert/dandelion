@@ -1,9 +1,13 @@
 #![allow(dead_code)]
 
-use cmos::RTCDateTime;
-use core::{cmp::Ordering::{self, *}, fmt::{Debug, Display, Formatter, Result}, time::Duration};
-use either::Either::{self, Left, Right};
 use super::time::dt_add_du;
+use cmos::RTCDateTime;
+use core::{
+	cmp::Ordering::{self, *},
+	fmt::{Debug, Display, Formatter, Result},
+	time::Duration,
+};
+use either::Either::{self, Left, Right};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum State {
@@ -13,9 +17,7 @@ pub enum State {
 }
 
 impl Display for State {
-	fn fmt(&self, f: &mut Formatter) -> Result {
-		write!(f, "{:?}", *self)
-	}
+	fn fmt(&self, f: &mut Formatter) -> Result { write!(f, "{:?}", *self) }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -123,9 +125,11 @@ impl Task {
 
 	pub fn get_estimated_remaining_time(&self) -> Option<Duration> {
 		match self.get_periodicity() {
-			Some(periodicity) => match periodicity {
-				Left(periodic) => Some(periodic.0 - (self.metadata.1).1),
-				Right(aperiodic) => Some(aperiodic.0 - (self.metadata.1).1),
+			Some(periodicity) => {
+				match periodicity {
+					Left(periodic) => Some(periodic.0 - (self.metadata.1).1),
+					Right(aperiodic) => Some(aperiodic.0 - (self.metadata.1).1),
+				}
 			}
 			None => None,
 		}
@@ -165,7 +169,13 @@ impl Task {
 impl Debug for Task {
 	#[inline]
 	fn fmt(&self, f: &mut Formatter) -> Result {
-		write!(f, "Task {{ created: {:?}, state: {}, realtime: {} }}", self.get_creation_time(), self.get_state(), self.is_realtime())
+		write!(
+			f,
+			"Task {{ created: {:?}, state: {}, realtime: {} }}",
+			self.get_creation_time(),
+			self.get_state(),
+			self.is_realtime()
+		)
 	}
 }
 
@@ -217,14 +227,16 @@ pub fn ord_periodicity(a: &Either<Periodic, Aperiodic>, b: &Either<Periodic, Ape
 // to check
 pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {
 	match dt_add_du(a.2, a.1) {
-		Some(deadline_a) => if deadline_a < b.1 {
-			Less
-		} else if b.1 < deadline_a {
-			Greater
-		} else {
-			Equal
-		},
-		None => Less
+		Some(deadline_a) => {
+			if deadline_a < b.1 {
+				Less
+			} else if b.1 < deadline_a {
+				Greater
+			} else {
+				Equal
+			}
+		}
+		None => Less,
 	}
 }
 

@@ -59,7 +59,7 @@ pub mod strategy {
 			for task in realtime_tasks.iter() {
 				temp += match task.as_ref().unwrap().get_periodicity().unwrap() {
 					Left(periodic) => periodic.0.as_secs_f64() / periodic.1.as_secs_f64(),
-					Right(_) => task.as_ref().unwrap().get_estimated_remaining_time().unwrap().as_secs_f64() / 256_f64
+					Right(_) => task.as_ref().unwrap().get_estimated_remaining_time().unwrap().as_secs_f64() / 256_f64,
 				}
 			}
 

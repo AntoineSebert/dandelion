@@ -31,7 +31,10 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 
 /// Remove the processes those deadlines have been missed in the given queue.
 fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
-	use crate::kernel::{scheduler::PROCESS_TABLE, time::{dt_add_du, get_datetime}};
+	use crate::kernel::{
+		scheduler::PROCESS_TABLE,
+		time::{dt_add_du, get_datetime},
+	};
 	use either::{Left, Right};
 
 	let mut guard = queue.lock();
@@ -40,14 +43,18 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 		let pt_guard = PROCESS_TABLE[index as usize].read();
 		if let Some(periodicity) = pt_guard.as_ref().unwrap().get_periodicity() {
 			match periodicity {
-				Left(periodic) => if dt_add_du(periodic.2, periodic.1).unwrap() < get_datetime() {
-					guard.remove(index);
-					counter += 1;
-				},
-				Right(aperiodic) => if aperiodic.1 < get_datetime() {
-					guard.remove(index);
-					counter += 1;
-				},
+				Left(periodic) => {
+					if dt_add_du(periodic.2, periodic.1).unwrap() < get_datetime() {
+						guard.remove(index);
+						counter += 1;
+					}
+				}
+				Right(aperiodic) => {
+					if aperiodic.1 < get_datetime() {
+						guard.remove(index);
+						counter += 1;
+					}
+				}
 			}
 		}
 		drop(pt_guard);
@@ -58,7 +65,10 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 }
 
 pub mod strategy {
-	use crate::kernel::{process::ord_periodicity, scheduler::{queue_front, PROCESS_TABLE}};
+	use crate::kernel::{
+		process::ord_periodicity,
+		scheduler::{queue_front, PROCESS_TABLE},
+	};
 	use arraydeque::ArrayDeque;
 	use core::cmp::Ordering::*;
 	use spin::Mutex;
@@ -112,11 +122,13 @@ pub mod strategy {
 				(None, None) => process_a.get_priority().cmp(&process_b.get_priority()),
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
-				(Some(periodicity_a), Some(periodicity_b)) => match (process_a.get_priority(), process_b.get_priority()) {
-					(HIGH, LOW) => ord_periodicity(&periodicity_a, &periodicity_b),
-					(LOW, HIGH) => ord_periodicity(&periodicity_a, &periodicity_b),
-					_ => process_a.get_priority().cmp(&process_b.get_priority()),
-				},
+				(Some(periodicity_a), Some(periodicity_b)) => {
+					match (process_a.get_priority(), process_b.get_priority()) {
+						(HIGH, LOW) => ord_periodicity(&periodicity_a, &periodicity_b),
+						(LOW, HIGH) => ord_periodicity(&periodicity_a, &periodicity_b),
+						_ => process_a.get_priority().cmp(&process_b.get_priority()),
+					}
+				}
 			};
 
 			drop(pt_guard_a);
