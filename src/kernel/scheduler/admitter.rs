@@ -41,14 +41,12 @@ pub mod strategy {
 		let realtime_tasks: ArrayDeque<[RwLockWriteGuard<Option<Task>>; 256]> = {
 			let mut temp: ArrayDeque<_> = ArrayDeque::new();
 			for element in PROCESS_TABLE.iter() {
-				let guard = element.read();
-				if let Some(v) = guard.as_ref() {
+				if let Some(v) = element.read().as_ref() {
 					if v.is_realtime() {
 						// capacity error should never happen if PROCESS_TABLE and realtime_tasks have the same size
 						if let Ok(()) = temp.push_back(element.write()) {}
 					}
 				}
-				drop(guard);
 			}
 			temp
 		};
@@ -71,12 +69,6 @@ pub mod strategy {
 			temp
 		};
 
-		let n = realtime_tasks.len();
-
-		for guard in realtime_tasks {
-			drop(guard);
-		}
-
-		rate < (n as f64) * (pow(2.0, 1 / n) - 1.0)
+		rate < (realtime_tasks.len() as f64) * (pow(2.0, 1 / realtime_tasks.len()) - 1.0)
 	}
 }

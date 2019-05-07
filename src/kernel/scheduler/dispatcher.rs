@@ -40,8 +40,7 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 	let mut guard = queue.lock();
 	let mut counter = 0;
 	for index in 0..guard.len() {
-		let pt_guard = PROCESS_TABLE[index as usize].read();
-		if let Some(periodicity) = pt_guard.as_ref().unwrap().get_periodicity() {
+		if let Some(periodicity) = PROCESS_TABLE[index as usize].read().as_ref().unwrap().get_periodicity() {
 			match periodicity {
 				Left(periodic) => {
 					if dt_add_du(periodic.2, periodic.1).unwrap() < get_datetime() {
@@ -57,9 +56,7 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 				}
 			}
 		}
-		drop(pt_guard);
 	}
-	drop(guard);
 
 	counter
 }
@@ -76,29 +73,18 @@ pub mod strategy {
 	/// Put the processes in READY_QUEUE by order of PID.
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn process_id(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
-		let mut guard = queue.lock();
-		guard.as_mut_slices().0.sort_unstable();
-		drop(guard);
-
+		queue.lock().as_mut_slices().0.sort_unstable();
 		queue_front(queue)
 	}
 
 	/// Put the processes in READY_QUEUE by order of priority.
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn priority(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
-		let mut guard = queue.lock();
-
-		guard.as_mut_slices().0.sort_unstable_by(|a, b| {
-			let pt_guard = PROCESS_TABLE[*a as usize].read();
-			let priority_a = pt_guard.as_ref().unwrap().get_priority();
-			drop(pt_guard);
-			let pt_guard = PROCESS_TABLE[*b as usize].read();
-			let priority_b = pt_guard.as_ref().unwrap().get_priority();
-			drop(pt_guard);
-
-			priority_a.cmp(&priority_b)
+		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
+			PROCESS_TABLE[*a as usize].read().as_ref().unwrap().get_priority().cmp(
+				&PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_priority()
+			)
 		});
-		drop(guard);
 
 		queue_front(queue)
 	}
@@ -107,18 +93,16 @@ pub mod strategy {
 	/// LOW can preempt MEDIUM, MEDIUM can preempt HIGH.
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn modified_earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
-		let mut guard = queue.lock();
-
-		guard.as_mut_slices().0.sort_unstable_by(|a, b| {
+		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
 			use crate::kernel::process::PRIORITY::*;
 
-			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
-			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
+			let guard_a = PROCESS_TABLE[*a as usize].read();
+			let guard_b = PROCESS_TABLE[*b as usize].read();
 
-			let process_a = pt_guard_a.as_ref().unwrap();
-			let process_b = pt_guard_b.as_ref().unwrap();
+			let process_a = guard_a.as_ref().unwrap();
+			let process_b = guard_b.as_ref().unwrap();
 
-			let order = match (process_a.get_periodicity(), process_b.get_periodicity()) {
+			match (process_a.get_periodicity(), process_b.get_periodicity()) {
 				(None, None) => process_a.get_priority().cmp(&process_b.get_priority()),
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
@@ -129,15 +113,8 @@ pub mod strategy {
 						_ => process_a.get_priority().cmp(&process_b.get_priority()),
 					}
 				}
-			};
-
-			drop(pt_guard_a);
-			drop(pt_guard_b);
-
-			order
+			}
 		});
-
-		drop(guard);
 
 		queue_front(queue)
 	}
@@ -145,28 +122,17 @@ pub mod strategy {
 	/// Put the processes in READY_QUEUE by order of deadline and priority.
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
-		let mut guard = queue.lock();
-
-		guard.as_mut_slices().0.sort_unstable_by(|a, b| {
-			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
-			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
-
-			let periodicity_a = pt_guard_a.as_ref().unwrap().get_periodicity();
-			let periodicity_b = pt_guard_b.as_ref().unwrap().get_periodicity();
-
-			let order = match (periodicity_a, periodicity_b) {
+		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
+			match (
+				PROCESS_TABLE[*a as usize].read().as_ref().unwrap().get_periodicity(),
+				PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_periodicity()
+			) {
 				(None, None) => Equal,
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
 				(Some(periodicity_a), Some(periodicity_b)) => ord_periodicity(periodicity_a, periodicity_b),
-			};
-
-			drop(pt_guard_a);
-			drop(pt_guard_b);
-
-			order
+			}
 		});
-		drop(guard);
 
 		queue_front(queue)
 	}

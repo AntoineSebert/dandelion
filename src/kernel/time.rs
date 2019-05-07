@@ -18,8 +18,6 @@ pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration { to_du
 
 // Operations
 
-// implement derive traits in cmos crate
-
 /// If first < second, the fields in the returned RTCDateTime equal to 0.
 pub fn dt_sub_dt(first: RTCDateTime, second: RTCDateTime) -> RTCDateTime {
 	RTCDateTime {
