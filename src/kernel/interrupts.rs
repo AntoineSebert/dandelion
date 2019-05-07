@@ -234,6 +234,6 @@ pub fn enable_rtc_interrupt() {
 #[test_case]
 fn test_breakpoint_exception() {
 	serial_print!("test_breakpoint_exception...");
-	interrupts::int3();
+	x86_64::instructions::interrupts::int3();
 	serial_println!("[ok]");
 }

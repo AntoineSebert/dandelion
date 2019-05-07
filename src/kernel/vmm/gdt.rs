@@ -20,9 +20,6 @@ lazy_static! {
 		};
 		tss
 	};
-}
-
-lazy_static! {
 	static ref GDT: (GlobalDescriptorTable, Selectors) = {
 		use gdt::Descriptor;
 
