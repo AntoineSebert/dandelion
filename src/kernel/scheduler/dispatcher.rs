@@ -58,10 +58,9 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 }
 
 pub mod strategy {
-	use crate::kernel::{process::{ord_p_p, ord_p_ap}, scheduler::{queue_front, PROCESS_TABLE}};
+	use crate::kernel::{process::ord_periodicity, scheduler::{queue_front, PROCESS_TABLE}};
 	use arraydeque::ArrayDeque;
 	use core::cmp::Ordering::*;
-	use either::{Left, Right};
 	use spin::Mutex;
 
 	/// Put the processes in READY_QUEUE by order of PID.
@@ -100,111 +99,32 @@ pub mod strategy {
 	pub fn modified_earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
 		let mut guard = queue.lock();
 
-		((*guard).as_mut_slices().0).sort_unstable_by(|a, b| {
+		guard.as_mut_slices().0.sort_unstable_by(|a, b| {
 			use crate::kernel::process::PRIORITY::*;
 
 			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
-			let process = (*pt_guard_a).as_ref().unwrap();
-			let constraint_a = process.get_constraint();
 			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
-			let process = (*pt_guard_b).as_ref().unwrap();
-			let constraint_b = process.get_constraint();
 
-			let order = match (constraint_a.0, constraint_b.0) {
-				(None, None) => {
-					match constraint_a.1.partial_cmp(&constraint_b.1) {
-						Some(ord) => ord,
-						None => Equal,
-					}
-				}
+			let process_a = pt_guard_a.as_ref().unwrap();
+			let process_b = pt_guard_b.as_ref().unwrap();
+
+			let order = match (process_a.get_periodicity(), process_b.get_periodicity()) {
+				(None, None) => process_a.get_priority().cmp(&process_b.get_priority()),
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
-				(Some(periodicity_a), Some(periodicity_b)) => {
-					match (periodicity_a, periodicity_b) {
-						(Right(aperiodic_a), Right(aperiodic_b)) => {
-							match aperiodic_a.1.partial_cmp(&aperiodic_b.1) {
-								Some(ord) => {
-									match (constraint_a.1, constraint_b.1) {
-										(HIGH, MEDIUM) => Greater,
-										(MEDIUM, LOW) => Greater,
-										(LOW, MEDIUM) => Less,
-										(MEDIUM, HIGH) => Less,
-										_ => ord,
-									}
-								}
-								None => {
-									match constraint_a.1.partial_cmp(&constraint_b.1) {
-										Some(ord) => ord,
-										None => Equal,
-									}
-								}
-							}
-						}
-						(Right(aperiodic_a), Left(periodic_b)) => {
-							match aperiodic_a.0.partial_cmp(&periodic_b.1) {
-								Some(ord) => {
-									match (constraint_a.1, constraint_b.1) {
-										(HIGH, MEDIUM) => Greater,
-										(MEDIUM, LOW) => Greater,
-										(LOW, MEDIUM) => Less,
-										(MEDIUM, HIGH) => Less,
-										_ => ord,
-									}
-								}
-								None => {
-									match constraint_a.1.partial_cmp(&constraint_b.1) {
-										Some(ord) => ord,
-										None => Equal,
-									}
-								}
-							}
-						}
-						(Left(periodic_a), Right(aperiodic_b)) => {
-							match periodic_a.1.partial_cmp(&aperiodic_b.0) {
-								Some(ord) => {
-									match (constraint_a.1, constraint_b.1) {
-										(HIGH, MEDIUM) => Greater,
-										(MEDIUM, LOW) => Greater,
-										(LOW, MEDIUM) => Less,
-										(MEDIUM, HIGH) => Less,
-										_ => ord,
-									}
-								}
-								None => {
-									match constraint_a.1.partial_cmp(&constraint_b.1) {
-										Some(ord) => ord,
-										None => Equal,
-									}
-								}
-							}
-						}
-						(Left(periodic_a), Left(periodic_b)) => {
-							match periodic_a.2.partial_cmp(&periodic_b.2) {
-								Some(ord) => {
-									match (constraint_a.1, constraint_b.1) {
-										(HIGH, MEDIUM) => Greater,
-										(MEDIUM, LOW) => Greater,
-										(LOW, MEDIUM) => Less,
-										(MEDIUM, HIGH) => Less,
-										_ => ord,
-									}
-								}
-								None => {
-									match constraint_a.1.partial_cmp(&constraint_b.1) {
-										Some(ord) => ord,
-										None => Equal,
-									}
-								}
-							}
-						}
-					}
-				}
+				(Some(periodicity_a), Some(periodicity_b)) => match (process_a.get_priority(), process_b.get_priority()) {
+					(HIGH, LOW) => ord_periodicity(&periodicity_a, &periodicity_b),
+					(LOW, HIGH) => ord_periodicity(&periodicity_a, &periodicity_b),
+					_ => process_a.get_priority().cmp(&process_b.get_priority()),
+				},
 			};
+
 			drop(pt_guard_a);
 			drop(pt_guard_b);
 
 			order
 		});
+
 		drop(guard);
 
 		queue_front(queue)
@@ -217,12 +137,18 @@ pub mod strategy {
 
 		guard.as_mut_slices().0.sort_unstable_by(|a, b| {
 			let pt_guard_a = PROCESS_TABLE[*a as usize].read();
-			let periodicity_a = pt_guard_a.as_ref().unwrap().get_periodicity();
-
 			let pt_guard_b = PROCESS_TABLE[*b as usize].read();
+
+			let periodicity_a = pt_guard_a.as_ref().unwrap().get_periodicity();
 			let periodicity_b = pt_guard_b.as_ref().unwrap().get_periodicity();
 
-			let order = periodicity_a.cmp(&periodicity_b);
+			let order = match (periodicity_a, periodicity_b) {
+				(None, None) => Equal,
+				(None, Some(_)) => Less,
+				(Some(_), None) => Greater,
+				(Some(periodicity_a), Some(periodicity_b)) => ord_periodicity(periodicity_a, periodicity_b),
+			};
+
 			drop(pt_guard_a);
 			drop(pt_guard_b);
 

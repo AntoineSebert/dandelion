@@ -75,6 +75,8 @@ impl PartialEq for Runnable {
 }
 impl Eq for Runnable {}
 
+// task
+
 #[derive(Eq)]
 pub struct Task {
 	metadata: Metadata,
@@ -175,7 +177,7 @@ impl PartialEq for Task {
 impl Ord for Task {
 	fn cmp(&self, other: &Self) -> Ordering {
 		match (self.get_periodicity(), other.get_periodicity()) {
-			(Some(periodicity_a), Some(periodicity_b)) => periodicity_a.cmp(&periodicity_b),
+			(Some(periodicity_a), Some(periodicity_b)) => periodicity_a.cmp(&periodicity_b), // probably doesn't work
 			(Some(_), None) => Greater,
 			(None, Some(_)) => Less,
 			(None, None) => Equal,
@@ -188,16 +190,29 @@ impl PartialOrd for Task {
 	fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
 }
 
+// job
+
 pub struct Job<'a> {
 	metadata: Metadata,
 	thread: &'a [&'a Runnable],
 }
+
+// group
 
 pub struct Group<'a> {
 	member: &'a [&'a Task],
 }
 
 // order
+
+pub fn ord_periodicity(a: &Either<Periodic, Aperiodic>, b: &Either<Periodic, Aperiodic>) -> Ordering {
+	match (a, b) {
+		(Right(aperiodic_a), Right(aperiodic_b)) => aperiodic_a.1.cmp(&aperiodic_b.1),
+		(Right(aperiodic_a), Left(periodic_b)) => ord_p_ap(&periodic_b, &aperiodic_a),
+		(Left(periodic_a), Right(aperiodic_b)) => ord_p_ap(&periodic_a, &aperiodic_b),
+		(Left(periodic_a), Left(periodic_b)) => ord_p_p(&periodic_a, &periodic_b),
+	}
+}
 
 // to check
 pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {

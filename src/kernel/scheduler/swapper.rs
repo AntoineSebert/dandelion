@@ -33,9 +33,9 @@ fn set_running(value: Option<u8>) {
 	let mut r_guard = RUNNING.write();
 	*r_guard = value;
 
-	if (*r_guard).is_some() {
-		let mut pt_guard = PROCESS_TABLE[(*r_guard).unwrap() as usize].write();
-		(*pt_guard).as_mut().unwrap().set_state(State::MainMemory(MainMemory::Running));
+	if r_guard.is_some() {
+		let mut pt_guard = PROCESS_TABLE[r_guard.unwrap() as usize].write();
+		pt_guard.as_mut().unwrap().set_state(State::MainMemory(MainMemory::Running));
 		drop(pt_guard);
 	}
 
@@ -63,7 +63,7 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 	let old = get_running();
 
 	let mut guard = READY_QUEUE.lock();
-	let new = (*guard).pop_front();
+	let new = guard.pop_front();
 	set_running(new);
 	drop(guard);
 
