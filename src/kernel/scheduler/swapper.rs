@@ -24,23 +24,7 @@ Note that this is only a high-level overview and only one way of doing it. For t
 //fn pop_register() {}
 
 use super::RUNNING;
-use crate::kernel::process::{self, MainMemory, State};
-
-/// Set the value of RUNNING and update the state of the related process if it exists.
-fn set_running(value: Option<u8>) {
-	use super::PROCESS_TABLE;
-
-	let mut r_guard = RUNNING.write();
-	*r_guard = value;
-
-	if r_guard.is_some() {
-		PROCESS_TABLE[r_guard.unwrap() as usize]
-			.write()
-			.as_mut()
-			.unwrap()
-			.set_state(State::MainMemory(MainMemory::Running));
-	}
-}
+use crate::kernel::process::{self, State};
 
 /// Return the value of RUNNING.
 pub fn get_running() -> Option<u8> { *RUNNING.read() }
@@ -52,7 +36,8 @@ pub fn get_running() -> Option<u8> { *RUNNING.read() }
 /// Return a tuple containing the old and the new running PIDs if they exist.
 pub fn next() -> (Option<u8>, Option<u8>) {
 	use super::{queue_push_back, terminate, BLOCKED_QUEUE, READY_QUEUE};
-	use process::SwapSpace;
+	use State::{MainMemory, SwapSpace};
+	use process::{MainMemory::Ready, SwapSpace::Suspended};
 
 	let old = get_running();
 
@@ -63,12 +48,30 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 
 	if old.is_some() {
 		let pid = old.unwrap();
-		if queue_push_back(&READY_QUEUE, pid, State::MainMemory(MainMemory::Ready)).is_err()
-			&& queue_push_back(&BLOCKED_QUEUE, pid, State::SwapSpace(SwapSpace::Suspended)).is_err()
+		if queue_push_back(&READY_QUEUE, pid, MainMemory(Ready)).is_err()
+			&& queue_push_back(&BLOCKED_QUEUE, pid, SwapSpace(Suspended)).is_err()
 		{
 			terminate(pid);
 		}
 	}
 
 	(old, new)
+}
+
+/// Set the value of RUNNING and update the state of the related process if it exists.
+fn set_running(value: Option<u8>) {
+	use State::MainMemory;
+	use process::MainMemory::Running;
+
+	let mut r_guard = RUNNING.write();
+	*r_guard = value;
+
+	if r_guard.is_some() {
+		// hide call to process table
+		super::PROCESS_TABLE[r_guard.unwrap() as usize]
+			.write()
+			.as_mut()
+			.unwrap()
+			.set_state(MainMemory(Running));
+	}
 }

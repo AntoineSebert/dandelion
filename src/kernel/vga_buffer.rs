@@ -1,10 +1,10 @@
-#[cfg(test)]
-use crate::{serial_print, serial_println};
 use core::fmt::{self, Arguments, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
 use Color::*;
+#[cfg(test)]
+use crate::{serial_print, serial_println};
 
 lazy_static! {
 	/// A global `Writer` instance that can be used for printing to the VGA text buffer.
@@ -155,9 +155,7 @@ macro_rules! println {
 
 #[doc(hidden)]
 pub fn _print(args: Arguments) {
-	use x86_64::instructions::interrupts::without_interrupts;
-
-	without_interrupts(|| {
+	x86_64::instructions::interrupts::without_interrupts(|| {
 		WRITER.lock().write_fmt(args).unwrap();
 	});
 }
@@ -182,13 +180,10 @@ fn test_println_many() {
 
 #[test_case]
 fn test_println_output() {
-	use core::fmt::Write;
-	use x86_64::instructions::interrupts;
-
 	serial_print!("test_println_output... ");
 
 	let s = "Some test string that fits on a single line";
-	interrupts::without_interrupts(|| {
+	x86_64::instructions::interrupts::without_interrupts(|| {
 		let mut writer = WRITER.lock();
 		writeln!(writer, "\n{}", s).expect("writeln failed");
 		for (i, c) in s.chars().enumerate() {

@@ -24,7 +24,7 @@ pub fn update(strategy: &Fn(&Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8>) -> (u8
 /// - the number of processes in READY_QUEUE
 /// - the PID of eventual running process
 pub fn global_info() -> (u8, usize, usize, Option<u8>) {
-	use super::{get_process_count, queue_size, swapper::get_running};
+	use super::{get_process_count, swapper::get_running};
 
 	(get_process_count(), queue_size(&BLOCKED_QUEUE), queue_size(&READY_QUEUE), get_running())
 }

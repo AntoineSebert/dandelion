@@ -61,11 +61,9 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 /// Halts the CPU until an interrupt occurs.
 /// The program remains idle.
 pub fn hlt_loop() -> ! {
-	use instructions::hlt;
-
 	// Brøther may I have some lööps ?
 	loop {
-		hlt();
+		instructions::hlt();
 	}
 }
 
