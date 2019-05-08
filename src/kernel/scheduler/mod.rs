@@ -12,6 +12,7 @@ use array_init::array_init;
 use arraydeque::{ArrayDeque, CapacityError};
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
+use core::u8::MAX;
 
 lazy_static! {
 	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) }; // should be replaced by a set
@@ -36,14 +37,12 @@ pub fn process_exists(pid: u8) -> bool { PROCESS_TABLE[pid as usize].read().is_s
 
 /// Browse PROCESS_TABLE and return the first available slot if it exists.
 pub fn get_slot() -> Option<usize> {
-	let mut result: Option<usize> = None;
-	for index in 0..256 {
-		if PROCESS_TABLE[index].read().is_none() {
-			result = Some(index as usize);
-			break;
+	for (index, element) in PROCESS_TABLE.iter().enumerate() {
+		if element.read().is_none() {
+			return Some(index);
 		}
 	}
-	result
+	None
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
@@ -94,7 +93,7 @@ pub fn get_process_count() -> u8 { *PROCESS_COUNT.read() }
 
 fn increment() -> u8 {
 	let mut guard = PROCESS_COUNT.write();
-	if *guard < 255 {
+	if *guard < MAX {
 		*guard += 1;
 	}
 	*guard
