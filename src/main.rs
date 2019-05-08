@@ -75,6 +75,7 @@ fn user_space() {
 
 /// Creates a mapper and a frame allocator.
 /// Maps a page corresponding to the screen and writes "New!" into it.
+#[allow(clippy::unreadable_literal)]
 fn map_memory(boot_info: &'static BootInfo) {
 	use kernel::vmm::memory::{create_example_mapping, init, BootInfoFrameAllocator};
 	use x86_64::{structures::paging::Page, VirtAddr};
