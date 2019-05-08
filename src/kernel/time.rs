@@ -13,10 +13,10 @@ pub fn get_datetime() -> RTCDateTime {
 	cmos.read_rtc(CMOSCenturyHandler::CurrentYear(2019))
 }
 
+// Operations
+
 /// Return the difference between two `RTCDateTime` as a `Duration`.
 pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration { to_duration(dt_sub_dt(first, second)) }
-
-// Operations
 
 /// If first < second, the fields in the returned RTCDateTime equal to 0.
 pub fn dt_sub_dt(first: RTCDateTime, second: RTCDateTime) -> RTCDateTime {
@@ -37,37 +37,36 @@ pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime>
 	use core::usize::MAX;
 
 	if (MAX - first.year) < second.year {
-		return None;
-	}
-
-	let mut result = RTCDateTime {
-		second: first.second + second.second,
-		minute: first.minute + second.minute,
-		hour: first.hour + second.hour,
-		day: first.day + second.day,
-		month: first.month + second.month,
-		year: 0,
-	};
-
-	let remove_overflow = |a: &mut u8, b: &mut u8, limit: u8| {
-		if limit < *a {
-			*a -= limit;
-			*b += 1;
-		}
-	};
-
-	remove_overflow(&mut result.second, &mut result.minute, 60);
-	remove_overflow(&mut result.minute, &mut result.hour, 60);
-	remove_overflow(&mut result.hour, &mut result.day, 24);
-	remove_overflow(&mut result.day, &mut result.month, 31);
-
-	result.year = first.year + second.year;
-	if result.year == MAX && 12 < result.month {
 		None
 	} else {
-		result.month -= 12;
-		result.year += 1;
-		Some(result)
+		let remove_overflow = |a: &mut u8, b: &mut u8, limit: u8| {
+			if limit < *a {
+				*a -= limit;
+				*b += 1;
+			}
+		};
+
+		let mut result = RTCDateTime {
+			second: first.second + second.second,
+			minute: first.minute + second.minute,
+			hour: first.hour + second.hour,
+			day: first.day + second.day,
+			month: first.month + second.month,
+			year: first.year + second.year,
+		};
+
+		remove_overflow(&mut result.second, &mut result.minute, 60);
+		remove_overflow(&mut result.minute, &mut result.hour, 60);
+		remove_overflow(&mut result.hour, &mut result.day, 24);
+		remove_overflow(&mut result.day, &mut result.month, 31);
+
+		if result.year == MAX && 12 < result.month {
+			None
+		} else {
+			result.month -= 12;
+			result.year += 1;
+			Some(result)
+		}
 	}
 }
 
