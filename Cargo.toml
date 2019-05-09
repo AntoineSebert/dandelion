@@ -25,13 +25,14 @@ harness = false
 #https://doc.rust-lang.org/rustdoc
 
 [package.metadata.bootimage]
+run-args = [
+	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
+	"-serial", "mon:stdio"
+]
 test-args = [
 	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
-	"-serial", "mon:stdio",
+	"-serial", "stdio",
 	"-display", "none"
-]
-run-args = [
-	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "mon:stdio"
 ]
 test-success-exit-code = 33
 default-target = "x86_64-dandelion.json"
@@ -44,8 +45,7 @@ pic8259_simple = "^0.1"
 spin = "^0.5"
 uart_16550 = "^0.2"
 volatile = "^0.2"
-x86_64 = "^0.6"
-#cmos = "^0.1"
+x86_64 = "^0.7"
 
 [dependencies.arraydeque]
 version = "^0.4"
