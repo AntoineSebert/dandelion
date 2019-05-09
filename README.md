@@ -20,24 +20,22 @@
 
 ## Table of contents
 
-- :fallen_leaf: [Motivation](#motivation)
-- 🌴 [Main design characteristics](#main design characteristics)
-- 💐 [Technical choices](#technical choices)
-- :ear_of_rice: [Getting started](#getting started)
-  - :hibiscus: [Prerequisites](#prerequisites)
-  - :cherry_blossom: [Installing]
-- :sunflower: [Running the tests]
-  - :tulip: [End to end tests]
-  - :blossom: [Coding style tests]
-- :herb: [Deployment](# deployment)
-- :maple_leaf: [Built tool](#build tool)
-- 🌲 [Documentation](#documentation)
-- 🌹 [File hierarchy](#file hierarchy)
-- :seedling: [Contributing](#contributing)
-- :cactus: [Versioning](#versioning)
-- :leaves: [Authors](#authors)
-- :four_leaf_clover: [License](#license)
-- :deciduous_tree: [Acknowledgments](#acknowledgments)
+- [Motivation](#motivation)
+- [Main design characteristics](#Main design characteristics)
+- [Technical choices](#Technical choices)
+- [Getting started](#Getting started)
+  - [Prerequisites](#prerequisites)
+  - [Installing](#Installing)
+- [Running the tests](#Running the tests)
+- [Deployment](#deployment)
+- [Built tool](#Build tool)
+- [Documentation](#documentation)
+- [File hierarchy](#File hierarchy)
+- [Contributing](#contributing)
+- [Versioning](#versioning)
+- [Authors](#authors)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ## Motivation
 
@@ -98,22 +96,6 @@ End with an example of getting some data out of the system or using it for a lit
 ## Running the tests
 
 Explain how to run the automated tests for this system.
-
-### End to end tests
-
-Explain what these tests test and why.
-
-```
-Give an example
-```
-
-### Coding style tests
-
-Explain what these tests test and why.
-
-```
-Give an example
-```
 
 ## Deployment
 
