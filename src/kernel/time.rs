@@ -31,8 +31,8 @@ pub fn dt_sub_dt(first: RTCDateTime, second: RTCDateTime) -> RTCDateTime {
 }
 
 /// Assumes that both `RTCDateTime` parameters are valid.
-/// Returns `Some(RTCDateTime)` if the addition could be performed, or `None` if the result is greater than the maximal
-/// `RTCDateTime` possible.
+/// Returns `Some(RTCDateTime)` if the addition could be performed.
+/// Returns `None` if the result is greater than `RTCDateTime::max()`.
 pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime> {
 	use core::usize::MAX;
 
@@ -71,8 +71,8 @@ pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime>
 }
 
 /// Adds a `Duration` to an `RTCDateTime`.
-/// Returns `Some(RTCDateTime)` if the operation could be performed, or `None` if the result is greater than the maximal
-/// `RTCDateTime` possible.
+/// Returns `Some(RTCDateTime)` if the operation could be performed.
+/// Returns `None` if the result is greater than `RTCDateTime::max()`.
 pub fn dt_add_du(datetime: RTCDateTime, duration: Duration) -> Option<RTCDateTime> {
 	dt_add_dt(datetime, to_rtcdatetime(duration))
 }
