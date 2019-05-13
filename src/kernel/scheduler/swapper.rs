@@ -24,7 +24,10 @@ Note that this is only a high-level overview and only one way of doing it. For t
 //fn pop_register() {}
 
 use super::RUNNING;
-use crate::kernel::process::{self, State};
+use crate::kernel::process::{
+	self,
+	State::{self, MainMemory},
+};
 
 /// Return the value of RUNNING.
 pub fn get_running() -> Option<u8> { *RUNNING.read() }
@@ -36,8 +39,8 @@ pub fn get_running() -> Option<u8> { *RUNNING.read() }
 /// Return a tuple containing the old and the new running PIDs if they exist.
 pub fn next() -> (Option<u8>, Option<u8>) {
 	use super::{queue_push_back, terminate, BLOCKED_QUEUE, READY_QUEUE};
-	use State::{MainMemory, SwapSpace};
 	use process::{MainMemory::Ready, SwapSpace::Suspended};
+	use State::SwapSpace;
 
 	let old = get_running();
 
@@ -60,18 +63,13 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 
 /// Set the value of RUNNING and update the state of the related process if it exists.
 fn set_running(value: Option<u8>) {
-	use State::MainMemory;
+	use super::set_process_state;
 	use process::MainMemory::Running;
 
 	let mut r_guard = RUNNING.write();
 	*r_guard = value;
 
-	if r_guard.is_some() {
-		// hide call to process table
-		super::PROCESS_TABLE[r_guard.unwrap() as usize]
-			.write()
-			.as_mut()
-			.unwrap()
-			.set_state(MainMemory(Running));
+	if let Some(pid) = value {
+		set_process_state(pid, MainMemory(Running));
 	}
 }

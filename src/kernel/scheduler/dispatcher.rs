@@ -32,7 +32,7 @@ pub fn global_info() -> (u8, usize, usize, Option<u8>) {
 /// Remove the processes those deadlines have been missed in the given queue.
 fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 	use crate::kernel::{
-		scheduler::PROCESS_TABLE,
+		scheduler::get_process_periodicity,
 		time::{dt_add_du, get_datetime},
 	};
 	use either::{Left, Right};
@@ -40,7 +40,7 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 	let mut guard = queue.lock();
 	let mut counter = 0;
 	for index in 0..guard.len() {
-		if let Some(periodicity) = PROCESS_TABLE[index as usize].read().as_ref().unwrap().get_periodicity() {
+		if let Some(periodicity) = get_process_periodicity(index as u8) {
 			match periodicity {
 				Left(periodic) => {
 					if dt_add_du(periodic.2, periodic.1).unwrap() < get_datetime() {
@@ -64,7 +64,7 @@ fn terminator(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> u8 {
 pub mod strategy {
 	use crate::kernel::{
 		process::ord_periodicity,
-		scheduler::{queue_front, PROCESS_TABLE},
+		scheduler::{get_process_periodicity, get_process_priority, queue_front},
 	};
 	use arraydeque::ArrayDeque;
 	use core::cmp::Ordering::*;
@@ -81,12 +81,12 @@ pub mod strategy {
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn priority(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
 		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
-			PROCESS_TABLE[*a as usize]
-				.read()
-				.as_ref()
-				.unwrap()
-				.get_priority()
-				.cmp(&PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_priority())
+			match (get_process_priority(*a), get_process_priority(*b)) {
+				(Some(a_priority), Some(b_priority)) => a_priority.cmp(&b_priority),
+				(Some(_), None) => Greater,
+				(None, Some(_)) => Less,
+				(None, None) => Equal,
+			}
 		});
 
 		queue_front(queue)
@@ -96,24 +96,24 @@ pub mod strategy {
 	/// LOW can preempt MEDIUM, MEDIUM can preempt HIGH.
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn modified_earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+		use crate::kernel::process::PRIORITY::*;
+
 		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
-			use crate::kernel::process::PRIORITY::*;
-
-			let guard_a = PROCESS_TABLE[*a as usize].read();
-			let guard_b = PROCESS_TABLE[*b as usize].read();
-
-			let process_a = guard_a.as_ref().unwrap();
-			let process_b = guard_b.as_ref().unwrap();
-
-			match (process_a.get_periodicity(), process_b.get_periodicity()) {
-				(None, None) => process_a.get_priority().cmp(&process_b.get_priority()),
+			match (get_process_periodicity(*a), get_process_periodicity(*b)) {
+				(None, None) => get_process_priority(*a).cmp(&get_process_priority(*b)),
 				(None, Some(_)) => Less,
 				(Some(_), None) => Greater,
 				(Some(periodicity_a), Some(periodicity_b)) => {
-					match (process_a.get_priority(), process_b.get_priority()) {
-						(HIGH, LOW) => ord_periodicity(&periodicity_a, &periodicity_b),
-						(LOW, HIGH) => ord_periodicity(&periodicity_a, &periodicity_b),
-						_ => process_a.get_priority().cmp(&process_b.get_priority()),
+					match (get_process_priority(*a), get_process_priority(*b)) {
+						(Some(a_priority), Some(b_priority)) => {
+							match (a_priority, b_priority) {
+								(HIGH, LOW) | (LOW, HIGH) => ord_periodicity(&periodicity_a, &periodicity_b),
+								_ => get_process_priority(*a).cmp(&get_process_priority(*b)),
+							}
+						}
+						(Some(_), None) => Greater,
+						(None, Some(_)) => Less,
+						(None, None) => Equal,
 					}
 				}
 			}
@@ -126,14 +126,11 @@ pub mod strategy {
 	/// Return the PID of the first process in the ready queue if it exists.
 	pub fn earliest_deadline_first(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
 		queue.lock().as_mut_slices().0.sort_unstable_by(|a, b| {
-			match (
-				PROCESS_TABLE[*a as usize].read().as_ref().unwrap().get_periodicity(),
-				PROCESS_TABLE[*b as usize].read().as_ref().unwrap().get_periodicity(),
-			) {
-				(None, None) => Equal,
-				(None, Some(_)) => Less,
+			match (get_process_periodicity(*a), get_process_periodicity(*b)) {
+				(Some(periodicity_a), Some(periodicity_b)) => ord_periodicity(&periodicity_a, &periodicity_b),
 				(Some(_), None) => Greater,
-				(Some(periodicity_a), Some(periodicity_b)) => ord_periodicity(periodicity_a, periodicity_b),
+				(None, Some(_)) => Less,
+				(None, None) => Equal,
 			}
 		});
 

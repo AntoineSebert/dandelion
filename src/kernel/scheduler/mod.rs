@@ -6,13 +6,14 @@ pub mod admitter;
 pub mod dispatcher;
 pub mod swapper;
 
-use super::process::{task::Task, Constraint, Runnable, State};
+use super::process::{task::Task, Aperiodic, Constraint, Periodic, Runnable, State, PRIORITY};
 use crate::println;
 use array_init::array_init;
 use arraydeque::{ArrayDeque, CapacityError};
+use core::u8::MAX;
+use either::Either;
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
-use core::u8::MAX;
 
 lazy_static! {
 	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = { array_init(|_| RwLock::new(None)) }; // should be replaced by a set
@@ -43,6 +44,35 @@ pub fn get_slot() -> Option<usize> {
 		}
 	}
 	None
+}
+
+/// Set the state of a process.
+/// Return true is the operation could be performed, and false otherwise.
+pub fn set_process_state(pid: u8, state: State) -> bool {
+	match PROCESS_TABLE[pid as usize].write().as_mut() {
+		Some(process) => {
+			process.set_state(state);
+			true
+		}
+		None => false,
+	}
+}
+
+/// Returns the periodicity of a process.
+/// If the process is non-realtime or does not exists, the result is `None`.
+pub fn get_process_periodicity(pid: u8) -> Option<Either<Periodic, Aperiodic>> {
+	match PROCESS_TABLE[pid as usize].write().as_mut() {
+		Some(process) => *process.get_periodicity(),
+		None => None,
+	}
+}
+
+/// Returns an `Option` containing a `PRIORITY` if the process exists, or `None` if it does not.
+pub fn get_process_priority(pid: u8) -> Option<PRIORITY> {
+	match PROCESS_TABLE[pid as usize].write().as_mut() {
+		Some(process) => Some(process.get_priority()),
+		None => None,
+	}
 }
 
 /// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
