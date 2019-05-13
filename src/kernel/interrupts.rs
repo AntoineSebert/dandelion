@@ -1,6 +1,8 @@
 //#![cfg(not(windows))] // makes the build fail
 
 use crate::{hlt_loop, kernel::vmm::gdt, print, println};
+#[cfg(test)]
+use crate::{serial_print, serial_println};
 use interrupt_indexes::Hardware::*;
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
@@ -9,8 +11,6 @@ use x86_64::{
 	instructions::{interrupts::without_interrupts, port::Port},
 	structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode},
 };
-#[cfg(test)]
-use crate::{serial_print, serial_println};
 
 /// From 32 to 39.
 pub const PIC_1_OFFSET: u8 = 32;
