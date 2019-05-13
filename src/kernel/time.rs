@@ -16,7 +16,7 @@ pub fn get_datetime() -> RTCDateTime {
 // Operations
 
 /// Return the difference between two `RTCDateTime` as a `Duration`.
-pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration { to_duration(dt_sub_dt(first, second)) }
+pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration { to_duration(first) - to_duration(second) }
 
 /// If first < second, the fields in the returned RTCDateTime equal to 0.
 pub fn dt_sub_dt(first: RTCDateTime, second: RTCDateTime) -> RTCDateTime {
@@ -78,7 +78,7 @@ pub fn dt_add_du(datetime: RTCDateTime, duration: Duration) -> Option<RTCDateTim
 }
 
 /// Converts a `RTCDateTime` into a `Duration` without checking.
-/// However it is possible that `u64::MAX` seconds is greater than the maximal `RTCDateTime` possible.
+// add checks
 pub fn to_duration(datetime: RTCDateTime) -> Duration {
 	Duration::from_secs(
 		u64::from(datetime.second)
