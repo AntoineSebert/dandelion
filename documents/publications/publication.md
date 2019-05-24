@@ -1,11 +1,18 @@
-# Microkernel Real-time Operating System in Rust
+potential titles
 
-[Antoine Sébert](mailto:antoine.sb@orange.fr)[^author]
+basic (naked truth):
 
-09/02/2019
+# A Microkernel Real-time Operating System in pure Rust
 
-> “The tools we use have a profound and devious influence on our thinking habits, and therefore on our thinking abilities”
-> E. W. Dijkstra
+assessment-oriented (assess maturity of technology for specific purpose):
+
+# On the feasability of implementing a microkernel RTOS in pure Rust
+
+approach-oriented (well defined technology with new technique):
+
+# Implementing a microkernel RTOS : the pure Rust approach
+
+[Antoine Sébert](mailto:antoine.sb@orange.fr)[^author], 2019/02/09
 
 ## Abstract
 
@@ -685,72 +692,6 @@ pub type Task = (Metadata, Runnable);
 pub type Job<'a> = (Metadata, &'a [&'a Runnable]);
 pub type Group<'a> = &'a [&'a Task];
 ```
-
-### Commands
-
-Assuming the current working directory is the operating system’s directory.
-
-Build & run :
-````
-bootimage run -- -serial mon:stdio -device isa-debug-exit,iobase=0xf4,iosize=0x04
-````
-
-Create a bootable device from the kernel image (with *sdX* as target device mounting point):
-````
-dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
-````
-
-### Tests
-
-#### Command
-
-This command runs the test files in `src/bin`. For each test file, an OS image file is built and run. This allows unit tests not to interfere with other tests.
-
-````
-bootimage test
-````
-
-### Code statistics
-
-#### Command
-
-```
-tokei ./src --files
-```
-
-#### Table
-
-| Language                                            | Files | Lines | Code | Comments | Blanks |
-| --------------------------------------------------- | ----- | ----- | ---- | -------- | ------ |
-| Rust                                                | 27    | 2214  | 1531 | 338      | 345    |
-| `lib.rs`                                            |       | 29    | 16   | 7        | 6      |
-| `main.rs`                                           |       | 112   | 66   | 25       | 21     |
-| `bin\test-basic-boot.rs`                            |       | 35    | 24   | 5        | 6      |
-| `bin\test-exception-breakpoint.rs`                  |       | 39    | 28   | 5        | 6      |
-| `bin\test-exception-double-fault-stack-overflow.rs` |       | 70    | 53   | 5        | 12     |
-| `bin\test-firm-deadline-exception.rs`               |       | 41    | 31   | 5        | 5      |
-| `bin\test-hard-deadline-exception.rs`               |       | 41    | 31   | 5        | 5      |
-| `bin\test-panic.rs`                                 |       | 29    | 19   | 5        | 5      |
-| `bin\test-soft-deadline-exception.rs`               |       | 41    | 31   | 5        | 5      |
-| `bin\test-task-remaining-exception.rs`              |       | 41    | 31   | 5        | 5      |
-| `bin\test-time-remaining-exception.rs`              |       | 41    | 31   | 5        | 5      |
-| `kernel\acpi.rs`                                    |       | 6     | 1    | 4        | 1      |
-| `kernel\interrupts.rs`                              |       | 291   | 180  | 70       | 41     |
-| `kernel\mod.rs`                                     |       | 20    | 10   | 7        | 3      |
-| `kernel\process.rs`                                 |       | 155   | 109  | 12       | 34     |
-| `kernel\serial.rs`                                  |       | 46    | 30   | 9        | 7      |
-| `kernel\time.rs`                                    |       | 101   | 70   | 12       | 19     |
-| `kernel\vga_buffer.rs`                              |       | 243   | 182  | 25       | 36     |
-| `kernel\scheduler\admitter.rs`                      |       | 121   | 87   | 12       | 22     |
-| `kernel\scheduler\dispatcher.rs`                    |       | 275   | 227  | 22       | 26     |
-| `kernel\scheduler\mod.rs`                           |       | 186   | 136  | 20       | 30     |
-| `kernel\scheduler\swapper.rs`                       |       | 86    | 38   | 29       | 19     |
-| `kernel\ipc\mod.rs`                                 |       | 4     | 0    | 4        | 0      |
-| `kernel\shell\mod.rs`                               |       | 4     | 0    | 4        | 0      |
-| `kernel\vmm\gdt.rs`                                 |       | 54    | 40   | 4        | 10     |
-| `kernel\vmm\memory.rs`                              |       | 96    | 58   | 23       | 15     |
-| `kernel\vmm\mod.rs`                                 |       | 7     | 2    | 4        | 1      |
-| Total                                               | 27    | 2214  | 1531 | 338      | 345    |
 
 ## Discussion
 
