@@ -39,6 +39,7 @@ default-target = "x86_64-dandelion.json"
 
 [dependencies]
 array-init = "^0.0"
+bitflags = "^1.0"
 integer-sqrt = "^0.1"
 pc-keyboard = "^0.5"
 pic8259_simple = "^0.1"
