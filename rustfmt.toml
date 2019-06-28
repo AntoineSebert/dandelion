@@ -8,7 +8,6 @@ max_width = 120
 force_multiline_blocks = true
 newline_style = "unix"
 reorder_impl_items = true
-format_doc_comments = true
 wrap_comments = true
 color = "always"
 unstable_features = true
