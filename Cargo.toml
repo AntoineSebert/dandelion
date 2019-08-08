@@ -53,7 +53,7 @@ version = "^0.4"
 default-features = false
 
 [dependencies.bootloader]
-version = "^0.7"
+version = "^0.8"
 features = ["map_physical_memory"]
 
 [dependencies.cmos]
