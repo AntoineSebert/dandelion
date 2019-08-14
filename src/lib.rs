@@ -3,17 +3,20 @@
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 #![feature(abi_x86_interrupt)]
+#![feature(alloc_error_handler)]
 #![feature(asm)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
 #![feature(trait_alias)]
 
-pub mod kernel;
+extern crate alloc;
 
 #[cfg(test)]
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use x86_64::instructions;
+
+pub mod kernel;
 
 #[cfg(test)]
 entry_point!(test_kernel_main); // OS entry point override for tests.
