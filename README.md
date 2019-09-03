@@ -1,14 +1,11 @@
 <p align=center><img src=resources/dandelion_logo.svg alt=Dandelion width=200></p>
 
-
 [![License: CC BY-NC-SA
 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-# 🚀 Dandelion : POSIX-compliant Microkernel Real-Time Operating System in Rust
+# 🚀 Dandelion : Microkernel Real-Time Operating System in Rust
 
-**Dandelion**. Make your mistakes more reliable.
-
-(or “Meet your constraints.”)
+**Dandelion**. Meet your constraints.
 
 > Ainsi, toujours poussés vers de nouveaux rivages,
 >
@@ -39,7 +36,7 @@
 
 ## Motivation
 
-This project aims to create a POSIX-compliant microkernel real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
+This project aims to create a microkernel real-time operating system using the Rust language. It addresses a large area of design techniques and algorithms so as to reach three defined goals  :
 
 - **deterministic** execution time of the programs (or subparts of them), allowing the processes to be managed accurately
 - **correctness** of the time when a result is expected, to meet or miss the deadlines, where treatment marks the difference between soft and hard RTOS
