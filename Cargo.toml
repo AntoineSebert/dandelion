@@ -14,7 +14,7 @@ license = "CC-BY-NC-SA-4.0"
 maintenance = { status = "experimental" }
 
 [[test]]
-name = "panic_handler"
+name = "should_panic"
 harness = false
 
 [[test]]
