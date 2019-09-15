@@ -59,18 +59,15 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 /// Maps a page corresponding to the screen and writes "New!" into it.
 #[allow(clippy::unreadable_literal)]
 fn map_memory(boot_info: &'static BootInfo) {
-	use alloc::{
-		boxed::Box,
-		rc::Rc,
-		vec::Vec,
-	};
+	use alloc::{boxed::Box, rc::Rc, vec::Vec};
 	use kernel::vmm::{
 		allocator,
 		memory::{create_example_mapping, init, BootInfoFrameAllocator},
 	};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
-	let mut mapper = unsafe { init(boot_info.physical_memory_offset) };
+	let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+	let mut mapper = unsafe { init(phys_mem_offset) };
 	let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
 
 	{
