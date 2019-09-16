@@ -8,6 +8,7 @@ pub mod swapper;
 
 use super::process::{task::Task, Aperiodic, Constraint, Periodic, Runnable, State, PRIORITY};
 use crate::println;
+use alloc::{string::String, vec};
 use array_init::array_init;
 use arraydeque::{ArrayDeque, CapacityError};
 use core::u8::MAX;
@@ -27,7 +28,9 @@ lazy_static! {
 pub fn run() -> Option<u64> {
 	match *(RUNNING.read()) {
 		Some(index) => {
-			Some(PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(&["sample_runnable_2"]))
+			Some(PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(vec![String::from(
+				"sample_runnable_2",
+			)]))
 		}
 		None => None,
 	}

@@ -3,6 +3,7 @@
 pub mod task;
 
 use super::time::dt_add_du;
+use alloc::{string::String, vec::Vec};
 use cmos::RTCDateTime;
 use core::{
 	cmp::Ordering::{self, *},
@@ -51,7 +52,7 @@ pub enum PRIORITY {
 
 // type aliases
 
-pub type Arguments<'a> = &'a [&'a str];
+pub type Arguments = Vec<String>;
 
 /// 0 : estimated completion time
 /// 1 : interval
