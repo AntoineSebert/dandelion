@@ -82,15 +82,15 @@ impl Eq for Runnable {}
 
 // job
 
-pub struct Job<'a> {
+pub struct Job {
 	metadata: Metadata,
-	thread: &'a [&'a Runnable],
+	thread: Vec<Runnable>,
 }
 
 // group
 
-pub struct Group<'a> {
-	member: &'a [&'a task::Task],
+pub struct Group {
+	member: Vec<task::Task>,
 }
 
 // order
