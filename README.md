@@ -18,7 +18,7 @@
 ## Table of contents
 
 - [Motivation](#motivation)
-- [Main design characteristics](#<Main design characteristics>)
+- [Main design characteristics](<#Main design characteristics>)
 - [Technical choices](#Technical choices)
 - [Getting started](#Getting started)
   - [Prerequisites](#prerequisites)
