@@ -39,7 +39,7 @@ default-target = "x86_64-dandelion.json"
 
 [dependencies]
 array-init = "^0.1"
-bitflags = "^1.1"
+bitflags = "^1.2"
 integer-sqrt = "^0.1"
 linked_list_allocator = "^0.6"
 pc-keyboard = "^0.5"
