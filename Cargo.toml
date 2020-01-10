@@ -11,7 +11,6 @@ readme = "README.md"
 keywords = ["real-time", "OS", "RTOS", "microkernel"]
 categories = ["embedded", "no-std"]
 license = "CC-BY-NC-SA-4.0"
-maintenance = { status = "experimental" }
 
 [[test]]
 name = "should_panic"
