@@ -1,6 +1,6 @@
 //#![cfg(not(windows))] // makes the build fail
 
-use crate::{hlt_loop, kernel::vmm::gdt, print, println};
+use crate::{kernel::vmm::gdt, hlt_loop, print, println};
 #[cfg(test)]
 use crate::{serial_print, serial_println};
 use interrupt_indexes::Hardware::*;
@@ -124,9 +124,8 @@ extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut InterruptStackFra
 	println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut InterruptStackFrame, _error_code: u64) {
-	println!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
-	hlt_loop();
+extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut InterruptStackFrame, _error_code: u64) -> ! {
+	panic!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 }
 
 extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFrame, error_code: PageFaultErrorCode) {

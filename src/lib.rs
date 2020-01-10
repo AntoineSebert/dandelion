@@ -11,15 +11,10 @@
 
 extern crate alloc;
 
-#[cfg(test)]
-use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use x86_64::instructions;
 
 pub mod kernel;
-
-#[cfg(test)]
-entry_point!(test_kernel_main); // OS entry point override for tests.
 
 /// Initialize the ACPI, the GDT,the IDT and the PICS.
 /// Enables the interrupts and changes RTC interrupt rate.
@@ -69,6 +64,12 @@ pub fn hlt_loop() -> ! {
 	}
 }
 
+#[cfg(test)]
+use bootloader::{entry_point, BootInfo};
+
+#[cfg(test)]
+entry_point!(test_kernel_main); // OS entry point override for tests.
+
 /// Runs all the tests.
 pub fn test_runner(tests: &[&dyn Fn()]) {
 	serial_println!("Running {} tests", tests.len());
@@ -98,3 +99,8 @@ fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! { test_panic_handler(info) }
+
+#[alloc_error_handler]
+fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
+	panic!("allocation error: {:?}", layout)
+}
