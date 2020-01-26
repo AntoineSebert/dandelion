@@ -1,6 +1,6 @@
 //#![cfg(not(windows))] // makes the build fail
 
-use crate::{kernel::vmm::gdt, hlt_loop, print, println};
+use crate::{hlt_loop, kernel::vmm::gdt, print, println};
 #[cfg(test)]
 use crate::{serial_print, serial_println};
 use interrupt_indexes::Hardware::*;

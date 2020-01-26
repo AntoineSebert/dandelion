@@ -83,8 +83,8 @@ impl BootInfoFrameAllocator {
 		let frame_addresses = addr_ranges.flat_map(|r| r.step_by(4096));
 		// create `PhysFrame` types from the start addresses
 		let frames = frame_addresses.map(|addr| PhysFrame::containing_address(PhysAddr::new(addr)));
-        // we know that the frames are really unused
-        frames.map(|f| unsafe { UnusedPhysFrame::new(f) })
+		// we know that the frames are really unused
+		frames.map(|f| unsafe { UnusedPhysFrame::new(f) })
 	}
 }
 

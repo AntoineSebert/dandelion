@@ -5,9 +5,13 @@
 #![feature(abi_x86_interrupt)]
 #![feature(alloc_error_handler)]
 #![feature(asm)]
+#![feature(const_fn)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
 #![feature(trait_alias)]
+#![feature(alloc_layout_extra)]
+#![feature(const_in_array_repeat_expressions)]
+#![feature(const_slice_len)]
 
 extern crate alloc;
 
@@ -99,8 +103,3 @@ fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! { test_panic_handler(info) }
-
-#[alloc_error_handler]
-fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
-	panic!("allocation error: {:?}", layout)
-}

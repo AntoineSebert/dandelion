@@ -5,8 +5,11 @@
 //!		cargo xrun
 //!		cargo xtest
 //!
+//! detect certain classes of undefined behavior (currently not working)
+//!		cargo clean && cargo miri test && cargo miri run
+//!
 //! format & lint
-//!		cargo +nightly fmt && cargo +nightly xclippy
+//!		cargo fmt && cargo +nightly xclippy
 //!
 //! repository data
 //!		tokei ./src --files
@@ -17,7 +20,6 @@
 //!
 //! misc
 //!		https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
-//!		let mortal_heroes: String = "your fame";
 //!		https://perf.rust-lang.org/
 
 #![no_std]
@@ -59,7 +61,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 /// Maps a page corresponding to the screen and writes "New!" into it.
 #[allow(clippy::unreadable_literal)]
 fn map_memory(boot_info: &'static BootInfo) {
-	use alloc::{boxed::Box, rc::Rc, vec::Vec};
+	use alloc::{boxed::Box, rc::Rc, vec, vec::Vec};
 	use kernel::vmm::{
 		allocator,
 		memory::{create_example_mapping, init, BootInfoFrameAllocator},
@@ -84,7 +86,6 @@ fn map_memory(boot_info: &'static BootInfo) {
 	allocator::init_heap(&mut mapper, &mut frame_allocator).expect("heap initialization failed");
 
 	{
-		// allocate a number on the heap
 		let heap_value = Box::new(41);
 		println!("heap_value at {:p}", heap_value);
 
@@ -96,7 +97,7 @@ fn map_memory(boot_info: &'static BootInfo) {
 		println!("vec at {:p}", vec.as_slice());
 
 		// create a reference counted vector -> will be freed when count reaches 0
-		let reference_counted = Rc::new(alloc::vec![1, 2, 3]);
+		let reference_counted = Rc::new(vec![1, 2, 3]);
 		let cloned_reference = reference_counted.clone();
 		println!("current reference count is {}", Rc::strong_count(&cloned_reference));
 		core::mem::drop(reference_counted);
