@@ -74,7 +74,7 @@ impl LinkedListAllocator {
 	/// Returns the allocation start address on success.
 	fn alloc_from_region(region: &ListNode, size: usize, align: usize) -> Result<usize, ()> {
 		let alloc_start = align_up(region.start_addr(), align);
-		let alloc_end = alloc_start + size;
+		let alloc_end = alloc_start.checked_add(size).ok_or(())?;
 
 		if alloc_end > region.end_addr() {
 			// region too small
@@ -97,8 +97,7 @@ impl LinkedListAllocator {
 	///
 	/// Returns the adjusted size and alignment as a (size, align) tuple.
 	fn size_align(layout: Layout) -> (usize, usize) {
-		let layout =
-			layout.align_to(mem::align_of::<ListNode>()).expect("adjusting alignment failed").pad_to_align().unwrap();
+		let layout = layout.align_to(mem::align_of::<ListNode>()).expect("adjusting alignment failed").pad_to_align();
 		let size = layout.size().max(mem::size_of::<ListNode>());
 		(size, layout.align())
 	}
@@ -108,10 +107,10 @@ unsafe impl GlobalAlloc for Locked<LinkedListAllocator> {
 	unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
 		// perform layout adjustments
 		let (size, align) = LinkedListAllocator::size_align(layout);
-		let mut allocator = self.inner.lock();
+		let mut allocator = self.lock();
 
 		if let Some((region, alloc_start)) = allocator.find_region(size, align) {
-			let alloc_end = alloc_start + size;
+			let alloc_end = alloc_start.checked_add(size).expect("overflow");
 			let excess_size = region.end_addr() - alloc_end;
 			if excess_size > 0 {
 				allocator.add_free_region(alloc_end, excess_size);
@@ -126,6 +125,6 @@ unsafe impl GlobalAlloc for Locked<LinkedListAllocator> {
 		// perform layout adjustments
 		let (size, _) = LinkedListAllocator::size_align(layout);
 
-		self.inner.lock().add_free_region(ptr as usize, size)
+		self.lock().add_free_region(ptr as usize, size)
 	}
 }

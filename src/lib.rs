@@ -11,7 +11,6 @@
 #![feature(trait_alias)]
 #![feature(alloc_layout_extra)]
 #![feature(const_in_array_repeat_expressions)]
-#![feature(const_slice_len)]
 
 extern crate alloc;
 
