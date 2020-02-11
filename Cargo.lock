@@ -70,7 +70,7 @@ dependencies = [
  "spin 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "uart_16550 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "volatile 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "x86_64 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "x86_64 0.9.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -170,6 +170,15 @@ dependencies = [
  "cast 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
+[[package]]
+name = "x86_64"
+version = "0.9.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "bit_field 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
 [metadata]
 "checksum array-init 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f30bbe2f5e3d117f55bd8c7a1f9191e4a5deba9f15f595bbea4f670c59c765db"
 "checksum arraydeque 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)" = "f0ffd3d69bd89910509a5d31d1f1353f38ccffdd116dd0099bbd6627f7bd8ad8"
@@ -194,3 +203,4 @@ dependencies = [
 "checksum uart_16550 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "58fc0bc8ff1beb1436e8c4ce9c4b47f6f6c1376b56fb91505fabeef13743eb33"
 "checksum volatile 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "6af0edf5b4faacc31fc51159244d78d65ec580f021afcef7bd53c04aeabc7f29"
 "checksum x86_64 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)" = "5d9e3e26fcb51976eafa310e8f2b7a5a83ae8c185443efe50cbc6534a4fffa0d"
+"checksum x86_64 0.9.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7467ff985c75f098f9897ea693141dbb25c8a5ceaf91e4a28ab705765932efb6"
