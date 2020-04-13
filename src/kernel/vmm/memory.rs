@@ -6,6 +6,8 @@ use x86_64::{
 
 /// Initialize a new OffsetPageTable.
 ///
+/// # Safety
+///
 /// This function is unsafe because the caller must guarantee that the
 /// complete physical memory is mapped to virtual memory at the passed
 /// `physical_memory_offset`. Also, this function must be only called once
