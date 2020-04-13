@@ -6,13 +6,15 @@ use super::super::process::{Constraint, Runnable};
 pub fn request(constraint: Constraint, code: Runnable) -> Option<usize> {
 	use super::{add_task, get_slot};
 
-	let slot = get_slot();
-
-	if slot.is_none() || !is_schedulable(constraint) {
-		None
+	if is_schedulable(constraint) {
+		if let Some(slot) = get_slot() {
+			add_task(constraint, code, slot);
+			Some(slot)
+		} else {
+			None
+		}
 	} else {
-		add_task(constraint, code, slot.unwrap());
-		slot
+		None
 	}
 }
 
