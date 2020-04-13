@@ -85,6 +85,10 @@ impl Executor {
 	}
 }
 
+impl Default for Executor {
+	fn default() -> Self { Self::new() }
+}
+
 struct TaskWaker {
 	task_id: TaskId,
 	wake_queue: Arc<ArrayQueue<TaskId>>,

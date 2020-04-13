@@ -49,8 +49,7 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 	set_running(new);
 	drop(guard);
 
-	if old.is_some() {
-		let pid = old.unwrap();
+	if let Some(pid) = old {
 		if queue_push_back(&READY_QUEUE, pid, MainMemory(Ready)).is_err()
 			&& queue_push_back(&BLOCKED_QUEUE, pid, SwapSpace(Suspended)).is_err()
 		{

@@ -107,15 +107,7 @@ pub fn ord_periodicity(a: &Either<Periodic, Aperiodic>, b: &Either<Periodic, Ape
 // to check
 pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {
 	match dt_add_du(a.2, a.1) {
-		Some(deadline_a) => {
-			if deadline_a < b.1 {
-				Less
-			} else if b.1 < deadline_a {
-				Greater
-			} else {
-				Equal
-			}
-		}
+		Some(deadline_a) => deadline_a.cmp(&b.1),
 		None => Less,
 	}
 }
