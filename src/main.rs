@@ -1,15 +1,12 @@
-//! target file argument (sometimes needed)
-//!		--target x86_64-dandelion.json
-//!
 //! run & tests
 //!		cargo xrun
 //!		cargo xtest
 //!
-//! detect certain classes of undefined behavior (currently not working)
-//!		cargo clean && cargo miri test && cargo miri run
-//!
 //! format & lint
 //!		cargo fmt && cargo +nightly xclippy
+//!
+//! detect certain classes of undefined behavior (currently not working)
+//!		cargo clean && cargo miri test && cargo miri run
 //!
 //! repository data
 //!		tokei ./src --files
@@ -44,12 +41,19 @@ entry_point!(kernel_main); // OS entry point override.
 /// Initialize the kernel components and launch the user space.
 /// Infinite loop at the end.
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
+	use kernel::task::{executor::Executor, keyboard, Task};
+
 	println!("Hello World!");
 	dandelion::init();
 	map_memory(boot_info);
 
 	#[cfg(test)]
 	test_main();
+
+	let mut executor = Executor::new();
+	executor.spawn(Task::new(example_task()));
+	executor.spawn(Task::new(keyboard::print_keypresses()));
+	executor.run();
 
 	user_space();
 
@@ -123,6 +127,13 @@ fn user_space() {
 
 	println!("removing process 0...{}", terminate(0));
 	println!("process 0 exists ? {}", process_exists(0));
+}
+
+async fn async_number() -> u32 { 42 }
+
+async fn example_task() {
+	let number = async_number().await;
+	println!("async number: {}", number);
 }
 
 /// Called on panic and prints information about the panic error.

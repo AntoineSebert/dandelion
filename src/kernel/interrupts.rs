@@ -1,6 +1,6 @@
 //#![cfg(not(windows))] // makes the build fail
 
-use crate::{hlt_loop, kernel::vmm::gdt, print, println};
+use crate::{hlt_loop, kernel::vmm::gdt, println};
 #[cfg(test)]
 use crate::{serial_print, serial_println};
 use interrupt_indexes::Hardware::*;
@@ -147,31 +147,14 @@ extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptSt
 }
 
 extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	use pc_keyboard::{
-		layouts::Us104Key,
-		DecodedKey::{RawKey, Unicode},
-		HandleControl, Keyboard, ScancodeSet1,
-	};
-
-	lazy_static! {
-		static ref KEYBOARD: Mutex<Keyboard<Us104Key, ScancodeSet1>> =
-			Mutex::new(Keyboard::new(Us104Key, ScancodeSet1, HandleControl::MapLettersToUnicode));
-	}
-
-	let mut keyboard = KEYBOARD.lock();
 	let mut port = Port::new(0x60);
-
 	let scancode: u8 = unsafe { port.read() };
-	if let Ok(Some(key_event)) = keyboard.add_byte(scancode) {
-		if let Some(key) = keyboard.process_keyevent(key_event) {
-			match key {
-				Unicode(character) => print!("{}", character),
-				RawKey(key) => print!("{:?}", key),
-			}
-		}
-	}
 
-	unsafe { PICS.lock().notify_end_of_interrupt(Keyboard.as_u8()) }
+	crate::kernel::task::keyboard::add_scancode(scancode);
+
+	unsafe {
+		PICS.lock().notify_end_of_interrupt(Keyboard.as_u8());
+	}
 }
 
 extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {

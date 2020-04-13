@@ -72,6 +72,20 @@ features = ["spin_no_std"]
 version = "^0.2"
 default-features = false
 
+[dependencies.crossbeam-queue]
+version = "^0.2"
+default-features = false
+features = ["alloc"]
+
+[dependencies.conquer-once]
+version = "^0.2"
+default-features = false
+
+[dependencies.futures-util]
+version = "^0.3"
+default-features = false
+features = ["alloc"]
+
 [dev-dependencies]
 array-init = "^0.1"
 
