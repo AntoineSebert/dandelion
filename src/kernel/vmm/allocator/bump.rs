@@ -29,7 +29,7 @@ unsafe impl GlobalAlloc for Locked<BumpAllocator> {
 		let mut bump = self.lock(); // get a mutable reference
 
 		let alloc_start = align_up(bump.next, layout.align());
-				let alloc_end = match alloc_start.checked_add(layout.size()) {
+		let alloc_end = match alloc_start.checked_add(layout.size()) {
 			Some(end) => end,
 			None => return ptr::null_mut(),
 		};
