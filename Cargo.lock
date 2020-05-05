@@ -113,7 +113,7 @@ dependencies = [
  "spin",
  "uart_16550",
  "volatile",
- "x86_64 0.10.1",
+ "x86_64 0.10.2",
 ]
 
 [[package]]
@@ -257,9 +257,9 @@ dependencies = [
 
 [[package]]
 name = "x86_64"
-version = "0.10.1"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6014ddb75b4f90f5bd2d067dbbd76ed093335b52d14365906801e9d63a69d82b"
+checksum = "074fe17c2586dd646602287854514c5cb3b6c3b5e63cd3970ecddbbb9c01468d"
 dependencies = [
  "bit_field",
  "bitflags",
