@@ -1,8 +1,6 @@
 //#![cfg(not(windows))] // makes the build fail
 
 use crate::{hlt_loop, kernel::vmm::gdt, println};
-#[cfg(test)]
-use crate::{serial_print, serial_println};
 use interrupt_indexes::Hardware::*;
 use lazy_static::lazy_static;
 use pic8259_simple::ChainedPics;
@@ -216,7 +214,5 @@ pub fn enable_rtc_interrupt() {
 /// Invoke a breakpoint exception.
 #[test_case]
 fn test_breakpoint_exception() {
-	serial_print!("test_breakpoint_exception...");
 	x86_64::instructions::interrupts::int3();
-	serial_println!("[ok]");
 }

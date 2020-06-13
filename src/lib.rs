@@ -74,11 +74,25 @@ use bootloader::{entry_point, BootInfo};
 #[cfg(test)]
 entry_point!(test_kernel_main); // OS entry point override for tests.
 
+pub trait Testable {
+	fn run(&self) -> ();
+}
+
+impl<T> Testable for T
+where T: Fn(),
+{
+	fn run(&self) {
+		serial_print!("{}...\t", core::any::type_name::<T>());
+		self();
+		serial_println!("[ok]");
+	}
+}
+
 /// Runs all the tests.
-pub fn test_runner(tests: &[&dyn Fn()]) {
+pub fn test_runner(tests: &[&dyn Testable]) {
 	serial_println!("Running {} tests", tests.len());
 	for test in tests {
-		test();
+		test.run();
 	}
 	exit_qemu(QemuExitCode::Success);
 }

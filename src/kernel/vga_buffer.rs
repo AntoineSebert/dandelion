@@ -1,11 +1,7 @@
-#[cfg(test)]
-use crate::{serial_print, serial_println};
 use core::fmt::{self, Arguments, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
-use x86_64::instructions::interrupts::without_interrupts;
-use Color::*;
 
 lazy_static! {
 	/// A global `Writer` instance that can be used for printing to the VGA text buffer.
@@ -68,6 +64,9 @@ struct ScreenChar {
 	color_code: ColorCode,
 }
 
+/// A writer type that allows writing ASCII bytes and strings to an underlying `Buffer`.
+///
+/// Wraps lines at `BUFFER_WIDTH`. Supports newline characters and implements the `core::fmt::Write` trait.
 pub struct Writer {
 	column_position: usize,
 	color_code: ColorCode,
@@ -75,6 +74,9 @@ pub struct Writer {
 }
 
 impl Writer {
+	/// Writes an ASCII byte to the buffer.
+	///
+	/// Wraps lines at `BUFFER_WIDTH`. Supports the `\n` newline character.
 	pub fn write_byte(&mut self, byte: u8) {
 		match byte {
 			b'\n' => self.new_line(),
@@ -93,6 +95,10 @@ impl Writer {
 		}
 	}
 
+	/// Writes the given ASCII string to the buffer.
+	///
+	/// Wraps lines at `BUFFER_WIDTH`. Supports the `\n` newline character. Does **not** support strings with
+	/// non-ASCII characters, since they can't be printed in the VGA text mode.
 	pub fn write_string(&mut self, s: &str) {
 		for byte in s.bytes() {
 			match byte {
@@ -104,6 +110,7 @@ impl Writer {
 		}
 	}
 
+	/// Shifts all lines one line up and clears the last row.
 	fn new_line(&mut self) {
 		for row in 1..BUFFER_HEIGHT {
 			for col in 0..BUFFER_WIDTH {
@@ -115,6 +122,7 @@ impl Writer {
 		self.column_position = 0;
 	}
 
+	/// Clears a row by overwriting it with blank characters.
 	fn clear_row(&mut self, row: usize) {
 		let blank = ScreenChar { ascii_character: b' ', color_code: self.color_code };
 		for col in 0..BUFFER_WIDTH {
@@ -132,28 +140,20 @@ impl Write for Writer {
 
 // Macros
 
-#[macro_export]
-macro_rules! timed_print {
-	($($arg:tt)*) => ($crate::kernel::vga_buffer::_print(format_args!("[{}] {}", "date", $($arg)*)));
-}
-
-#[macro_export]
-macro_rules! timed_println {
-	() => ($crate::print!("\n"));
-	($($arg:tt)*) => ($crate::timed_print!("{}\n", format_args!($($arg)*)));
-}
-
+/// Like the `print!` macro in the standard library, but prints to the VGA text buffer.
 #[macro_export]
 macro_rules! print {
 	($($arg:tt)*) => ($crate::kernel::vga_buffer::_print(format_args!($($arg)*)));
 }
 
+/// Like the `println!` macro in the standard library, but prints to the VGA text buffer.
 #[macro_export]
 macro_rules! println {
 	() => ($crate::print!("\n"));
 	($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
 }
 
+/// Prints the given formatted string to the VGA text buffer through the global `WRITER` instance.
 #[doc(hidden)]
 pub fn _print(args: Arguments) {
 	without_interrupts(|| {
@@ -165,24 +165,18 @@ pub fn _print(args: Arguments) {
 
 #[test_case]
 fn test_println_simple() {
-	serial_print!("test_println... ");
 	println!("test_println_simple output");
-	serial_println!("[ok]");
 }
 
 #[test_case]
 fn test_println_many() {
-	serial_print!("test_println_many... ");
 	for _ in 0..200 {
 		println!("test_println_many output");
 	}
-	serial_println!("[ok]");
 }
 
 #[test_case]
 fn test_println_output() {
-	serial_print!("test_println_output... ");
-
 	let s = "Some test string that fits on a single line";
 	without_interrupts(|| {
 		let mut writer = WRITER.lock();
@@ -192,6 +186,4 @@ fn test_println_output() {
 			assert_eq!(char::from(screen_char.ascii_character), c);
 		}
 	});
-
-	serial_println!("[ok]");
 }

@@ -148,3 +148,8 @@ fn panic(info: &PanicInfo) -> ! {
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! { dandelion::test_panic_handler(info) }
+
+#[test_case]
+fn trivial_assertion() {
+	assert_eq!(1, 1);
+}

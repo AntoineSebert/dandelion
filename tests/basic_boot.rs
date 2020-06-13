@@ -20,6 +20,4 @@ fn panic(info: &PanicInfo) -> ! { dandelion::test_panic_handler(info) }
 #[test_case]
 fn test_println() {
 	serial_print!("test_println... ");
-	println!("test_println output");
-	serial_println!("[ok]");
 }

@@ -9,9 +9,9 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-	serial_print!("stack_overflow... ");
+	serial_print!("stack_overflow::stack_overflow...\t");
 
-	dandelion::kernel::vmm::gdt::init();
+	gdt::init();
 	init_test_idt();
 
 	// trigger a stack overflow
@@ -23,6 +23,7 @@ pub extern "C" fn _start() -> ! {
 #[allow(unconditional_recursion)]
 fn stack_overflow() {
 	stack_overflow(); // for each recursion, the return address is pushed
+	volatile::Volatile::new(0).read(); // prevent tail recursion optimizations
 }
 
 lazy_static! {

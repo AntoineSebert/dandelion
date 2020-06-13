@@ -1,0 +1,4 @@
+time.rs implement operators in cmos crate
+process : ordering functions
+scheduler : terminate ghost processes
+http://www.rust-compare.com/site/index.html
