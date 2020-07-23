@@ -52,9 +52,9 @@ dependencies = [
 
 [[package]]
 name = "conquer-once"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f7644600a548ecad74e4a918392af1798f7dd045be610be3203b9e129b4f98f"
+checksum = "96eb12fb69466716fbae9009d389e6a30830ae8975e170eff2d2cff579f9efa3"
 dependencies = [
  "conquer-util",
 ]
