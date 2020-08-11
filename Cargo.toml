@@ -61,7 +61,7 @@ version = "^0.1"
 git = "https://github.com/AntoineSebert/cmos"
 
 [dependencies.either]
-version = "^1.5"
+version = "^1.6"
 default-features = false
 
 [dependencies.lazy_static]
