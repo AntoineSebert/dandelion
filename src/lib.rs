@@ -14,6 +14,7 @@
 #![feature(wake_trait)]
 
 extern crate alloc;
+extern crate rlibc;
 
 use core::panic::PanicInfo;
 use x86_64::instructions;
@@ -75,11 +76,12 @@ use bootloader::{entry_point, BootInfo};
 entry_point!(test_kernel_main); // OS entry point override for tests.
 
 pub trait Testable {
-	fn run(&self) -> ();
+	fn run(&self);
 }
 
 impl<T> Testable for T
-where T: Fn(),
+where
+	T: Fn(),
 {
 	fn run(&self) {
 		serial_print!("{}...\t", core::any::type_name::<T>());

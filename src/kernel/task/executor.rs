@@ -11,11 +11,7 @@ pub struct Executor {
 
 impl Executor {
 	pub fn new() -> Self {
-		Executor {
-			tasks: BTreeMap::new(),
-			task_queue: Arc::new(ArrayQueue::new(100)),
-			waker_cache: BTreeMap::new(),
-		}
+		Executor { tasks: BTreeMap::new(), task_queue: Arc::new(ArrayQueue::new(100)), waker_cache: BTreeMap::new() }
 	}
 
 	pub fn spawn(&mut self, task: Task) {
@@ -28,11 +24,7 @@ impl Executor {
 
 	fn run_ready_tasks(&mut self) {
 		// destructure `self` to avoid borrow checker errors
-		let Self {
-			tasks,
-			task_queue,
-			waker_cache,
-		} = self;
+		let Self { tasks, task_queue, waker_cache } = self;
 
 		while let Ok(task_id) = task_queue.pop() {
 			let task = match tasks.get_mut(&task_id) {
@@ -82,10 +74,7 @@ struct TaskWaker {
 
 impl TaskWaker {
 	fn new(task_id: TaskId, task_queue: Arc<ArrayQueue<TaskId>>) -> Waker {
-		Waker::from(Arc::new(TaskWaker {
-			task_id,
-			task_queue,
-		}))
+		Waker::from(Arc::new(TaskWaker { task_id, task_queue }))
 	}
 
 	fn wake_task(&self) { self.task_queue.push(self.task_id).expect("task_queue full"); }

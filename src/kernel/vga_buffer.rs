@@ -1,7 +1,9 @@
+use crate::instructions::interrupts::without_interrupts;
 use core::fmt::{self, Arguments, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
+use Color::*;
 
 lazy_static! {
 	/// A global `Writer` instance that can be used for printing to the VGA text buffer.

@@ -9,7 +9,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
-use dandelion::HEAP_SIZE;
+use dandelion::kernel::vmm::allocator::HEAP_SIZE;
 
 entry_point!(main);
 
