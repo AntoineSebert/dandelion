@@ -1,16 +1,17 @@
 //! run & tests
-//!		cargo xrun
-//!		cargo xtest
+//!		cargo build
+//!		cargo run
+//!		cargo test
 //!
 //! format & lint
-//!		cargo fmt && cargo +nightly xclippy
+//!		cargo fmt && cargo clippy
 //!
 //! detect certain classes of undefined behavior (currently not working)
 //!		cargo clean && cargo miri test && cargo miri run
 //!
 //! repository data
 //!		tokei ./src --files
-//!		cargo deps --all-deps | dot -Tpng > graph.png
+//!		cargo depgraph | dot -Tpng > graph.png
 //!
 //! bootable USB
 //!		dd if=target/x86_64-dandelion/debug/bootimage-dandelion.bin of=/dev/sdX && sync
@@ -18,6 +19,7 @@
 //! misc
 //!		https://giphy.com/gifs/love-cute-adorable-RExphJPPMEVeo
 //!		https://perf.rust-lang.org/
+//!		https://rust-lang.github.io/rustup-components-history/
 
 #![no_std]
 #![no_main]
@@ -28,6 +30,8 @@
 #![feature(allocator_api)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
+
+#![allow(clippy::tabs_in_doc_comments)]
 
 extern crate alloc;
 

@@ -18,16 +18,16 @@
 ## Table of contents
 
 - [Motivation](#motivation)
-- [Main design characteristics](<#Main design characteristics>)
-- [Technical choices](<#Technical choices>)
-- [Getting started](<#Getting started>)
+- [Main design characteristics](#Main design characteristics)
+- [Technical choices](#Technical choices)
+- [Getting started](#Getting started)
   - [Prerequisites](#prerequisites)
   - [Installing](#Installing)
-- [Running the tests](<#Running the tests>)
+- [Running the tests](#Running the tests)
 - [Deployment](#deployment)
-- [Built tool](<#Build tool>)
+- [Built tool](#Build tool)
 - [Documentation](#documentation)
-- [File hierarchy](<#File hierarchy>)
+- [File hierarchy](#File hierarchy)
 - [Contributing](#contributing)
 - [Versioning](#versioning)
 - [Authors](#authors)
@@ -62,41 +62,33 @@ Then you need to install an emulator to run the RTOS. We recommand [Qemu](https:
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
-Say what the step will be
+First you need to clone the repository:
 
 ```
 git clone https://github.com/AntoineSebert/dandelion
 cd dandelion
 ```
 
-If you want to clone dandelion in a particular folder, use
+Then you need to build the project and generate an iso image of the RTOS:
 
 ```
-git clone https://github.com/AntoineSebert/dandelion location
-cd location/dandelion
-```
-
-Then you need to build the project and generate an iso image of the RTOS.
-
-```
+cargo update
 cargo build
-cargo run parameters
 ```
 
-```
-qemu ... dandelion.iso
-```
+### Running the operating system
 
-End with an example of getting some data out of the system or using it for a little demo.
+Once all previous steps have been completed successfully, simply run the project:
+
+```
+cargo run
+```
 
 ## Running the tests
 
-Explain how to run the automated tests for this system.
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system.
+```
+cargo test
+```
 
 ## Build tool
 
@@ -105,45 +97,6 @@ Add additional notes about how to deploy this on a live system.
 ## Documentation
 
 The documentation for this repository can be found at https://github.com/AntoineSebert/dandelion/documentation
-
-## File hierarchy
-
-```
---src/
-  +--bin/
-  |  +--test-basic-boot.rs
-  |  +--test-exception-breakpoint.rs
-  |  +--test-exception-double-fault-stack-overflow.rs
-  |  +--test-firm-deadline-exception.rs
-  |  +--test-hard-deadline-exception.rs
-  |  +--test-panic.rs
-  |  +--test-soft-deadline-exception.rs
-  |  +--test-task-remaining-exception.rs
-  |  +--test-time-remaining-exception.rs
-  +--kernel/
-  |  +--ipc/
-  |  |  +--mod.rs
-  |  +--scheduler/
-  |  |  +--mod.rs
-  |  |  +--admitter.rs
-  |  |  +--dispatcher.rs
-  |  |  +--swapper.rs
-  |  +--shell/
-  |  |  +--mod.rs
-  |  +--vmm/
-  |  |  +--mod.rs
-  |  |  +--gdt.rs
-  |  |  +--memory.rs
-  |  +--mod.rs
-  |  +--acpi.rs
-  |  +--interrupt.rs
-  |  +--process.rs
-  |  +--serial.rs
-  |  +--time.rs
-  |  +--vga_buffer.rs
-  +--lib.rs
-  +--main.rs
-```
 
 ## Contributing
 
