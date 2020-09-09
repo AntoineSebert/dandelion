@@ -1,9 +1,7 @@
 # Untracked files
-resources/publications/
-resources/POSIX/
-resources/VxWorks/
-resources/osal-2.10
+resources/
 target
+Cargo.lock
 
 # ignore bibliography files
 documents/references.bib

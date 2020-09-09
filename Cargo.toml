@@ -24,17 +24,12 @@ harness = false
 #https://doc.rust-lang.org/rustdoc
 
 [package.metadata.bootimage]
-run-args = [
-	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
-	"-serial", "mon:stdio"
-]
 test-args = [
 	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
 	"-serial", "stdio",
 	"-display", "none"
 ]
 test-success-exit-code = 33
-default-target = "x86_64-dandelion.json"
 
 [dependencies]
 array-init = "^0.1"
@@ -43,6 +38,7 @@ integer-sqrt = "^0.1"
 linked_list_allocator = "^0.8"
 pc-keyboard = "^0.5"
 pic8259_simple = "^0.2"
+rlibc = "^1.0"
 spin = "^0.5"
 uart_16550 = "^0.2"
 volatile = "^0.3"
@@ -53,7 +49,7 @@ version = "^0.4"
 default-features = false
 
 [dependencies.bootloader]
-version = "^0.9"
+version = "^0.9.3"
 features = ["map_physical_memory"]
 
 [dependencies.cmos]
@@ -85,12 +81,3 @@ default-features = false
 version = "^0.3"
 default-features = false
 features = ["alloc"]
-
-[dev-dependencies]
-array-init = "^0.1"
-
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
