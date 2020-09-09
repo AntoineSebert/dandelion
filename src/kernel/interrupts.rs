@@ -213,6 +213,4 @@ pub fn enable_rtc_interrupt() {
 
 /// Invoke a breakpoint exception.
 #[test_case]
-fn test_breakpoint_exception() {
-	x86_64::instructions::interrupts::int3();
-}
+fn test_breakpoint_exception() { x86_64::instructions::interrupts::int3(); }
