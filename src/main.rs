@@ -30,7 +30,6 @@
 #![feature(allocator_api)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
-
 #![allow(clippy::tabs_in_doc_comments)]
 
 extern crate alloc;
@@ -54,12 +53,12 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 	#[cfg(test)]
 	test_main();
 
+	user_space();
+
 	let mut executor = Executor::new();
 	executor.spawn(Task::new(example_task()));
 	executor.spawn(Task::new(keyboard::print_keypresses()));
 	executor.run();
-
-	user_space();
 
 	println!("It did not crash!");
 	hlt_loop();
