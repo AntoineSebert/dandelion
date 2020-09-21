@@ -41,7 +41,7 @@ pic8259_simple = "^0.2"
 rlibc = "^1.0"
 spin = "^0.5"
 uart_16550 = "^0.2"
-volatile = "^0.3"
+volatile = "^0.4"
 x86_64 = "^0.11"
 
 [dependencies.arraydeque]
