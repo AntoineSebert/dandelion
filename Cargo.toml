@@ -69,7 +69,7 @@ version = "^0.2"
 default-features = false
 
 [dependencies.crossbeam-queue]
-version = "^0.2"
+version = "^0.3"
 default-features = false
 features = ["alloc"]
 
