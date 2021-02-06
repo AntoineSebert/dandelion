@@ -5,16 +5,14 @@
 #![feature(abi_x86_interrupt)]
 #![feature(alloc_error_handler)]
 #![feature(asm)]
-#![feature(const_fn)]
+#![feature(const_mut_refs)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
 #![feature(trait_alias)]
 #![feature(alloc_layout_extra)]
-#![feature(const_in_array_repeat_expressions)]
 #![feature(wake_trait)]
 
 extern crate alloc;
-extern crate rlibc;
 
 use core::panic::PanicInfo;
 use x86_64::instructions;

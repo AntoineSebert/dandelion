@@ -1,6 +1,6 @@
 use bootloader::bootinfo::{MemoryMap, MemoryRegionType::Usable};
 use x86_64::{
-	structures::paging::{FrameAllocator, Mapper, OffsetPageTable, Page, PageTable, PhysFrame, Size4KiB},
+	structures::paging::{FrameAllocator, OffsetPageTable, PageTable, PhysFrame, Size4KiB},
 	PhysAddr, VirtAddr,
 };
 
@@ -33,21 +33,6 @@ unsafe fn active_level_4_table(physical_memory_offset: VirtAddr) -> &'static mut
 	let page_table_ptr: *mut PageTable = virt.as_mut_ptr();
 
 	&mut *page_table_ptr // unsafe
-}
-
-/// Creates an example mapping for the given page to frame `0xb8000`.
-pub fn create_example_mapping(
-	page: Page,
-	mapper: &mut OffsetPageTable,
-	frame_allocator: &mut impl FrameAllocator<Size4KiB>,
-) {
-	use x86_64::structures::paging::PageTableFlags as Flags;
-
-	let frame = PhysFrame::containing_address(PhysAddr::new(0xb8000));
-	let flags = Flags::PRESENT | Flags::WRITABLE;
-
-	let map_to_result = unsafe { mapper.map_to(page, frame, flags, frame_allocator) };
-	map_to_result.expect("map_to failed").flush();
 }
 
 /// A FrameAllocator that always returns `None`.
