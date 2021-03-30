@@ -32,7 +32,7 @@ test-args = [
 test-success-exit-code = 33
 
 [dependencies]
-array-init = "^1.0"
+array-init = "^2.0"
 bitflags = "^1.2"
 integer-sqrt = "^0.1"
 linked_list_allocator = "^0.8"
