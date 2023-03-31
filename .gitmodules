@@ -1,3 +1,0 @@
-[submodule "src/kernel/module/cmos"]
-	path = src/kernel/module/cmos
-	url = https://github.com/AntoineSebert/cmos
