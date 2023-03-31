@@ -49,7 +49,7 @@ unsafe impl GlobalAlloc for Dummy {
 	unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) { panic!("dealloc should be never called") }
 }
 
-/// A wrapper around spin::Mutex to permit trait implementations.
+/// A wrapper around [`spin::Mutex`] to permit trait implementations.
 pub struct Locked<A> {
 	inner: spin::Mutex<A>,
 }

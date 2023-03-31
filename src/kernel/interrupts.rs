@@ -1,9 +1,9 @@
 //#![cfg(not(windows))] // makes the build fail
 
 use crate::{hlt_loop, kernel::vmm::gdt, println};
-use interrupt_indexes::Hardware::*;
+use interrupt_indexes::Hardware::{Keyboard, RealTimeClock, Timer};
 use lazy_static::lazy_static;
-use pic8259_simple::ChainedPics;
+use pic8259::ChainedPics;
 use spin::Mutex;
 use x86_64::{
 	instructions::{interrupts::without_interrupts, port::Port},
@@ -38,9 +38,11 @@ pub mod interrupt_indexes {
 	}
 	impl Hardware {
 		#[inline]
+		#[must_use]
 		pub fn as_u8(self) -> u8 { self as u8 }
 
 		#[inline]
+		#[must_use]
 		pub fn as_usize(self) -> usize { usize::from(self.as_u8()) }
 	}
 }
@@ -118,15 +120,15 @@ lazy_static! {
 
 // CPU exceptions
 
-extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut InterruptStackFrame) {
+extern "x86-interrupt" fn breakpoint_handler(stack_frame: InterruptStackFrame) {
 	println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn double_fault_handler(stack_frame: &mut InterruptStackFrame, _error_code: u64) -> ! {
+extern "x86-interrupt" fn double_fault_handler(stack_frame: InterruptStackFrame, _error_code: u64) -> ! {
 	panic!("EXCEPTION: DOUBLE FAULT\n{:#?}", stack_frame);
 }
 
-extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFrame, error_code: PageFaultErrorCode) {
+extern "x86-interrupt" fn page_fault_handler(stack_frame: InterruptStackFrame, error_code: PageFaultErrorCode) {
 	use x86_64::registers::control::Cr2;
 
 	println!("EXCEPTION: PAGE FAULT");
@@ -139,12 +141,12 @@ extern "x86-interrupt" fn page_fault_handler(stack_frame: &mut InterruptStackFra
 
 // hardware
 
-extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
+extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: InterruptStackFrame) {
 	//print!(".");
 	unsafe { PICS.lock().notify_end_of_interrupt(Timer.as_u8()) }
 }
 
-extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
+extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: InterruptStackFrame) {
 	let mut port = Port::new(0x60);
 	let scancode: u8 = unsafe { port.read() };
 
@@ -155,10 +157,10 @@ extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut Interrup
 	}
 }
 
-extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
-	use super::scheduler::dispatcher::{strategy::*, update};
+extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: InterruptStackFrame) {
+	use super::scheduler::dispatcher::{strategy::process_id, update};
 
-	let x = update(&process_id);
+	let x = update(process_id);
 	println!("{{");
 	println!("    processes : {}, running : {}", x.0, x.3.is_some());
 	println!("    blocked queue : {}, ready queue : {}", x.1, x.2);
@@ -179,6 +181,7 @@ extern "x86-interrupt" fn real_time_clock_interrupt_handler(_stack_frame: &mut I
 /// The parameter must 2 and not over 15 for physical constraints.
 /// The default rate is 6.
 /// Returns the new frequency in Hertz.
+#[must_use]
 pub fn change_rtc_interrupt_rate(mut rate: u8) -> u16 {
 	rate &= 0x0F;
 	without_interrupts(|| {

@@ -1,4 +1,3 @@
-pub mod acpi;
 pub mod ipc;
 pub mod scheduler;
 pub mod shell;

@@ -1,9 +1,4 @@
 [unstable]
-build-std = ["core", "compiler_builtins", "alloc"]
-build-std-features = ["compiler-builtins-mem"]
-
-[build]
-target = "x86_64-dandelion.json"
-
-[target.'cfg(target_os = "none")']
-runner = "bootimage runner"
+# enable the unstable artifact-dependencies feature, see
+# https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#artifact-dependencies
+bindeps = true

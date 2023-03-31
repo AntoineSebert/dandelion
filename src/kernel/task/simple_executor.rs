@@ -8,6 +8,7 @@ pub struct SimpleExecutor {
 }
 
 impl SimpleExecutor {
+	#[must_use]
 	pub fn new() -> SimpleExecutor { SimpleExecutor { task_queue: VecDeque::new() } }
 
 	pub fn spawn(&mut self, task: Task) { self.task_queue.push_back(task) }

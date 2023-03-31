@@ -17,22 +17,17 @@
 
 ## Table of contents
 
-- [Motivation](#motivation)
-- [Main design characteristics](#Main design characteristics)
-- [Technical choices](#Technical choices)
-- [Getting started](#Getting started)
-  - [Prerequisites](#prerequisites)
-  - [Installing](#Installing)
-- [Running the tests](#Running the tests)
-- [Deployment](#deployment)
-- [Built tool](#Build tool)
-- [Documentation](#documentation)
-- [File hierarchy](#File hierarchy)
-- [Contributing](#contributing)
-- [Versioning](#versioning)
-- [Authors](#authors)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [🚀 Dandelion : Microkernel Real-Time Operating System in Rust](#-dandelion--microkernel-real-time-operating-system-in-rust)
+  - [Table of contents](#table-of-contents)
+  - [Motivation](#motivation)
+  - [Main design characteristics](#main-design-characteristics)
+  - [Technical choices](#technical-choices)
+  - [Getting started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installing](#installing)
+    - [Running the operating system](#running-the-operating-system)
+  - [Running the tests](#running-the-tests)
+  - [License](#license)
 
 ## Motivation
 
@@ -90,39 +85,6 @@ cargo run
 cargo test
 ```
 
-## Build tool
-
-* [cargo](http://www.example.com) - the official Rust build tool
-
-## Documentation
-
-The documentation for this repository can be found at https://github.com/AntoineSebert/dandelion/documentation
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/AntoineSebert/dandelion/tags).
-
-## Authors
-
-* [**Antoine/Anthony Sébert**](https://github.com/AntoineSebert) - *Design*
-	* I do not declare any conflict of interest. Besides trying to increase humanity's knowledge, this project is necessary for me to complete my cursus at The Robert Gordon University.
-* [**Antoine/Anthony Sébert's clone**](https://github.com/AntoineSebert) - *Implementation*
-* [**Antoine/Anthony Sébert's evil twin**](https://github.com/AntoineSebert) - *Bug creation*
-* [**Antoine/Anthony Sébert's future self**](https://github.com/AntoineSebert) - *Testing*
-* [**Antoine/Anthony Sébert from a parallel dimension**](https://github.com/AntoineSebert) - *Documentation*
-
 ## License
 
 This project is licensed under the CC BY-NC-SA License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-
-* My supervisor, [Petrovski](https://orcid.org/0000-0002-0987-2791)
-* M. Bartlett
-* N. Wiratunga
-* My friends
-* My family

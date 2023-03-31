@@ -30,17 +30,18 @@ use crate::kernel::process::{
 };
 
 /// Return the value of RUNNING.
+#[must_use]
 pub fn get_running() -> Option<u8> { *RUNNING.read() }
 
-/// Move the first element in READY_QUEUE to RUNNING (if there is no element, RUNNING is `None`).
-/// Move the element in RUNNING at the end of READY_QUEUE if it exists.
-/// If the element cannot be placed in READY_QUEUE, it is moved to BLOCKED_QUEUE.
-/// If the element cannot be placed in BLOCKED_QUEUE, terminated.
+/// Move the first element in `READY_QUEUE` to RUNNING (if there is no element, RUNNING is `None`).
+/// Move the element in RUNNING at the end of `READY_QUEUE` if it exists.
+/// If the element cannot be placed in `READY_QUEUE`, it is moved to `BLOCKED_QUEUE`.
+/// If the element cannot be placed in `BLOCKED_QUEUE`, terminated.
 /// Return a tuple containing the old and the new running PIDs if they exist.
+#[must_use]
 pub fn next() -> (Option<u8>, Option<u8>) {
 	use super::{queue_push_back, terminate, BLOCKED_QUEUE, READY_QUEUE};
 	use process::{MainMemory::Ready, SwapSpace::Suspended};
-	use State::SwapSpace;
 
 	let old = get_running();
 
@@ -50,8 +51,8 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 	drop(guard);
 
 	if let Some(pid) = old {
-		if queue_push_back(&READY_QUEUE, pid, MainMemory(Ready)).is_err()
-			&& queue_push_back(&BLOCKED_QUEUE, pid, SwapSpace(Suspended)).is_err()
+		if !queue_push_back(&READY_QUEUE, pid, MainMemory(Ready))
+			&& !queue_push_back(&BLOCKED_QUEUE, pid, State::SwapSpace(Suspended))
 		{
 			terminate(pid);
 		}
@@ -62,13 +63,9 @@ pub fn next() -> (Option<u8>, Option<u8>) {
 
 /// Set the value of RUNNING and update the state of the related process if it exists.
 fn set_running(value: Option<u8>) {
-	use super::set_process_state;
-	use process::MainMemory::Running;
-
-	let mut r_guard = RUNNING.write();
-	*r_guard = value;
+	*RUNNING.write() = value;
 
 	if let Some(pid) = value {
-		set_process_state(pid, MainMemory(Running));
+		super::set_process_state(pid, MainMemory(process::MainMemory::Running));
 	}
 }

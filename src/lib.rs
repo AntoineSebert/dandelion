@@ -4,13 +4,11 @@
 #![reexport_test_harness_main = "test_main"]
 #![feature(abi_x86_interrupt)]
 #![feature(alloc_error_handler)]
-#![feature(asm)]
 #![feature(const_mut_refs)]
 #![feature(core_intrinsics)]
 #![feature(custom_test_frameworks)]
 #![feature(trait_alias)]
 #![feature(alloc_layout_extra)]
-#![feature(wake_trait)]
 
 extern crate alloc;
 
@@ -23,14 +21,7 @@ pub mod kernel;
 /// Enables the interrupts and changes RTC interrupt rate.
 pub fn init() {
 	use interrupts::{change_rtc_interrupt_rate, enable_rtc_interrupt};
-	use kernel::{acpi, interrupts, vmm::gdt};
-
-	unsafe {
-		match acpi::init() {
-			Ok(_) => println!("ACPI initialized"),
-			Err(_) => println!("Could not initialize ACPI"),
-		}
-	};
+	use kernel::{interrupts, vmm::gdt};
 
 	gdt::init();
 	interrupts::init_idt();
@@ -70,8 +61,14 @@ pub fn hlt_loop() -> ! {
 #[cfg(test)]
 use bootloader::{entry_point, BootInfo};
 
+pub static BOOTLOADER_CONFIG: BootloaderConfig = {
+	let mut config = BootloaderConfig::new_default();
+	config.mappings.physical_memory = Some(Mapping::Dynamic);
+	config
+};
+
 #[cfg(test)]
-entry_point!(test_kernel_main); // OS entry point override for tests.
+entry_point!(test_kernel_main, config = &BOOTLOADER_CONFIG); // OS entry point override for tests.
 
 pub trait Testable {
 	fn run(&self);
@@ -107,7 +104,7 @@ pub fn test_panic_handler(info: &PanicInfo) -> ! {
 
 /// Entry point for `cargo xtest`.
 #[cfg(test)]
-fn test_kernel_main(_boot_info: &'static BootInfo) -> ! {
+fn test_kernel_main(_boot_info: &'static mut BootInfo) -> ! {
 	init();
 	test_main();
 	hlt_loop();

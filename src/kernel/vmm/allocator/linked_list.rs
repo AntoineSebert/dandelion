@@ -20,7 +20,8 @@ pub struct LinkedListAllocator {
 }
 
 impl LinkedListAllocator {
-	/// Creates an empty LinkedListAllocator.
+	/// Creates an empty [`LinkedListAllocator`].
+	#[must_use]
 	pub const fn new() -> Self { Self { head: ListNode::new(0) } }
 
 	/// Initialize the allocator with the given heap bounds.
@@ -43,7 +44,7 @@ impl LinkedListAllocator {
 		node.next = self.head.next.take();
 		let node_ptr = addr as *mut ListNode;
 		node_ptr.write(node);
-		self.head.next = Some(&mut *node_ptr)
+		self.head.next = Some(&mut *node_ptr);
 	}
 
 	/// Looks for a free region with the given size and alignment and removes
@@ -55,16 +56,16 @@ impl LinkedListAllocator {
 		let mut current = &mut self.head;
 		// look for a large enough memory region in linked list
 		while let Some(ref mut region) = current.next {
-			if let Ok(alloc_start) = Self::alloc_from_region(&region, size, align) {
+			if let Ok(alloc_start) = Self::alloc_from_region(region, size, align) {
 				// region suitable for allocation -> remove node from list
 				let next = region.next.take();
 				let ret = Some((current.next.take().unwrap(), alloc_start));
 				current.next = next;
 				return ret;
-			} else {
-				// region not suitable -> continue with next region
-				current = current.next.as_mut().unwrap();
 			}
+
+			// region not suitable -> continue with next region
+			current = current.next.as_mut().unwrap();
 		}
 
 		// no suitable region found
@@ -127,6 +128,6 @@ unsafe impl GlobalAlloc for Locked<LinkedListAllocator> {
 		// perform layout adjustments
 		let (size, _) = LinkedListAllocator::size_align(layout);
 
-		self.lock().add_free_region(ptr as usize, size)
+		self.lock().add_free_region(ptr as usize, size);
 	}
 }

@@ -4,9 +4,9 @@ pub mod task;
 
 use super::time::dt_add_du;
 use alloc::{string::String, vec::Vec};
-use cmos::RTCDateTime;
+use cmos_rtc::Time;
 use core::{
-	cmp::Ordering::{self, *},
+	cmp::Ordering::{self, Equal, Greater, Less},
 	fmt::{Display, Formatter, Result},
 	time::Duration,
 };
@@ -57,17 +57,17 @@ pub type Arguments = Vec<String>;
 /// 0 : estimated completion time
 /// 1 : interval
 /// 2 : last execution (can be in future for delayed tasks)
-pub type Periodic = (Duration, Duration, RTCDateTime); // make tuple struct
+pub type Periodic = (Duration, Duration, Time); // make tuple struct
 
 /// 0 : estimated completion time
 /// 1 : deadline
 /// 2 : start delay
-pub type Aperiodic = (Duration, RTCDateTime, Option<RTCDateTime>); // make tuple struct
+pub type Aperiodic = (Duration, Time, Option<Time>); // make tuple struct
 
 /// 0 : process state
 /// 1 : elapsed running time
 /// 2 : creation time
-pub type Info = (State, Duration, RTCDateTime); // make tuple struct
+pub type Info = (State, Duration, Time); // make tuple struct
 pub type Constraint = (Option<Either<Periodic, Aperiodic>>, PRIORITY); // make tuple struct
 
 pub type Metadata = (Constraint, Info); // make tuple struct
@@ -76,7 +76,7 @@ pub type Metadata = (Constraint, Info); // make tuple struct
 pub struct Runnable(pub fn(Arguments) -> u64);
 
 impl PartialEq for Runnable {
-	fn eq(&self, other: &Self) -> bool { self as *const _ == other as *const _ }
+	fn eq(&self, other: &Self) -> bool { core::ptr::eq(self, other) }
 }
 impl Eq for Runnable {}
 
@@ -95,16 +95,18 @@ pub struct Group {
 
 // order
 
+#[must_use]
 pub fn ord_periodicity(a: &Either<Periodic, Aperiodic>, b: &Either<Periodic, Aperiodic>) -> Ordering {
 	match (a, b) {
 		(Right(aperiodic_a), Right(aperiodic_b)) => aperiodic_a.1.cmp(&aperiodic_b.1),
-		(Right(aperiodic_a), Left(periodic_b)) => ord_p_ap(&periodic_b, &aperiodic_a),
-		(Left(periodic_a), Right(aperiodic_b)) => ord_p_ap(&periodic_a, &aperiodic_b),
-		(Left(periodic_a), Left(periodic_b)) => ord_p_p(&periodic_a, &periodic_b),
+		(Right(aperiodic_a), Left(periodic_b)) => ord_p_ap(periodic_b, aperiodic_a),
+		(Left(periodic_a), Right(aperiodic_b)) => ord_p_ap(periodic_a, aperiodic_b),
+		(Left(periodic_a), Left(periodic_b)) => ord_p_p(periodic_a, periodic_b),
 	}
 }
 
 // to check
+#[must_use]
 pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {
 	match dt_add_du(a.2, a.1) {
 		Some(deadline_a) => deadline_a.cmp(&b.1),
@@ -113,6 +115,7 @@ pub fn ord_p_ap(a: &Periodic, b: &Aperiodic) -> Ordering {
 }
 
 // to check
+#[must_use]
 pub fn ord_p_p(a: &Periodic, b: &Periodic) -> Ordering {
 	match (dt_add_du(a.2, a.1), dt_add_du(b.2, b.1)) {
 		(Some(deadline_a), Some(deadline_b)) => deadline_a.cmp(&deadline_b),
@@ -125,11 +128,12 @@ pub fn ord_p_p(a: &Periodic, b: &Periodic) -> Ordering {
 // Samples
 
 /// Prints the function's name and the arguments.
+#[must_use]
 pub fn sample_runnable_2(args: Arguments) -> u64 {
 	use crate::println;
 
 	println!("Running sample_runnable_2");
-	for element in args.iter() {
+	for element in args {
 		println!("argument: {}", element);
 	}
 
@@ -139,7 +143,7 @@ pub fn sample_runnable_2(args: Arguments) -> u64 {
 /// Streams prime numbers on the serial port up to a limit (passed as parameter) less than 2^64.
 /// On my computer, finds all the primes between 0 and 1.000.000 in 2:05 min.
 #[allow(dead_code)]
-fn sample_runnable(_args: Arguments) -> u64 {
+fn sample_runnable(_args: &Arguments) -> u64 {
 	use crate::println;
 	use core::u64::MAX;
 	use integer_sqrt::IntegerSquareRoot;

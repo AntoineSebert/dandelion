@@ -29,7 +29,8 @@ pub struct FixedSizeBlockAllocator {
 }
 
 impl FixedSizeBlockAllocator {
-	/// Creates an empty FixedSizeBlockAllocator.
+	/// Creates an empty [`FixedSizeBlockAllocator`].
+	#[must_use]
 	pub const fn new() -> Self {
 		const EMPTY: Option<&'static mut ListNode> = None;
 
@@ -64,19 +65,16 @@ unsafe impl GlobalAlloc for Locked<FixedSizeBlockAllocator> {
 		let mut allocator = self.lock();
 		match list_index(&layout) {
 			Some(index) => {
-				match allocator.list_heads[index].take() {
-					Some(node) => {
-						allocator.list_heads[index] = node.next.take();
-						node as *mut ListNode as *mut u8
-					}
-					None => {
-						// no block exists in list => allocate new block
-						let block_size = BLOCK_SIZES[index];
-						// only works if all block sizes are a power of 2
-						let block_align = block_size;
-						let layout = Layout::from_size_align(block_size, block_align).unwrap();
-						allocator.fallback_alloc(layout)
-					}
+				if let Some(node) = allocator.list_heads[index].take() {
+					allocator.list_heads[index] = node.next.take();
+					(node as *mut ListNode).cast::<u8>()
+				} else {
+					// no block exists in list => allocate new block
+					let block_size = BLOCK_SIZES[index];
+					// only works if all block sizes are a power of 2
+					let block_align = block_size;
+					let layout = Layout::from_size_align(block_size, block_align).unwrap();
+					allocator.fallback_alloc(layout)
 				}
 			}
 			None => allocator.fallback_alloc(layout),
@@ -88,10 +86,13 @@ unsafe impl GlobalAlloc for Locked<FixedSizeBlockAllocator> {
 		match list_index(&layout) {
 			Some(index) => {
 				let new_node = ListNode { next: allocator.list_heads[index].take() };
+
 				// verify that block has size and alignment required for storing node
 				assert!(mem::size_of::<ListNode>() <= BLOCK_SIZES[index]);
 				assert!(mem::align_of::<ListNode>() <= BLOCK_SIZES[index]);
-				let new_node_ptr = ptr as *mut ListNode;
+
+				let new_node_ptr = ptr.cast::<ListNode>();
+
 				new_node_ptr.write(new_node);
 				allocator.list_heads[index] = Some(&mut *new_node_ptr);
 			}

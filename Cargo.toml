@@ -1,8 +1,8 @@
 [package]
 name = "dandelion"
-version = "0.3.0"
-authors = ["Antoine \"Anthony\" Sébert <antoine.sb@orange.fr>"]
-edition = "2018"
+version = "1.0.0"
+authors = ["Antoine  Sébert <antoine.sb@orange.fr>"]
+edition = "2021"
 publish = false
 description = "Microkernel Real-Time Operating System in Rust"
 homepage = "https://github.com/AntoineSebert/dandelion"
@@ -20,9 +20,6 @@ harness = false
 name = "stack_overflow"
 harness = false
 
-#[doc]
-#https://doc.rust-lang.org/rustdoc
-
 [package.metadata.bootimage]
 test-args = [
 	"-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
@@ -32,29 +29,18 @@ test-args = [
 test-success-exit-code = 33
 
 [dependencies]
-array-init = "^2.0"
 bitflags = "^1.2"
 integer-sqrt = "^0.1"
-linked_list_allocator = "^0.8"
+linked_list_allocator = "^0.9"
 pc-keyboard = "^0.5"
-pic8259_simple = "^0.2"
-rlibc = "^1.0"
+pic8259 = "0.10.1"
 spin = "^0.9"
 uart_16550 = "^0.2"
-volatile = "^0.4"
-x86_64 = "^0.13"
-
-[dependencies.arraydeque]
-version = "^0.4"
-default-features = false
-
-[dependencies.bootloader]
-version = "^0.10.0"
-features = ["map_physical_memory"]
-
-[dependencies.cmos]
-version = "^0.1"
-git = "https://github.com/AntoineSebert/cmos"
+volatile = "^0.2" # must stay at v0.2 for now
+x86_64 = "^0.14"
+cmos-rtc = {version = "^0.1", git = "https://github.com/deadblackclover/CMOS.git", rev = "ae088e85a80f2c9668233f0eab5aad4caf42c81c"}
+bootloader = "0.11.3"
+bootloader_api = "0.11.3"
 
 [dependencies.either]
 version = "^1.6"

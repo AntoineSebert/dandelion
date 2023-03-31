@@ -25,7 +25,6 @@
 #![no_main]
 #![test_runner(dandelion::test_runner)]
 #![reexport_test_harness_main = "test_main"]
-#![feature(asm)]
 #![feature(trait_alias)]
 #![feature(allocator_api)]
 #![feature(core_intrinsics)]
@@ -34,16 +33,22 @@
 
 extern crate alloc;
 
-use bootloader::{bootinfo::BootInfo, entry_point};
+use bootloader_api::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use dandelion::{hlt_loop, kernel, println};
 
-entry_point!(kernel_main); // OS entry point override.
+pub static BOOTLOADER_CONFIG: BootloaderConfig = {
+	let mut config = BootloaderConfig::new_default();
+	config.mappings.physical_memory = Some(Mapping::Dynamic);
+	config
+};
+
+entry_point!(kernel_main, config = &BOOTLOADER_CONFIG); // OS entry point override.
 
 /// Entry point of the OS.
 /// Initialize the kernel components and launch the user space.
 /// Infinite loop at the end.
-fn kernel_main(boot_info: &'static BootInfo) -> ! {
+fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
 	use kernel::task::{executor::Executor, keyboard, Task};
 
 	println!("Hello World!");
@@ -66,7 +71,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
 /// Creates a mapper and a frame allocator.
 /// Maps a page corresponding to the screen and writes "New!" into it.
-#[allow(clippy::unreadable_literal)]
 fn map_memory(boot_info: &'static BootInfo) {
 	use alloc::{boxed::Box, rc::Rc, vec, vec::Vec};
 	use kernel::vmm::{
@@ -75,9 +79,9 @@ fn map_memory(boot_info: &'static BootInfo) {
 	};
 	use x86_64::{structures::paging::Page, VirtAddr};
 
-	let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+	let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset.into_option().unwrap());
 	let mut mapper = unsafe { init(phys_mem_offset) };
-	let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_map) };
+	let mut frame_allocator = unsafe { BootInfoFrameAllocator::init(&boot_info.memory_regions) };
 
 	{
 		// map a previously unmapped page
@@ -94,7 +98,7 @@ fn map_memory(boot_info: &'static BootInfo) {
 
 	{
 		let heap_value = Box::new(41);
-		println!("heap_value at {:p}", heap_value);
+		println!("heap_value at {heap_value:p}");
 
 		// create a dynamically sized vector
 		let mut vec = Vec::new();
@@ -120,11 +124,13 @@ fn user_space() {
 	};
 
 	println!("process 0 exists ? {}", process_exists(0));
-	request((None, MEDIUM), Runnable(sample_runnable_2));
+	if let Some(pid) = request((None, MEDIUM), Runnable(sample_runnable_2)) {
+		println!("process has pid 0 ? {pid}");
+	}
 	println!("process 0 exists ? {}", process_exists(0));
 
 	match run() {
-		Some(value) => println!("Processed finished with code : {}", value),
+		Some(value) => println!("Processed finished with code : {value}"),
 		None => println!("No process to run"),
 	}
 
@@ -136,7 +142,7 @@ async fn async_number() -> u32 { 42 }
 
 async fn example_task() {
 	let number = async_number().await;
-	println!("async number: {}", number);
+	println!("async number: {number}");
 }
 
 /// Called on panic and prints information about the panic error.

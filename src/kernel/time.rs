@@ -2,41 +2,45 @@
 // https://wiki.osdev.org/APIC_timer
 // https://wiki.osdev.org/Time_And_Date
 
-use cmos::RTCDateTime;
+use cmos_rtc::Time;
 use core::time::Duration;
 
-/// Return the current datetime as `RTCDateTime`.
-pub fn get_datetime() -> RTCDateTime {
-	use cmos::{CMOSCenturyHandler, CMOS};
+/// Return the current datetime as `Time`.
+#[must_use]
+pub fn get_datetime() -> Time {
+	let mut cmos = cmos_rtc::ReadRTC::new(0x00, 0x00);
 
-	let mut cmos = unsafe { CMOS::new() };
-	cmos.read_rtc(CMOSCenturyHandler::CurrentYear(2019))
+	cmos.read()
 }
 
 // Operations
 
-/// Return the difference between two `RTCDateTime` as a `Duration`.
-pub fn get_duration(first: RTCDateTime, second: RTCDateTime) -> Duration { to_duration(first) - to_duration(second) }
+/// Return the difference between two `Time` as a `Duration`.
+#[must_use]
+pub fn get_duration(first: Time, second: Time) -> Duration { to_duration(first) - to_duration(second) }
 
-/// If first < second, the fields in the returned RTCDateTime equal to 0.
-pub fn dt_sub_dt(first: RTCDateTime, second: RTCDateTime) -> RTCDateTime {
-	RTCDateTime {
+/// If first < second, the fields in the returned Time equal to 0.
+#[must_use]
+pub fn dt_sub_dt(first: Time, second: Time) -> Time {
+	Time {
 		second: first.second - second.second,
 		minute: first.minute - second.minute,
 		hour: first.hour - second.hour,
 		day: first.day - second.day,
 		month: first.month - second.month,
 		year: first.year - second.year,
+		century: first.century - second.century,
 	}
 }
 
-/// Assumes that both `RTCDateTime` parameters are valid.
-/// Returns `Some(RTCDateTime)` if the addition could be performed.
-/// Returns `None` if the result is greater than `RTCDateTime::max()`.
-pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime> {
+/// Assumes that both `Time` parameters are valid.
+/// Returns `Some(Time)` if the addition could be performed.
+/// Returns `None` if the result is greater than `Time::max()`.
+#[must_use]
+pub fn dt_add_dt(first: Time, second: Time) -> Option<Time> {
 	use core::usize::MAX;
 
-	if (MAX - first.year) < second.year {
+	if (MAX - first.year as usize) < second.year.into() {
 		None
 	} else {
 		let remove_overflow = |a: &mut u8, b: &mut u8, limit: u8| {
@@ -46,13 +50,14 @@ pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime>
 			}
 		};
 
-		let mut result = RTCDateTime {
+		let mut result = Time {
 			second: first.second + second.second,
 			minute: first.minute + second.minute,
 			hour: first.hour + second.hour,
 			day: first.day + second.day,
 			month: first.month + second.month,
 			year: first.year + second.year,
+			century: first.century + second.century,
 		};
 
 		remove_overflow(&mut result.second, &mut result.minute, 60);
@@ -60,7 +65,7 @@ pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime>
 		remove_overflow(&mut result.hour, &mut result.day, 24);
 		remove_overflow(&mut result.day, &mut result.month, 31);
 
-		if result.year == MAX && 12 < result.month {
+		if usize::from(result.year) == MAX && 12 < result.month {
 			None
 		} else {
 			result.month -= 12;
@@ -70,37 +75,38 @@ pub fn dt_add_dt(first: RTCDateTime, second: RTCDateTime) -> Option<RTCDateTime>
 	}
 }
 
-/// Adds a `Duration` to an `RTCDateTime`.
-/// Returns `Some(RTCDateTime)` if the operation could be performed.
-/// Returns `None` if the result is greater than `RTCDateTime::max()`.
-pub fn dt_add_du(datetime: RTCDateTime, duration: Duration) -> Option<RTCDateTime> {
-	dt_add_dt(datetime, to_rtcdatetime(duration))
-}
+/// Adds a `Duration` to an `Time`.
+/// Returns `Some(Time)` if the operation could be performed.
+/// Returns `None` if the result is greater than `Time::max()`.
+#[must_use]
+pub fn dt_add_du(datetime: Time, duration: Duration) -> Option<Time> { dt_add_dt(datetime, to_rtcdatetime(duration)) }
 
-/// Converts a `RTCDateTime` into a `Duration` without checking.
+/// Converts a `Time` into a `Duration` without checking.
 // add checks
-pub fn to_duration(datetime: RTCDateTime) -> Duration {
+#[must_use]
+pub fn to_duration(datetime: Time) -> Duration {
 	Duration::from_secs(
 		u64::from(datetime.second)
 			+ u64::from(datetime.minute) * 60
 			+ u64::from(datetime.hour) * 3_600
 			+ u64::from(datetime.day) * 86_400
 			+ u64::from(datetime.month) * 2_628_000
-			+ (datetime.year * 31_536_000) as u64,
+			+ (datetime.year as u64 * 31_536_000),
 	)
 }
 
-/// Converts a `Duration` into a `RTCDateTime` without ckecking.
-pub fn to_rtcdatetime(duration: Duration) -> RTCDateTime {
+/// Converts a `Duration` into a `Time` without ckecking.
+#[must_use]
+pub fn to_rtcdatetime(duration: Duration) -> Time {
 	let apply_divisor = |time: &mut u64, divisor: u64| -> u8 {
 		let left = *time / divisor;
 		*time %= divisor;
 		left as u8
 	};
 	let mut time: u64 = duration.as_secs();
-	let mut result = RTCDateTime { second: 0, minute: 0, hour: 0, day: 0, month: 0, year: 0 };
+	let mut result = Time::default();
 
-	result.year = apply_divisor(&mut time, 31_536_000) as usize;
+	result.year = apply_divisor(&mut time, 31_536_000);
 	result.month = apply_divisor(&mut time, 2_628_000);
 	result.day = apply_divisor(&mut time, 86_400);
 	result.hour = apply_divisor(&mut time, 3_600);
@@ -113,6 +119,5 @@ pub fn to_rtcdatetime(duration: Duration) -> RTCDateTime {
 /// Returns `true` if there is an intersection between the timespan parameters, and `false` otherwise.
 /// An inclusion is considered as an intersection.
 /// Assumes that the timespans are ordered.
-pub fn intersect(a: (RTCDateTime, RTCDateTime), b: (RTCDateTime, RTCDateTime)) -> bool {
-	(a.0 < b.0 && a.1 <= b.0) || (b.1 <= a.0 && b.1 < a.1)
-}
+#[must_use]
+pub fn intersect(a: (Time, Time), b: (Time, Time)) -> bool { (a.0 < b.0 && a.1 <= b.0) || (b.1 <= a.0 && b.1 < a.1) }

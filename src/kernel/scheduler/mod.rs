@@ -8,38 +8,37 @@ pub mod swapper;
 
 use super::process::{task::Task, Aperiodic, Constraint, Periodic, Runnable, State, PRIORITY};
 use crate::println;
-use alloc::{string::String, vec};
-use array_init::array_init;
-use arraydeque::{ArrayDeque, CapacityError};
-use core::u8::MAX;
+use alloc::{collections::VecDeque, string::String, vec};
 use either::Either;
 use lazy_static::lazy_static;
 use spin::{Mutex, RwLock};
 
+const MAX_TASKS: u8 = 255;
+const EMPTY_LOCK: RwLock<Option<Task>> = RwLock::new(None);
+
 lazy_static! {
-	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; 256] = array_init(|_| RwLock::new(None)); // should be replaced by a set
-	pub static ref BLOCKED_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
-	pub static ref READY_QUEUE: Mutex<ArrayDeque<[u8; 256]>> = Mutex::new(ArrayDeque::new());
 	pub static ref RUNNING: RwLock<Option<u8>> = RwLock::new(None);
+	pub static ref PROCESS_TABLE: [RwLock<Option<Task>>; MAX_TASKS as usize] = [EMPTY_LOCK; MAX_TASKS as usize]; // should be replaced by a set
+	pub static ref BLOCKED_QUEUE: Mutex<VecDeque<u8>> = Mutex::new(VecDeque::with_capacity(MAX_TASKS as usize));
+	pub static ref READY_QUEUE: Mutex<VecDeque<u8>> = Mutex::new(VecDeque::with_capacity(MAX_TASKS as usize));
 	static ref PROCESS_COUNT: RwLock<u8> = RwLock::new(0);
 }
 
 /// Run the current running process.
+#[must_use]
 pub fn run() -> Option<u64> {
-	match *(RUNNING.read()) {
-		Some(index) => {
-			Some(PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(vec![String::from(
-				"sample_runnable_2",
-			)]))
-		}
-		None => None,
-	}
+	(*(RUNNING.read())).map(|index| {
+		PROCESS_TABLE[usize::from(index)].read().as_ref().unwrap().get_runnable().0(vec![String::from(
+			"sample_runnable_2",
+		)])
+	})
 }
 
 /// Check if a process exists
 pub fn process_exists(pid: u8) -> bool { PROCESS_TABLE[pid as usize].read().is_some() }
 
-/// Browse PROCESS_TABLE and return the first available slot if it exists.
+/// Browse `PROCESS_TABLE` and return the first available slot if it exists.
+#[must_use]
 pub fn get_slot() -> Option<usize> {
 	for (index, element) in PROCESS_TABLE.iter().enumerate() {
 		if element.read().is_none() {
@@ -72,13 +71,10 @@ pub fn get_process_periodicity(pid: u8) -> Option<Either<Periodic, Aperiodic>> {
 
 /// Returns an `Option` containing a `PRIORITY` if the process exists, or `None` if it does not.
 pub fn get_process_priority(pid: u8) -> Option<PRIORITY> {
-	match PROCESS_TABLE[pid as usize].write().as_mut() {
-		Some(process) => Some(process.get_priority()),
-		None => None,
-	}
+	PROCESS_TABLE[pid as usize].write().as_mut().map(|process| process.get_priority())
 }
 
-/// Creates a new process and add it ot the PROCESS_TABLE, and stores its index in PROCESS_QUEUE.
+/// Creates a new process and add it ot the `PROCESS_TABLE`, and stores its index in `PROCESS_QUEUE`.
 fn add_task(constraint: Constraint, code: Runnable, index: usize) {
 	*(PROCESS_TABLE[index].write()) = Some(Task::new(constraint, code));
 	increment();
@@ -122,13 +118,12 @@ pub fn terminate(pid: u8) -> bool {
 
 // processes count
 
+#[must_use]
 pub fn get_process_count() -> u8 { *PROCESS_COUNT.read() }
 
 fn increment() -> u8 {
 	let mut guard = PROCESS_COUNT.write();
-	if *guard < MAX {
-		*guard += 1;
-	}
+	*guard = guard.saturating_add(1);
 	*guard
 }
 
@@ -142,22 +137,25 @@ fn decrement() -> u8 {
 
 // queues
 
-pub fn queue_push_back(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8, state: State) -> Result<(), CapacityError<u8>> {
+pub fn queue_push_back(queue: &Mutex<VecDeque<u8>>, pid: u8, state: State) -> bool {
 	let mut q_guard = queue.lock();
 
 	if !process_exists(pid) || q_guard.contains(&pid) {
-		Ok(())
+		true
 	} else {
-		let result = q_guard.push_back(pid);
-		if result.is_ok() {
-			PROCESS_TABLE[pid as usize].write().as_mut().unwrap().set_state(state);
-		}
+		q_guard.push_back(pid);
 
-		result
+		if let Some(table) = PROCESS_TABLE[pid as usize].write().as_mut() {
+			table.set_state(state);
+
+			true
+		} else {
+			false
+		}
 	}
 }
 
-pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
+pub fn queue_remove(queue: &Mutex<VecDeque<u8>>, pid: u8) -> bool {
 	let mut guard = queue.lock();
 
 	for index in 0..guard.len() {
@@ -171,15 +169,15 @@ pub fn queue_remove(queue: &Mutex<ArrayDeque<[u8; 256]>>, pid: u8) -> bool {
 }
 
 /// Return the size of the queue given as parameter.
-pub fn queue_size(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> usize { queue.lock().len() }
+pub fn queue_size(queue: &Mutex<VecDeque<u8>>) -> usize { queue.lock().len() }
 
 /// Return an `Option` containing a copy of the first element of the queue if it exists, and `None` otherwise.
-pub fn queue_front(queue: &Mutex<ArrayDeque<[u8; 256]>>) -> Option<u8> {
+pub fn queue_front(queue: &Mutex<VecDeque<u8>>) -> Option<u8> {
 	let guard = queue.lock();
 
-	if !guard.is_empty() {
-		Some(*(guard.front().unwrap()))
-	} else {
+	if guard.is_empty() {
 		None
+	} else {
+		Some(*(guard.front().unwrap()))
 	}
 }

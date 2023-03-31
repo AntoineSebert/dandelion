@@ -1,9 +1,9 @@
 use crate::instructions::interrupts::without_interrupts;
-use core::fmt::{self, Arguments, Write};
+use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
-use Color::*;
+use Color::{Black, LightGreen};
 
 lazy_static! {
 	/// A global `Writer` instance that can be used for printing to the VGA text buffer.
@@ -133,7 +133,7 @@ impl Writer {
 	}
 }
 
-impl Write for Writer {
+impl fmt::Write for Writer {
 	fn write_str(&mut self, s: &str) -> fmt::Result {
 		self.write_string(s);
 		Ok(())
@@ -157,7 +157,9 @@ macro_rules! println {
 
 /// Prints the given formatted string to the VGA text buffer through the global `WRITER` instance.
 #[doc(hidden)]
-pub fn _print(args: Arguments) {
+pub fn _print(args: fmt::Arguments) {
+	use core::fmt::Write;
+
 	without_interrupts(|| {
 		WRITER.lock().write_fmt(args).unwrap();
 	});
@@ -179,6 +181,8 @@ fn test_println_many() {
 
 #[test_case]
 fn test_println_output() {
+	use core::fmt::Write;
+
 	let s = "Some test string that fits on a single line";
 	without_interrupts(|| {
 		let mut writer = WRITER.lock();
