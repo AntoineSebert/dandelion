@@ -29,7 +29,7 @@ test-args = [
 test-success-exit-code = 33
 
 [dependencies]
-bitflags = "^1.2"
+bitflags = "^2.0"
 integer-sqrt = "^0.1"
 linked_list_allocator = "^0.10.2"
 pc-keyboard = "^0.5"
